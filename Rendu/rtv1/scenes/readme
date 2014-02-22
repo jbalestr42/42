@@ -1,0 +1,9 @@
+# pos.x pos.y pos.z
+# dir.x dir.y dir.z
+# nb_lights
+# color  pos.x pos.y pos.z
+# nb_objects
+# SPHERE    0 color center.x center.y center.z radius
+# PLAN      1 color pos.x pos.y pos.z normal.x normal.y normal.z
+# CYLINDER  2 color pos.x pos.y pos.z dir.x dir.y dir.z radius
+# CONE      3 color pos.x pos.y pos.z dir.x dir.y dir.z coeff
