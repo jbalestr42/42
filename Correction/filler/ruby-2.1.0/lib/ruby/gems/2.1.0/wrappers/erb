@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if
+  [[ -s "/Users/mpapis/.rvm/gems/ruby-2.1.0@global/environment" ]]
+then
+  source "/Users/mpapis/.rvm/gems/ruby-2.1.0@global/environment"
+  exec erb "$@"
+else
+  echo "ERROR: Missing RVM environment file: '/Users/mpapis/.rvm/gems/ruby-2.1.0@global/environment'" >&2
+  exit 1
+fi

@@ -1,0 +1,2 @@
+U:RDoc::Attr[iI"shell_executable:ETI"1RVM::Shell::AbstractWrapper#shell_executable;FI"R;T:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;	[I""Defines the shell exectuable.;T:
+@fileI"&lib/rvm/shell/abstract_wrapper.rb;T:0@omit_headings_from_table_of_contents_below0F@I" RVM::Shell::AbstractWrapper;FcRDoc::NormalClass0

@@ -1,0 +1,6 @@
+export PATH="/Users/mpapis/.rvm/gems/ruby-2.1.0@global/bin:/Users/mpapis/.rvm/rubies/ruby-2.1.0/bin:$PATH"
+export GEM_HOME='/Users/mpapis/.rvm/gems/ruby-2.1.0@global'
+export GEM_PATH='/Users/mpapis/.rvm/gems/ruby-2.1.0@global'
+export IRBRC='/Users/mpapis/.rvm/rubies/ruby-2.1.0/.irbrc'
+unset MAGLEV_HOME
+unset RBXOPT

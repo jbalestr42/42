@@ -1,0 +1,10 @@
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/alafouas
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/blechiar
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/glasset
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/hmoutaou
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/jduhau
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/maxevra
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/mmeillan
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/nsaintot
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/qarcher
+git clone vogsphere@vogsphere.42.fr:unix-1-001/2013/par-1-1/ftsh2/tettouat
