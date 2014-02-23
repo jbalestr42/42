@@ -14,12 +14,13 @@
 # define RAY_TRACER_H
 
 # include "objects.h"
+# include "obj_file.h"
 
-# define WIDTH			1800
-# define HEIGHT			1200
+# define WIDTH			900
+# define HEIGHT			600
 # define NAME			"Raytracer v1.0"
 # define NB_KEY_EVENT	1
-# define NB_TYPE		4
+# define NB_TYPE		5
 # define MAX_DBL		1.7976931348623158e+308
 
 /*
@@ -59,6 +60,8 @@ struct				s_env
 	double			y_ratio;
 	int				nb_object;
 	int				nb_light;
+	int				nb_obj;
+	t_obj			*obj;
 	t_light			*lights;
 	t_vec			pos_plan;
 	t_object		*objects;
@@ -77,6 +80,7 @@ t_object	read_cylinder(t_env *e, char *s);
 t_object	read_cone(t_env *e, char *s);
 t_object	read_sphere(t_env *e, char *s);
 t_object	read_plan(t_env *e, char *s);
+t_object	read_triangle(t_env *e, char *s);
 
 /*
 ** Helpers
@@ -115,12 +119,23 @@ double		inter_sphere(t_object *obj, t_ray *ray);
 double		inter_plan(t_object *obj, t_ray *ray);
 double		inter_cylinder(t_object *obj, t_ray *ray);
 double		inter_cone(t_object *obj, t_ray *ray);
+double		inter_triangle(t_object *obj, t_ray *ray);
 t_vec		normal_sphere(t_sphere *sph, t_vec *vi);
 t_vec		normal_cone(t_cone *con, t_vec *vi);
 t_vec		normal_cylinder(t_cylinder *cyl, t_vec *vi);
 t_color		diffuse_sphere(t_light *li, t_object *obj, t_vec *vi, double shade);
 t_color		diffuse_plan(t_light *li, t_object *obj, t_vec *vi, double shade);
 t_color		diffuse_cyl(t_light *li, t_object *obj, t_vec *vi, double shade);
+
+/*
+** Init obj
+*/
+t_vertices	*new_vertex(t_vec v);
+void		push_vertex(t_vertices **begin, t_vertices *new);
+t_obj		*new_triangle(t_triangle t);
+void		push_triangle(t_obj **begin, t_obj *new);
+double		ft_atod(char *s);
+int			open_obj(t_env *e, char *path);
 
 /*
 ** Hooks

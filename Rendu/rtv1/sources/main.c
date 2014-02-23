@@ -11,12 +11,14 @@
 /* ************************************************************************** */
 
 #include <mlx.h>
+#include <stdlib.h>
 #include "ray_tracer.h"
 
 int			main(int argc, char **argv)
 {
 	t_env	*e;
 
+	e = NULL;
 	if (argc != 2)
 		ft_error(1, e, "You need only one argument.\n");
 	if (!(e = init_env(argv[1])))

@@ -57,6 +57,7 @@ static void		put_pixel(t_env *e, int x, int y, t_object *obj)
 	}
 }
 
+#include <stdio.h>
 void			draw_view(t_env *e)
 {
 	t_object	*obj;
@@ -64,13 +65,21 @@ void			draw_view(t_env *e)
 	t_vec		iv;
 	int			x;
 	int			y;
+	int			nb;
+	int			prev;
+	int			tmp;
+	double		f;
 
+	f = 100 / ((double)HEIGHT * (double)WIDTH);
 	x = -1;
+	nb = 0;
+	prev = 0;
 	ray.ori = e->cam.ori;
 	obj = NULL;
 	while (++x < WIDTH)
 	{
 		y = -1;
+		nb++;
 		while (++y < HEIGHT)
 		{
 			compute_ray(e, &ray, x, y);
@@ -81,6 +90,12 @@ void			draw_view(t_env *e)
 				compute_inter_point(&ray, &iv);
 				compute_light(e, &iv, &ray, obj);
 				put_pixel(e, x, y, obj);
+			}
+			tmp = (nb * HEIGHT + y) * f;
+			if (tmp > prev)
+			{
+				prev = tmp;
+				printf("%i %%\n", tmp);
 			}
 		}
 	}

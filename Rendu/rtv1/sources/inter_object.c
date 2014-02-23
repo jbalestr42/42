@@ -82,5 +82,37 @@ double			inter_cone(t_object *obj, t_ray *ray)
 	c = pow(ray->ori.x, 2) + pow(ray->ori.y, 2)
 	- (pow(ray->ori.z, 2) * pow(tan(con->coeff), 2));
 	d = determinant(a, b, c);
+	if (d)
+	{
+		
+	}
 	return (d);
+}
+
+double			inter_triangle(t_object *obj, t_ray *ray)
+{
+	t_triangle	*tri;
+	t_vec		w;
+	t_vec		tmp;
+	double		d;
+	double		a;
+	double		b;
+	double		t;
+
+	tri = &obj->prim.triangle;
+	normalize(&ray->dir);
+	if (!(d = -dot_product(&ray->dir, &tri->normal))) // si le triangle est parallele au rayon, on return 0
+		return (0);
+	w.x = ray->ori.x - tri->v1.x;
+	w.y = ray->ori.y - tri->v1.y;
+	w.z = ray->ori.z - tri->v1.z;
+	mul_vec(&tmp, &w, &tri->v3);
+	a = -dot_product(&tmp, &ray->dir) / d;
+	mul_vec(&tmp, &tri->v2, &w);
+	b = -dot_product(&tmp, &ray->dir) / d;
+	mul_vec(&tmp, &tri->v2, &tri->v3);
+	t = dot_product(&tmp, &w) / d;
+	if (a > 0 && b > 0 && a + b <= 1)
+		return (t);
+	return (0);
 }

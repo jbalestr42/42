@@ -18,4 +18,5 @@ void		init_types(t_env *e)
 	e->get_inter[T_PLAN] = inter_plan;
 	e->get_inter[T_CYLINDER] = inter_cylinder;
 	e->get_inter[T_CONE] = inter_cone;
+	e->get_inter[T_TRIANGLE] = inter_triangle;
 }

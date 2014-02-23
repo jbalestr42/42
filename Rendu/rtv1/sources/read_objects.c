@@ -132,3 +132,32 @@ t_object		read_plan(t_env *e, char *s)
 		ft_error(1, e, "Plan wrong format : ignore plan.\n");
 	return (obj);
 }
+
+t_object		read_triangle(t_env *e, char *s)
+{
+	t_object	obj;
+	char		**tmp;
+
+	tmp = ft_strsplit(s, ' ');
+	if (tmp && ft_strlen_tab(tmp) == 10)
+	{
+		obj.type = T_TRIANGLE;
+		obj.color = read_color(e, tmp[0]);
+		obj.light.r = obj.color.r;
+		obj.light.g = obj.color.g;
+		obj.light.b = obj.color.b;
+		obj.prim.triangle.v1.x = ft_atoi(tmp[1]);
+		obj.prim.triangle.v1.y = ft_atoi(tmp[2]);
+		obj.prim.triangle.v1.z = ft_atoi(tmp[3]);
+		obj.prim.triangle.v2.x = ft_atoi(tmp[4]);
+		obj.prim.triangle.v2.y = ft_atoi(tmp[5]);
+		obj.prim.triangle.v2.z = ft_atoi(tmp[6]);
+		obj.prim.triangle.v3.x = ft_atoi(tmp[7]);
+		obj.prim.triangle.v3.y = ft_atoi(tmp[8]);
+		obj.prim.triangle.v3.z = ft_atoi(tmp[9]);
+		free_split(tmp);
+	}
+	else
+		ft_error(1, e, "Triangle wrong format : ignore triangle.\n");
+	return (obj);
+}

@@ -22,9 +22,9 @@ IDIR =	-I includes/ -I /usr/X11/include/ -I gnl/includes
 SRC =	main.c init.c init_events.c init_image.c events.c key_events.c \
 		init_types.c compute_inter.c draw.c math.c math_vec.c helpers.c \
 		init_scene.c inter_object.c read_color.c read_objects.c \
-		normal_objects.c compute_diffuse.c
+		normal_objects.c compute_diffuse.c init_obj.c read_obj.c ft_atod.c
 OBJ =	$(SRC:.c=.o)
-EXT =	includes/ray_tracer.h includes/objects.h
+EXT =	includes/ray_tracer.h includes/objects.h includes/obj_file.h
 S =		$(addprefix $(SDIR), $(SRC))
 O =		$(addprefix $(ODIR), $(OBJ))
 

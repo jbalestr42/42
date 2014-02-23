@@ -55,7 +55,7 @@ static int		read_objects(t_env *e, int fd)
 	i = -1;
 	line = NULL;
 	if (get_next_line(fd, &line))
-		e->nb_object = ft_atoi(line);
+		e->nb_object = ft_atoi(line) + e->nb_obj;
 	if (!(e->objects = (t_object *)malloc(sizeof(t_object) * e->nb_object)))
 		return (-1);
 	while (++i < e->nb_object && get_next_line(fd, &line))
@@ -68,8 +68,20 @@ static int		read_objects(t_env *e, int fd)
 			e->objects[i] = read_cylinder(e, &line[2]);
 		else if (line[0] == '3')
 			e->objects[i] = read_cone(e, &line[2]);
+		else if (line[0] == '4')
+			e->objects[i] = read_triangle(e, &line[2]);
 		else
 			ft_error(0, e, "Primitive unknow.\n");
+	}
+	while (e->obj)
+	{
+		e->objects[i].type = T_TRIANGLE;
+		e->objects[i].prim.triangle = e->obj->triangle;
+		e->objects[i].color.r = (205 * i) % 255 + 200;
+		e->objects[i].color.g = (205 * i) % 255 + 200;
+		e->objects[i].color.b = (205 * i) % 255 + 200;
+		e->obj = e->obj->next;
+		i++;
 	}
 	return (1);
 }
@@ -85,6 +97,7 @@ static int		read_file(t_env *e, int fd)
 		read_pos_dir(e, &e->cam.ori, line);
 	if (get_next_line(fd, &line))
 		read_pos_dir(e, &e->cam.dir, line);
+	sub_vec(&e->cam.dir, &e->cam.dir, &e->cam.ori);
 	normalize(&e->cam.dir);
 	e->cam.down = init_vec(0, 1, 0);
 	mul_vec(&e->cam.right, &e->cam.down, &e->cam.dir);
@@ -99,10 +112,13 @@ static int		read_file(t_env *e, int fd)
 	return (read_objects(e, fd));
 }
 
+#include <stdio.h>
 int				init_scene(t_env *e, char *path)
 {
 	int			fd;
 
+	open_obj(e, "scenes/sphere.obj");
+	printf("nb triangles : %i\n", e->nb_obj);
 	if ((fd = open(path, O_RDONLY)) == -1)
 		ft_error(1, e, "Can't open file.\n");
 	if (!read_file(e, fd))

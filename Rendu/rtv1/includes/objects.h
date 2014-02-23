@@ -78,9 +78,17 @@ typedef struct		s_plan
 	t_vec			normal;
 }					t_plan;
 
+typedef struct		s_triangle
+{
+	t_vec			v1;
+	t_vec			v2;
+	t_vec			v3;
+	t_vec			normal;
+}					t_triangle;
+
 typedef enum		e_type
 {
-	T_SPHERE, T_PLAN, T_CYLINDER, T_CONE, T_CUBE
+	T_SPHERE, T_PLAN, T_CYLINDER, T_CONE, T_TRIANGLE
 }					t_type;
 
 typedef union		u_prim
@@ -89,6 +97,7 @@ typedef union		u_prim
 	t_plan			plan;
 	t_cylinder		cylinder;
 	t_cone			cone;
+	t_triangle		triangle;
 }					t_prim;
 
 typedef struct		s_object
