@@ -117,7 +117,7 @@ int				init_scene(t_env *e, char *path)
 {
 	int			fd;
 
-	open_obj(e, "scenes/sphere.obj");
+	open_obj(e, "scenes/cub.obj");
 	printf("nb triangles : %i\n", e->nb_obj);
 	if ((fd = open(path, O_RDONLY)) == -1)
 		ft_error(1, e, "Can't open file.\n");
