@@ -59,46 +59,6 @@ static void		put_pixel(t_env *e, int x, int y)
 	}
 }
 
-void			refresh_load(t_env *e, double prog)
-{
-	t_screen	*s;
-	t_img		img;
-	int			x;
-	int			y;
-	double		xx;
-
-	s = &e->screens[LOAD_SCREEN];
-	s->buttons[0].state = HOVER;
-	img = s->background;
-	x = -1;
-	while (++x < s->buttons[0].img.width)
-	{
-		y = -1;
-		xx = x / (double)s->buttons[0].img.width;
-		if (xx > prog)
-			s->buttons[0].state = NONE;
-		while (++y < s->buttons[0].frame_size)
-		{
-			int t = (s->buttons[0].state * s->buttons[0].frame_size + y)
-					* s->buttons[0].img.size_line
-					+ (x * s->buttons[0].img.bpp);
-			if (t > 0 && t < s->buttons[0].img.max_size)
-			{
-				int tt = (s->buttons[0].y_pos + y) * img.size_line
-						+ ((s->buttons[0].x_pos + x) * img.bpp);
-				if (tt > 0 && tt < img.max_size)
-				{
-					img.img[tt] = s->buttons[0].img.img[t];
-					img.img[tt + 1] = s->buttons[0].img.img[t + 1];
-					img.img[tt + 2] = s->buttons[0].img.img[t + 2];
-				}
-			}
-		}
-	}
-	mlx_put_image_to_window(e->mlx, e->win, img.ptr, 0, 0);
-}
-
-#include <stdio.h>
 void			draw_image(t_env *e)
 {
 	t_mesh		*mesh;
@@ -126,8 +86,11 @@ void			draw_image(t_env *e)
 			}
 			put_pixel(e, x, y);
 		}
-		refresh_load(e, x / (double)WIDTH);
-		printf("%f\n", x/ (double)WIDTH);
+		if (e->progressive_load)
+			refresh_load(e, x / (double)WIDTH);
+		ft_putnbr(x / (double)WIDTH * 100);
+		ft_putstr("%\n");
 	}
+	ft_putstr("100%\n");
 	e->cur_screen = RAY_TRACE;
 }

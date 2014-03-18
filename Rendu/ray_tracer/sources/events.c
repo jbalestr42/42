@@ -63,9 +63,11 @@ int				mouse_hook_press(int button, int x, int y, t_env *e)
 	s = &e->screens[e->cur_screen];
 	while (++i < s->nb_button)
 	{
-		if (s->buttons[i].x_pos < x && x <= s->buttons[i].x_pos + s->buttons[i].img.width)
+		if (s->buttons[i].x_pos < x && x <= s->buttons[i].x_pos
+						+ s->buttons[i].img.width)
 		{
-			if (s->buttons[i].y_pos < y && y <= s->buttons[i].y_pos + s->buttons[i].img.height / 2)
+			if (s->buttons[i].y_pos < y && y <= s->buttons[i].y_pos
+							+ s->buttons[i].img.height / 2)
 			{
 				e->cur_button = &s->buttons[i];
 				s->buttons[i].event(e);
@@ -87,9 +89,11 @@ int				mouse_hook_move(int x, int y, t_env *e)
 	{
 		if (!s->buttons[i].check_box)
 		{
-			if (s->buttons[i].x_pos < x && x <= s->buttons[i].x_pos + s->buttons[i].img.width)
+			if (s->buttons[i].x_pos < x && x <= s->buttons[i].x_pos +
+							s->buttons[i].img.width)
 			{
-				if (s->buttons[i].y_pos < y && y <= s->buttons[i].y_pos + s->buttons[i].img.height / 2)
+				if (s->buttons[i].y_pos < y && y <= s->buttons[i].y_pos
+								+ s->buttons[i].img.height / 2)
 					s->buttons[i].state = HOVER;
 				else
 					s->buttons[i].state = NONE;
@@ -107,48 +111,13 @@ int				expose_hook(t_env *e)
 	t_screen	*s;
 	t_img		img;
 	int			k;
-	int			x;
-	int			y;
 
 	k = -1;
 	s = &e->screens[e->cur_screen];
 	img = s->background;
 	while (++k < s->nb_button)
-	{
-		x = -1;
-		while (++x < s->buttons[k].img.width)
-		{
-			y = -1;
-			while (++y < s->buttons[k].frame_size)
-			{
-				int t = (s->buttons[k].state * s->buttons[k].frame_size + y) * s->buttons[k].img.size_line + (x * s->buttons[k].img.bpp);
-				if (t > 0 && t < s->buttons[k].img.max_size)
-				{
-					int tt = (s->buttons[k].y_pos + y) * img.size_line
-							+ ((s->buttons[k].x_pos + x) * img.bpp);
-					
-					if (tt > 0 && tt < img.max_size)
-					{
-						img.img[tt] = s->buttons[k].img.img[t];
-						img.img[tt + 1] = s->buttons[k].img.img[t + 1];
-						img.img[tt + 2] = s->buttons[k].img.img[t + 2];
-					}
-				}
-			}
-		}
-	}
+		display_background(&s->buttons[k], &img);
 	mlx_put_image_to_window(e->mlx, e->win, img.ptr, 0, 0);
-	if (e->cur_screen == CHOOSE)
-	{
-		k = e->screens[CHOOSE].nb_button;
-		while (--k >= 0)
-		{
-			if (e->screens[CHOOSE].buttons[k].name)
-				mlx_string_put(e->mlx, e->win,
-					e->screens[CHOOSE].buttons[k].x_pos + 10,
-					e->screens[CHOOSE].buttons[k].y_pos + 10, 0xffffff,
-					e->screens[CHOOSE].buttons[k].name);
-		}
-	}
+	display_choose(e);
 	return (0);
 }

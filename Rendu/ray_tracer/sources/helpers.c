@@ -52,3 +52,18 @@ char		*ft_strdup(char *s)
 	*s2 = '\0';
 	return (s2 - len);
 }
+
+void		ft_putnbr(int n)
+{
+	char	c;
+
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		n = -n;
+	}
+	if (n / 10 > 0)
+		ft_putnbr(n / 10);
+	c = '0' + n % 10;
+	write(1, &c, 1);
+}

@@ -161,6 +161,9 @@ t_button	init_button(int x, int y, mouse_event *event, t_img img);
 */
 void		draw_image(t_env *e);
 int			save_ppm(t_env *e);
+void		refresh_load(t_env *e, double prog);
+void		display_choose(t_env *e);
+void		display_background(t_button *b, t_img *img);
 
 /*
 ** Helpers
@@ -169,6 +172,7 @@ void		ft_error(int b_exit, t_env *e, char *str);
 int			ft_strlen(char *s);
 void		ft_putstr(char *s);
 char		*ft_strdup(char *s);
+void		ft_putnbr(int n);
 
 /*
 ** Intersections && Normals

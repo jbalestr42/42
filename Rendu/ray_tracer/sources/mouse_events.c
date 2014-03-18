@@ -46,7 +46,10 @@ void			mouse_event_choose_scene(t_env *e)
 	ft_putstr("Reading scene : ");
 	ft_putstr(e->cur_button->name);
 	ft_putstr("\n");
-	e->cur_screen = LOAD_SCREEN;
+	if (e->progressive_load)
+		e->cur_screen = LOAD_SCREEN;
+	else
+		e->cur_screen = RAY_TRACE;
 	// init_scene ici avec en parametre la chaine vers la scene, il faut verifier si le fichier existe toujours, et ajotuer le nom de dossier devant scenes/
 	draw_image(e);
 }

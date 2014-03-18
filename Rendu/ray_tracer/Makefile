@@ -24,7 +24,7 @@ SRC =	main.c init.c events.c key_events.c helpers.c init_keys.c \
 		init_scene.c diffuse.c normal.c specular.c init_screens.c \
 		mouse_events.c reflection.c refraction.c save_ppm.c inv_matrix.c \
 		matrix.c trans_matrix.c perlin_noise.c perlin_tools.c \
-		init_choose_scene.c init_items.c
+		init_choose_scene.c init_items.c refresh_load.c display.c
 OBJ =	$(SRC:.c=.o)
 EXT =	includes/ray_tracer.h includes/objects.h includes/perlin.h
 S =		$(addprefix $(SDIR), $(SRC))
