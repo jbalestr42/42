@@ -28,6 +28,7 @@ void				get_builtins(t_builtin *builtins)
 	builtins[2] = get_builtin("setenv", &parse_setenv);
 	builtins[3] = get_builtin("unsetenv", &parse_unsetenv);
 	builtins[4] = get_builtin("exit", &parse_exit);
+	builtins[5] = get_builtin("echo", &parse_echo);
 }
 
 void				builtin(char **argv, char **envp, t_builtin *builtins)

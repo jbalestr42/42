@@ -15,22 +15,12 @@
 
 int				main(int argc, char **argv, char **envp)
 {
-	t_token		*begin;
-
-	if (argc != 2/*1*/)
+		(void)argv;
+	if (argc != 1)
 		return (error(ARGC, NULL));
 	if (!envp[0])
 		return (error(NOENV, NULL));
 	// Il faudra changer cet fonction et l'ajouter dans le prompt
-	begin = lexer(argv[1]);
-	if (begin)
-		check_rules(begin, envp);
-	while (begin)
-	{
-		ft_putnbr(begin->type);
-		ft_putendl(begin->str);
-		begin = begin->next;
-	}
-	/*prompt(envp);*/
+	prompt(envp);
 	return (0);
 }

@@ -21,9 +21,9 @@
 # include <libft.h>
 # include <stdlib.h>
 
-# define NB_BUILTIN	5
+# define NB_BUILTIN	6
 # define PROMPT		"$> "
-# define BUILTIN	"cd env setenv unsetenv exit"
+# define BUILTIN	"cd env setenv unsetenv exit echo"
 
 /* Error codes */
 # define NB_ERR		8
@@ -62,6 +62,7 @@ void	parse_env(char **argv, char **envp);
 void	parse_setenv(char **argv, char **envp);
 void	parse_unsetenv(char **argv, char **envp);
 void	parse_exit(char **argv, char **envp);
+void	parse_echo(char **argv, char **envp);
 char	*ft_getenv(char **envp, char *key);
 char	**ft_setenv(char **envp, char *key, char *value, int override);
 

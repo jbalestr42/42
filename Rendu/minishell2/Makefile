@@ -19,7 +19,7 @@ ODIR = objects/
 IDIR = -I includes/ -I libft/includes/
 SRC = main.c error.c get_next_line.c prompt.c helpers.c lexer.c list.c cd.c \
 	  env.c getenv.c setenv.c unsetenv.c exit.c builtin.c init_lex.c \
-	  check_rules.c define_type.c
+	  check_rules.c define_type.c echo.c
 OBJ = $(SRC:.c=.o)
 EXT = includes/gnl.h includes/ft_minishell1.h includes/ft_minishell2.h
 S = $(addprefix $(SDIR), $(SRC))
