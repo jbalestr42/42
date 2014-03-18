@@ -228,6 +228,7 @@ t_vector	sub(t_vector u, t_vector v);
 t_vector	prod(t_vector u, t_vector v);
 t_vector	cross(t_vector u, t_vector v);
 t_vector	prod_val(t_vector u, double val);
+double		ft_rand(double x);
 
 /*
 ** Matrix

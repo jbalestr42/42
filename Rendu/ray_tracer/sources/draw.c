@@ -64,6 +64,8 @@ void			draw_image(t_env *e)
 	t_mesh		*mesh;
 	t_vertex	inter;
 	t_ray		ray;
+	t_color		tmp;
+	t_color		col;
 	int			x;
 	int			y;
 
@@ -77,7 +79,38 @@ void			draw_image(t_env *e)
 		{
 			compute_ray(e, &ray, x, y);
 			if (intersect_mesh(e, &ray, &mesh, &inter))
-				e->color = compute_color(e, &ray, mesh, 0, 1.0, &inter);
+			{
+				// anti aliasing
+				if (0)
+				{
+					col.r = 0;
+					col.g = 0;
+					col.b = 0;
+					int		aax = -2;
+					while (aax < 2)
+					{
+						int aay = -2;
+						while (aay < 2)
+						{
+							compute_ray(e, &ray, x - aax, y + aay);
+							if (intersect_mesh(e, &ray, &mesh, &inter))
+							{
+								tmp = compute_color(e, &ray, mesh, 0, 1.0, &inter);
+								col.r += tmp.r;
+								col.g += tmp.g;
+								col.b += tmp.b;
+							}
+							aay++;
+						}
+						aax++;
+					}
+					e->color.r = col.r / 16;
+					e->color.g = col.g / 16;
+					e->color.b = col.b / 16;
+				}
+				else
+					e->color = compute_color(e, &ray, mesh, 0, 1.0, &inter);
+			}
 			else
 			{
 				e->color.r = 0x0;

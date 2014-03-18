@@ -23,7 +23,7 @@ int				compute_shadow(t_env *e, t_ray *ray, t_mesh *mesh)
 	{
 		if (&e->meshes[i] != mesh)
 		{
-			if (e->inter_tab[e->meshes[i].type](&e->meshes[i], ray, &tmp) > 0.0)
+			if (e->inter_tab[e->meshes[i].type](&e->meshes[i], ray, &tmp) > 0.0001)
 				return (1);
 		}
 	}
