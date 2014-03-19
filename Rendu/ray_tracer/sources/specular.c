@@ -23,7 +23,7 @@ t_color			specular(t_env *e, t_light *light, t_mesh *mesh, t_ray *ray, t_ray *ca
 	normal = e->normals[mesh->type](mesh, &ray->pos);
 	r = sub(ray->dir, prod_val(normal, 2.0 * dot(ray->dir, normal)));
 	d = dot(cam_ray->dir, normalize(r));
-	if (d > 0)
+	if (d > 0.0001)
 	{
 		spec = pow(d, 30) * mesh->spec;
 		spec_col(&col, &mesh->color, &light->color, spec);

@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/06 13:57:28 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/13 13:37:38 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/19 17:10:05 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ double			inter_sphere(t_mesh *mesh, t_ray *ray, t_ray *m_ray)
 	abc[1] = 2 * dot(dir, pos);
 	abc[2] = square_length(pos) - pow(sphere->radius, 2);
 	d = determinant(abc[0], abc[1], abc[2]);
-	if (d >= 0)
+	if (d >= 0.0001)
 	{
 		m_ray->pos = pos;
 		m_ray->dir = dir;
@@ -49,7 +49,7 @@ double			inter_plan(t_mesh *mesh, t_ray *ray, t_ray *m_ray)
 	plan = &mesh->prim.plan;
 	d = -(dot(plan->normal, pos))
 		/ dot(plan->normal, dir);
-	if (d >= 0)
+	if (d >= 0.0001)
 	{
 		m_ray->pos = pos;
 		m_ray->dir = dir;
@@ -73,7 +73,7 @@ double			inter_cylinder(t_mesh *mesh, t_ray *ray, t_ray *m_ray)
 	abc[1] = 2 * (dir.x * pos.x + dir.y * pos.y);
 	abc[2] = pow(pos.x, 2) + pow(pos.y, 2) - pow(cyl->radius, 2);
 	d = determinant(abc[0], abc[1], abc[2]);
-	if (d >= 0)
+	if (d >= 0.0001)
 	{
 		m_ray->pos = pos;
 		m_ray->dir = dir;
@@ -100,7 +100,7 @@ double			inter_hyperbole(t_mesh *mesh, t_ray *ray, t_ray *m_ray)
 	abc[2] = pow(pos.x, 2) + pow(pos.y, 2)
 			- (pow(pos.z, 2) * pow(tan(h->coeff), 2)) - h->open;
 	d = determinant(abc[0], abc[1], abc[2]);
-	if (d >= 0)
+	if (d >= 0.0001)
 	{
 		m_ray->pos = pos;
 		m_ray->dir = dir;
@@ -124,7 +124,7 @@ double			inter_parabole(t_mesh *mesh, t_ray *ray, t_ray *m_ray)
 	abc[1] = (2 * (dir.x * pos.x + dir.y * pos.y)) - (dir.z * tan(p->coeff));
 	abc[2] = pow(pos.x, 2) + pow(pos.y, 2) - (pos.z * tan(p->coeff));
 	d = determinant(abc[0], abc[1], abc[2]);
-	if (d >= 0)
+	if (d >= 0.0001)
 	{
 		m_ray->pos = pos;
 		m_ray->dir = dir;
@@ -151,7 +151,7 @@ double			inter_cone(t_mesh *mesh, t_ray *ray, t_ray *m_ray)
 	abc[2] = pow(pos.x, 2) + pow(pos.y, 2)
 				- (pow(pos.z, 2) * pow(tan(con->coeff), 2));
 	d = determinant(abc[0], abc[1], abc[2]);
-	if (d >= 0)
+	if (d >= 0.0001)
 	{
 		m_ray->pos = pos;
 		m_ray->dir = dir;

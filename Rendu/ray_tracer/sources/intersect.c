@@ -6,14 +6,14 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/27 17:40:56 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/13 13:54:23 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/19 17:10:12 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "ray_tracer.h"
 
-int				compute_shadow(t_env *e, t_ray *ray, t_mesh *mesh)
+int				compute_shadow(t_env *e, t_ray *ray, t_ray *oldray, t_mesh *mesh)
 {
 	int			i;
 	t_ray		tmp;
@@ -23,7 +23,9 @@ int				compute_shadow(t_env *e, t_ray *ray, t_mesh *mesh)
 	{
 		if (&e->meshes[i] != mesh)
 		{
-			if (e->inter_tab[e->meshes[i].type](&e->meshes[i], ray, &tmp) > 0.0001)
+			tmp.pos = add(oldray->pos, prod_val(oldray->dir, oldray->dist));
+			tmp.dir = ray->dir;
+			if (e->inter_tab[e->meshes[i].type](&e->meshes[i], &tmp, &tmp) > 0.0001)
 				return (1);
 		}
 	}
@@ -40,7 +42,8 @@ t_color			compute_color(t_env *e, t_ray *ray, t_mesh *mesh, int depth, double re
 	i = -1;
 	//ray_light.pos = transform_normal(mesh->result, inter);
 	(void)inter;// delete
-	ray_light.pos = add(ray->pos, prod_val(ray->dir, ray->dist));
+	//ray_light.pos = add(ray->pos, prod_val(ray->dir, ray->dist));
+	ray_light.pos = *inter;
 	pix.r = mesh->color.r * e->ambient;
 	pix.g = mesh->color.g * e->ambient;
 	pix.b = mesh->color.b * e->ambient;
@@ -52,7 +55,7 @@ t_color			compute_color(t_env *e, t_ray *ray, t_mesh *mesh, int depth, double re
 	while (++i < e->nb_light)
 	{
 		ray_light.dir = sub(e->lights[i].pos, ray_light.pos);
-		if (compute_shadow(e, &ray_light, mesh))
+		if (compute_shadow(e, &ray_light, ray, mesh))
 			continue ;
 		else
 		{

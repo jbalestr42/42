@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/27 16:18:35 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/12 17:52:47 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/19 17:21:32 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ void			draw_image(t_env *e)
 					col.r = 0;
 					col.g = 0;
 					col.b = 0;
-					int		aax = -2;
-					while (aax < 2)
+					int		aax = -1;
+					while (aax < 1)
 					{
-						int aay = -2;
-						while (aay < 2)
+						int aay = -1;
+						while (aay < 1)
 						{
 							compute_ray(e, &ray, x - aax, y + aay);
 							if (intersect_mesh(e, &ray, &mesh, &inter))
@@ -104,9 +104,9 @@ void			draw_image(t_env *e)
 						}
 						aax++;
 					}
-					e->color.r = col.r / 16;
-					e->color.g = col.g / 16;
-					e->color.b = col.b / 16;
+					e->color.r = col.r / 4;
+					e->color.g = col.g / 4;
+					e->color.b = col.b / 4;
 				}
 				else
 					e->color = compute_color(e, &ray, mesh, 0, 1.0, &inter);

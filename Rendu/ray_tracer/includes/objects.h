@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/13 13:49:36 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/13 13:37:38 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/19 16:37:15 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,19 @@ typedef enum		e_type
 	T_SPHERE, T_PLAN, T_CYLINDER, T_CONE, T_PARABOLE, T_HYPERBOLE, T_TORE
 }					t_type;
 
+typedef enum		e_mat_type
+{
+	WOOD, MARBLE, ZEBRA
+}					t_mat_type;
+
+typedef struct		s_mat
+{
+	t_color			col1;
+	t_color			col2;
+	t_color			col3;
+	t_mat_type		type;
+}					t_mat;
+
 /*
 ** Primitives
 */
@@ -130,12 +143,19 @@ typedef struct		s_mesh
 	double			**rot_x;
 	double			**rot_y;
 	double			**rot_z;
+	double			**inv_trans;
+	double			**inv_scale;
+	double			**inv_rot_x;
+	double			**inv_rot_y;
+	double			**inv_rot_z;
 	double			**result;
+	double			**inv_result;
 	double			diff;
 	double			spec;
 	double			refl;
 	double			refr;
-	int				type;
+	t_type			type;
+	t_mat			mat;
 }					t_mesh;
 
 #endif /* !OBJECTS_H */

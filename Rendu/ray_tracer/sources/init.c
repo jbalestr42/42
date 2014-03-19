@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/22 16:39:46 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/13 11:47:48 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/19 15:29:01 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_env			*init_env(char *path)
 	if (!(e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, NAME)))
 		ft_error(1, e, E_WIN);
 	e->progressive_load = 0;
-	e->progress = 0.0;
 	init_scene(e, path);
 	init_events(e);
 	init_tab(e);

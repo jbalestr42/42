@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/27 17:51:57 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/13 13:28:01 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/19 17:14:24 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void		init_normals(t_env *e)
 	e->normals[T_PLAN] = normal_plan;
 	e->normals[T_CYLINDER] = normal_cylinder;
 	e->normals[T_CONE] = normal_cone;
-	e->normals[T_PARABOLE] = normal_cone;
+	e->normals[T_PARABOLE] = normal_parabole;
 	e->normals[T_HYPERBOLE] = normal_cone;
 }
 

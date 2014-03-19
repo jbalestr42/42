@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/22 16:23:00 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/13 13:08:17 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/19 17:38:16 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ struct				s_env
 	void			*win;
 	double			ambient;
 	int				cur_screen;
-	double			progress;
 	t_button		*cur_button;
 	t_screen		*screens;
 	t_color			color;
@@ -132,8 +131,10 @@ struct				s_env
 	t_vertex		up_left;
 	t_cam			cam;
 	int				nb_mesh;
+	int				nb_mesh_malloc;
 	t_mesh			*meshes;
 	int				nb_light;
+	int				nb_light_malloc;
 	t_light			*lights;
 	int				progressive_load;
 	t_key			key_events[NB_KEY_EVENT];
@@ -188,6 +189,7 @@ t_vector	normal_cone(t_mesh *mesh, t_vertex *v);
 t_vector	normal_cylinder(t_mesh *mesh, t_vertex *v);
 t_vector	normal_plan(t_mesh *mesh, t_vertex *v);
 t_vector	normal_sphere(t_mesh *mesh, t_vertex *v);
+t_vertex	normal_parabole(t_mesh *mesh, t_vertex *v);
 
 /*
 ** Light
