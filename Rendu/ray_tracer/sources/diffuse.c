@@ -31,8 +31,12 @@ t_color			diffuse(t_env *e, t_light *light, t_mesh *mesh, t_ray *ray)
 	d = dot(normalize(ray->dir), e->normals[mesh->type](mesh, &ray->pos));
 	if (d > 0.0001)
 	{
+		if (mesh->type == T_SPHERE)
+			col = perlin_marble(ray->pos.x, ray->pos.y, ray->pos.z);
+		else
+			col = mesh->color;
 		diff = d * mesh->diff;
-		diff_col(&col, &mesh->color, &light->color, diff);
+		diff_col(&col, &col, &light->color, diff);
 	}
 	return (col);
 }

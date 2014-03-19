@@ -35,7 +35,7 @@
 ** Keys
 */
 # define ESC			65307
-# define KEY_S			65507
+# define KEY_S			115
 
 typedef struct s_env	t_env;
 typedef void			(key_event)(t_env *e);
@@ -112,6 +112,20 @@ typedef struct		s_key
 }					t_key;
 
 /*
+** anti aliasing struct x16
+*/
+typedef struct		s_aa
+{
+	int				x;
+	int				y;
+	double			dx;
+	double			dy;
+	t_ray			*ray;
+	t_mesh			**mesh;
+	t_vertex		*inter;
+}					t_aa;
+
+/*
 ** mlx : pointer to mlx
 ** win : pointer to win
 ** image : image to display on screen
@@ -124,6 +138,8 @@ struct				s_env
 	void			*win;
 	double			ambient;
 	int				cur_screen;
+	t_aa			aa;
+	int				aa_active; // add checkbox antialiasing
 	t_button		*cur_button;
 	t_screen		*screens;
 	t_color			color;
@@ -165,6 +181,7 @@ int			save_ppm(t_env *e);
 void		refresh_load(t_env *e, double prog);
 void		display_choose(t_env *e);
 void		display_background(t_button *b, t_img *img);
+t_color		compute_aa(t_env *e, t_ray *ray, t_mesh **mesh, t_vertex *inter);
 
 /*
 ** Helpers
@@ -230,7 +247,7 @@ t_vector	sub(t_vector u, t_vector v);
 t_vector	prod(t_vector u, t_vector v);
 t_vector	cross(t_vector u, t_vector v);
 t_vector	prod_val(t_vector u, double val);
-double		ft_rand(double x);
+void		compute_ray(t_env *e, t_ray *r, int x, int y);
 
 /*
 ** Matrix

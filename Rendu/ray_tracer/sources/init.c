@@ -64,6 +64,10 @@ t_env			*init_env(char *path)
 	if (!(e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, NAME)))
 		ft_error(1, e, E_WIN);
 	e->progressive_load = 0;
+	// add aa
+	e->aa_active = 0;
+	e->aa.dx = (double)X_INDENT / 5;
+	e->aa.dy = (double)Y_INDENT / 5;
 	init_scene(e, path);
 	init_events(e);
 	init_tab(e);

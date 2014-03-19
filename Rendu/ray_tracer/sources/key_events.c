@@ -15,9 +15,10 @@
 
 void	key_event_save(t_env *e)
 {
-	//finir de save ppm
+	ft_putstr("Saving image to save.ppm ...\n");
 	if (e->cur_screen == RAY_TRACE)
 		save_ppm(e);
+	ft_putstr("Done !\n");
 }
 
 void	key_event_esc(t_env *e)

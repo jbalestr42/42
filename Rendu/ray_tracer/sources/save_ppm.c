@@ -42,6 +42,28 @@ char			*ft_itoa(int n)
 	return (r);
 }
 
+static void		print_header(int fd)
+{
+	write(fd, "P6\n", 3);
+	write(fd, ft_itoa(WIDTH), ft_strlen(ft_itoa(WIDTH)));
+	write(fd, " ", 1);
+	write(fd, ft_itoa(HEIGHT), ft_strlen(ft_itoa(HEIGHT)));
+	write(fd, "\n255\n", 5);
+}
+
+/*
+** img->endian = 0 -> Ubuntu
+*/
+static void		put_pixel(int fd, t_img *img, int k)
+{
+	if (!img->endian)
+	{
+		write(fd, &img->img[k + 2], 1);
+		write(fd, &img->img[k + 1], 1);
+		write(fd, &img->img[k + 0], 1);
+	}
+}
+
 int				save_ppm(t_env *e)
 {
 	t_img		*img;
@@ -53,11 +75,7 @@ int				save_ppm(t_env *e)
 	img = &e->screens[RAY_TRACE].background;
 	if ((fd = open("save.ppm", O_CREAT | O_TRUNC | O_WRONLY, 0755)) < 2)
 		return (0);
-	write(fd, "P6\n", 3);
-	write(fd, ft_itoa(WIDTH), ft_strlen(ft_itoa(WIDTH)));
-	write(fd, " ", 1);
-	write(fd, ft_itoa(HEIGHT), ft_strlen(ft_itoa(HEIGHT)));
-	write(fd, "\n255\n", 5);
+	print_header(fd);
 	j = -1;
 	while (++j < HEIGHT)
 	{
@@ -66,12 +84,7 @@ int				save_ppm(t_env *e)
 		{
 			k = j * img->size_line + (i * img->bpp);
 			if (k > 0 && k < img->max_size)
-			{
-				write(fd, &img->img[k], 1);
-				write(fd, &img->img[k + 1], 1);
-				write(fd, &img->img[k + 2], 1);
-				write(fd, " ", 1);
-			}
+				put_pixel(fd, img, k);
 		}
 	}
 	close(fd);

@@ -28,17 +28,6 @@ static void		compute_up_left(t_env *e)
 	e->up_left = tmp;
 }
 
-static void		compute_ray(t_env *e, t_ray *r, int x, int y)
-{
-	t_vector	v;
-
-	r->pos = e->cam.pos;
-	v = prod_val(e->cam.right, (double)X_INDENT * x);
-	v = sub(v, prod_val(e->cam.up, (double)Y_INDENT * y));
-	v = add(sub(e->up_left, r->pos), v);
-	r->dir = normalize(v);
-}
-
 static void		put_pixel(t_env *e, int x, int y)
 {
 	int			k;
@@ -59,13 +48,22 @@ static void		put_pixel(t_env *e, int x, int y)
 	}
 }
 
+void		compute_ray(t_env *e, t_ray *r, int x, int y)
+{
+	t_vector	v;
+
+	r->pos = e->cam.pos;
+	v = prod_val(e->cam.right, (double)X_INDENT * x);
+	v = sub(v, prod_val(e->cam.up, (double)Y_INDENT * y));
+	v = add(sub(e->up_left, r->pos), v);
+	r->dir = normalize(v);
+}
+
 void			draw_image(t_env *e)
 {
 	t_mesh		*mesh;
 	t_vertex	inter;
 	t_ray		ray;
-	t_color		tmp;
-	t_color		col;
 	int			x;
 	int			y;
 
@@ -80,42 +78,20 @@ void			draw_image(t_env *e)
 			compute_ray(e, &ray, x, y);
 			if (intersect_mesh(e, &ray, &mesh, &inter))
 			{
-				// anti aliasing
-				if (0)
+				if (e->aa_active)
 				{
-					col.r = 0;
-					col.g = 0;
-					col.b = 0;
-					int		aax = -1;
-					while (aax < 1)
-					{
-						int aay = -1;
-						while (aay < 1)
-						{
-							compute_ray(e, &ray, x - aax, y + aay);
-							if (intersect_mesh(e, &ray, &mesh, &inter))
-							{
-								tmp = compute_color(e, &ray, mesh, 0, 1.0, &inter);
-								col.r += tmp.r;
-								col.g += tmp.g;
-								col.b += tmp.b;
-							}
-							aay++;
-						}
-						aax++;
-					}
-					e->color.r = col.r / 4;
-					e->color.g = col.g / 4;
-					e->color.b = col.b / 4;
+					e->aa.x = x;
+					e->aa.y = y;
+					e->color = compute_aa(e, &ray, &mesh, &inter);
 				}
 				else
 					e->color = compute_color(e, &ray, mesh, 0, 1.0, &inter);
 			}
 			else
 			{
-				e->color.r = 0x0;
-				e->color.g = 0x0;
-				e->color.b = 0x0;
+				e->color.r = 0.0;
+				e->color.g = 0.0;
+				e->color.b = 0.0;
 			}
 			put_pixel(e, x, y);
 		}

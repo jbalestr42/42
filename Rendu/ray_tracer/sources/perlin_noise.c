@@ -6,22 +6,20 @@
 /*   By: fcorbel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/14 13:17:59 by fcorbel           #+#    #+#             */
-/*   Updated: 2014/03/14 17:27:33 by fcorbel          ###   ########.fr       */
+/*   Updated: 2014/03/19 18:02:23 by fcorbel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
 #include "perlin.h"
-
-#include <stdio.h>
 
 double			smooth_noise(double x, double y, double z)
 {
 	t_perlin	p;
 
 	s_n_integer(&p, x, y, z);
-	p.doubler.x = x - p.integer.x;
-	p.doubler.y = y - p.integer.y;
-	p.doubler.z = z - p.integer.z;
+	p.fract.x = x - p.integer.x;
+	p.fract.y = y - p.integer.y;
+	p.fract.z = z - p.integer.z;
 	p.a.y = noise_3d(p.integer.x, p.integer.y, p.integer.z);
 	p.a.z = noise_3d(p.integer.x + 1, p.integer.y, p.integer.z);
 	p.b.y = noise_3d(p.integer.x, p.integer.y + 1, p.integer.z);
@@ -30,16 +28,16 @@ double			smooth_noise(double x, double y, double z)
 	p.c.z = noise_3d(p.integer.x + 1, p.integer.y, p.integer.z + 1);
 	p.d.y = noise_3d(p.integer.x, p.integer.y + 1, p.integer.z + 1);
 	p.d.z = noise_3d(p.integer.x + 1, p.integer.y + 1, p.integer.z + 1);
-	p.a.x = cos_interpolate(p.a.y, p.a.z, p.doubler.x);
-	p.b.x = cos_interpolate(p.b.y, p.b.z, p.doubler.x);
-	p.c.x = cos_interpolate(p.c.y, p.c.z, p.doubler.x);
-	p.d.x = cos_interpolate(p.d.y, p.d.z, p.doubler.x);
-	p.v = cos_interpolate(p.a.x, p.b.x, p.doubler.y);
-	p.w = cos_interpolate(p.b.x, p.c.x, p.doubler.y);
-	return (cos_interpolate(p.v, p.w, p.doubler.z));
+	p.a.x = cos_interpolate(p.a.y, p.a.z, p.fract.x);
+	p.b.x = cos_interpolate(p.b.y, p.b.z, p.fract.x);
+	p.c.x = cos_interpolate(p.c.y, p.c.z, p.fract.x);
+	p.d.x = cos_interpolate(p.d.y, p.d.z, p.fract.x);
+	p.v = cos_interpolate(p.a.x, p.b.x, p.fract.y);
+	p.w = cos_interpolate(p.c.x, p.d.x, p.fract.y);
+	return (cos_interpolate(p.v, p.w, p.fract.z));
 }
 
-double			ft_perlin(t_env *e, double x, double y, double z)
+double			ft_perlin(double x, double y, double z)
 {
 	double		result;
 	double		f;
@@ -47,7 +45,6 @@ double			ft_perlin(t_env *e, double x, double y, double z)
 	int			i;
 	int			t;
 
-	(void)e;
 	result = 0;
 	f = FREQUENCY;
 	amplitude = 1;
@@ -60,117 +57,52 @@ double			ft_perlin(t_env *e, double x, double y, double z)
 		f *= 2;
 	}
 	result *= (1 - PERSISTANCE) / (1 - amplitude);
-//	printf("%f\n", result);
 	return (result);
 }
 
-t_color			ft_more_effect(t_env *e, double x, double y, double z)
+t_color			perlin_zebra(double x, double y, double z, t_color pix)
 {
 	double		result;
 	t_color		col;
-	int			i;
 
-	i = 0;
-	result = 0;
-	while (++i < 15)
-	{
-			result += (1 / i) * ft_perlin(e, i * x, i * y, i * z);
-	}
-	result = cos(((x * y * z) / (x)) + result);
-	//		e->color.x *= 1 - result;
-	//		e->color.y *= result;
-	//		e->color.z *= 1 - result;
-	//	esult *= ft_perlin(e, x, y, z);
-	col.r = result;
-	col.g = result;
-	col.b = result;
+	result = ft_perlin(x, y, z);
+	result = cos(((x * y * z) / (x / 3)) + result);
+	col.r = pix.r * result;
+	col.g = pix.g * result;
+	col.b = pix.b * result;
 	return (col);
 }
 
-t_color			marble(t_env *e, double x, double y, double z)
+t_color			perlin_marble(double x, double y, double z)
 {
-	t_color		col;
-	double		value;
-	t_vertex		c1;
-	t_vertex		c2;
-	double		result;
-	int			i;
+	t_effect	e;
 
-	i = 0;
-	result = 0;
-	while (++i < 10)
-	{
-		result += (1 / i) * ft_perlin(e, i * x, i * y, i * z);
-	}
-	value = sqrt(fabs(sin(2 * 3.141592 * result)));
-	c1 = init_vec(0.5, 0.5, 0.5);
-	c2 = init_vec(0.9, 0.9, 0.9);
-	col.r = c1.x * (1 - value) + c2.x * value;
-	col.g = c1.y * (1 - value) + c2.y * value;
-	col.b = c1.z * (1 - value) + c2.z * value;
-	return (col);
+	e.result = ft_perlin(x, y, z);
+	e.value = sqrt(fabs(sin(2 * 3.141592 * e.result)));
+	e.c1 = init_vec(0.5, 0.5, 0.5);
+	e.c2 = init_vec(0.9, 0.9, 0.9);
+	e.color.r = e.c1.x * (1 - e.value) + e.c2.x * e.value;
+	e.color.g = e.c1.y * (1 - e.value) + e.c2.y * e.value;
+	e.color.b = e.c1.z * (1 - e.value) + e.c2.z * e.value;
+	return (e.color);
 }
 
-t_color			wood(t_env *e, double x, double y, double z)
+t_color			perlin_wood(double x, double y, double z)
 {
-	t_color		col;
+	t_effect	e;
 	double		step;
-	t_vertex	c1;
-	t_vertex	c2;
-	double		value;
 	double		f;
 
-//	double		result;
-//	int			i;
-
-
-//		i = 0;
-//		result = 0;
-//		while (++i < 10)
-//		{
-//			result += (1 / i) * ft_perlin(e, i * x, i * y, i * z);
-//		}
-
+	e.result = ft_perlin(x, y, z);
 	step = 0.2;
-	c1 = init_vec(0.05, 0.05, 0.05);
-	c2 = init_vec(0.05, 0.1, 0.1);
-	value = fmod(ft_perlin(e, x, y, z), step);
-	if (value > step / 2)
-			value = step - value;
-	f = (1 - cos(M_PI * value / (step / 2))) / 2;
-	col.r = c1.x * (1 - f) + c2.x * f;
-	col.g = c1.y * (1 - f) + c2.y * f;
-	col.b = c1.z * (1 - f) + c2.z * f;
-	return (col);
+	e.c1 = init_vec(0.0, 0.2, 0.4);
+	e.c2 = init_vec(0.0, 0.0, 0.2);
+	e.value = fmod(ft_perlin(x, y, z), step);
+	if (e.value > step / 2)
+			e.value = step - e.value;
+	f = (1 - cos(M_PI * e.value / (step / 2))) / 2;
+	e.color.r = e.c1.x * (1 - f) + e.c2.x * f;
+	e.color.g = e.c1.y * (1 - f) + e.c2.y * f;
+	e.color.b = e.c1.z * (1 - f) + e.c2.z * f;
+	return (e.color);
 }
-/*
-void obtenirPixel(t_env *e, double x, double y, double z) {
-
-	(void)y;
-	(void)z;
-    double value = sqrt(fabs(sin(2 * 3.141592 * x)));
-//	double value = x;
-
-//    t_vertex resultat;
-//    if(value > s1 / 2)
-//        value = s1 - value;
-	else if(value < s2) {
-	      double f = (value - s1) / (s2 - s1);
-        resultat.x = c1.x * (1 - f) + c2.x * f;
-        resultat.y = c1.y * (1 - f) + c2.y * f;
-	       resultat.z = c1.z * (1 - f) + c2.z * f;
-    } else if(value < s3) {
-        double f = (value - s2) / (s3 - s2);
-        resultat.x = c2.x * (1 - f) + c3.x * f;
-        resultat.y = c2.y * (1 - f) + c3.y * f;
-        resultat.z = c2.z * (1 - f) + c3.z * f;
-    } else resultat = c3;
-
-	e->color.x = resultat.x;
-	e->color.y = resultat.y;
-	e->color.z = resultat.z;
-	double f = (1 - cos(M_PI * value / (s1 / 2))) / 2;
-	e->color.x = c1.x * (1 - value) + c2.x * value;
-	e->color.y = c1.y * (1 - value) + c2.y * value;
-	e->color.z = c1.z * (1 - value) + c2.z * value;
-}*/

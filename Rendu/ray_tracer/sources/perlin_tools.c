@@ -6,20 +6,20 @@
 /*   By: fcorbel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/14 13:17:48 by fcorbel           #+#    #+#             */
-/*   Updated: 2014/03/14 15:30:56 by fcorbel          ###   ########.fr       */
+/*   Updated: 2014/03/19 14:13:48 by fcorbel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
 #include <stdlib.h>
 #include "ray_tracer.h"
 
-double			ft_rand(double x)
+double			ft_rand(int x)
 {
 	double		tmp;
 
-	x = ((int)x<<13) ^ (int)x;
+	x = (x<<13) ^ x;
 	x = (x * (x * x * 15731 + 789221) + 1376312589);
-	tmp = 1.0 - ((int)x & 0x7fffffff) / 1073741824.0;
+	tmp = 1.0 - (x & 0x7fffffff) / 1073741824.0;
 //	tmp = (tmp + 1) / 2; //Rand 0-1
 	return (tmp);
 }

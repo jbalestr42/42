@@ -40,18 +40,20 @@ t_color			compute_color(t_env *e, t_ray *ray, t_mesh *mesh, int depth, double re
 	int			i;
 
 	i = -1;
-	//ray_light.pos = transform_normal(mesh->result, inter);
-	(void)inter;// delete
-	//ray_light.pos = add(ray->pos, prod_val(ray->dir, ray->dist));
 	ray_light.pos = *inter;
-	pix.r = mesh->color.r * e->ambient;
-	pix.g = mesh->color.g * e->ambient;
-	pix.b = mesh->color.b * e->ambient;
-	// if perlinpinpin
-	//tmp = ft_more_effect(e, ray_light.pos.x, ray_light.pos.y, ray_light.pos.z);
-	//pix.r = tmp.r;
-	//pix.g = tmp.g;
-	//pix.b = tmp.b;
+	if (mesh->type == T_SPHERE)
+	{
+		pix = perlin_marble(ray_light.pos.x, ray_light.pos.y, ray_light.pos.z);
+		pix.r *= e->ambient;
+		pix.g *= e->ambient;
+		pix.b *= e->ambient;
+	}
+	else
+	{
+		pix.r = mesh->color.r * e->ambient;
+		pix.g = mesh->color.g * e->ambient;
+		pix.b = mesh->color.b * e->ambient;
+	}
 	while (++i < e->nb_light)
 	{
 		ray_light.dir = sub(e->lights[i].pos, ray_light.pos);
