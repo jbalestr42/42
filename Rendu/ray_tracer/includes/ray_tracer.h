@@ -14,6 +14,7 @@
 # define RAY_TRACER_H
 
 # include "objects.h"
+# include "obj_file.h"
 
 # define WIDTH			1080 //1440
 # define HEIGHT			720 //1080
@@ -140,6 +141,8 @@ struct				s_env
 	int				cur_screen;
 	t_aa			aa;
 	int				aa_active; // add checkbox antialiasing
+	t_obj			*obj;
+	int				nb_obj;
 	t_button		*cur_button;
 	t_screen		*screens;
 	t_color			color;
@@ -161,7 +164,7 @@ struct				s_env
 /*
 ** Inits
 */
-t_env		*init_env(char *path);
+t_env		*init_env(void);
 void		init_events(t_env *e);
 void		init_tab(t_env *e);
 int			init_screens(t_env *e);
@@ -172,6 +175,7 @@ t_vector	init_vec(double x, double y, double z);
 void		init_img(void *mlx, t_img *i, int width, int height);
 t_img		init_img_xpm(void *mlx, char *path, int width, int height);
 t_button	init_button(int x, int y, mouse_event *event, t_img img);
+int			open_obj(t_env *e, char *path);
 
 /*
 ** Display

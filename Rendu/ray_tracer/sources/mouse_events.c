@@ -51,7 +51,11 @@ void			mouse_event_choose_scene(t_env *e)
 	else
 		e->cur_screen = RAY_TRACE;
 	// init_scene ici avec en parametre la chaine vers la scene, il faut verifier si le fichier existe toujours, et ajotuer le nom de dossier devant scenes/
-	draw_image(e);
+	if (e->cur_button)
+	{
+		init_scene(e, e->cur_button->name);
+		draw_image(e);
+	}
 }
 
 void			mouse_event_void(t_env *e)

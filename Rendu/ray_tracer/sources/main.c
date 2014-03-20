@@ -14,15 +14,12 @@
 #include <stdlib.h>
 #include "ray_tracer.h"
 
-int			main(int argc, char **argv)
+int			main(void)
 {
-	(void)argc;(void)argv;
 	t_env	*e;
 
 	e = NULL;
-	if (argc != 2)
-		ft_error(1, e, "You need only one argument.");
-	if (!(e = init_env(argv[1])))
+	if (!(e = init_env()))
 		return (1);
 	mlx_hook(e->win, 2, (1L << 0), key_hook_press, e);
 	mlx_hook(e->win, 3, (1L << 1), key_hook_release, e);

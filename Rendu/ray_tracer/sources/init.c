@@ -53,7 +53,7 @@ void			ft_error(int b_exit, t_env *e, char *str)
 }
 
 // if error pour les inits
-t_env			*init_env(char *path)
+t_env			*init_env(void)
 {
 	t_env		*e;
 
@@ -64,11 +64,9 @@ t_env			*init_env(char *path)
 	if (!(e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, NAME)))
 		ft_error(1, e, E_WIN);
 	e->progressive_load = 0;
-	// add aa
 	e->aa_active = 0;
 	e->aa.dx = (double)X_INDENT / 5;
 	e->aa.dy = (double)Y_INDENT / 5;
-	init_scene(e, path);
 	init_events(e);
 	init_tab(e);
 	init_screens(e);

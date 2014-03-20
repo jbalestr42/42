@@ -32,6 +32,7 @@ int				compute_shadow(t_env *e, t_ray *ray, t_ray *oldray, t_mesh *mesh)
 	return (0);
 }
 
+// creer des fonction pour additioner et multiplier des couleurs
 t_color			compute_color(t_env *e, t_ray *ray, t_mesh *mesh, int depth, double refr, t_vertex *inter)
 {
 	t_ray		ray_light;
@@ -41,7 +42,7 @@ t_color			compute_color(t_env *e, t_ray *ray, t_mesh *mesh, int depth, double re
 
 	i = -1;
 	ray_light.pos = *inter;
-	if (mesh->type == T_SPHERE)
+	if (mesh->type == T_SPHERE) // if perlin
 	{
 		pix = perlin_marble(ray_light.pos.x, ray_light.pos.y, ray_light.pos.z);
 		pix.r *= e->ambient;
@@ -74,18 +75,21 @@ t_color			compute_color(t_env *e, t_ray *ray, t_mesh *mesh, int depth, double re
 			pix.b += tmp.b;
 		}
 	}
-	(void)depth;(void)refr;
-	/*
-	if (mesh->refl > 0.0)
+	if (mesh->refl > 0.0001)
+	{
 		tmp = reflection(e, mesh, &ray_light, ray, depth, refr);
-	pix.r += tmp.r;
-	pix.g += tmp.g;
-	pix.b += tmp.b;
-	if (mesh->refr > 0.0)
+		pix.r += tmp.r;
+		pix.g += tmp.g;
+		pix.b += tmp.b;
+	}
+	if (mesh->refr > 0.0001)
+	{
 		tmp = refraction(e, mesh, &ray_light, ray, depth, refr);
-	pix.r += tmp.r;
-	pix.g += tmp.g;
-	pix.b += tmp.b;
+		pix.r += tmp.r;
+		pix.g += tmp.g;
+		pix.b += tmp.b;
+	}
+	/*
 	pix.r *= (1 / (0.9 + 0.9 / ray_light.dist + 0.9 / (ray_light.dist * ray_light.dist)));
 	pix.g *= (1 / (0.9 + 0.9 / ray_light.dist + 0.9 / (ray_light.dist * ray_light.dist)));
 	pix.b *= (1 / (0.9 + 0.9 / ray_light.dist + 0.9 / (ray_light.dist * ray_light.dist)));

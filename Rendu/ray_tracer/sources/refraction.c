@@ -20,10 +20,12 @@ t_color				refraction(t_env *e, t_mesh *mesh, t_ray *ray_light, t_ray *ray, int 
 	t_color			tmp;
 	t_vector		n;
 	t_vector		t;
+	t_vertex		inter;
+	t_color			col;
 	double			r;
 	double			cos_i;
 	double			cos_t2;
-	t_ray			r_ray;
+	t_ray			new_r;
 
 	tmp.r = 0;
 	tmp.g = 0;
@@ -39,14 +41,18 @@ t_color				refraction(t_env *e, t_mesh *mesh, t_ray *ray_light, t_ray *ray, int 
 			if (cos_t2 > 0.0)
 			{
 				t = add(prod_val(ray->dir, r), prod_val(n, r * cos_i - sqrt(cos_t2)));
-				r_ray.pos = add(ray_light->pos, prod_val(t, 0.0001));
-				r_ray.dir = t;
-				if (intersect_mesh(e, &r_ray, &mesh_tmp, NULL))
+				new_r.pos = add(ray->pos, prod_val(ray->dir, ray->dist));
+				new_r.dir = t;
+				if (intersect_mesh(e, &new_r, &mesh_tmp, &inter))
 				{
-					tmp = compute_color(e, &r_ray, mesh_tmp, depth + 1, r, NULL);
-					tmp.r = tmp.r * exp(mesh->color.r * 0.15 * -r_ray.dist);
-					tmp.g = tmp.g * exp(mesh->color.r * 0.15 * -r_ray.dist);
-					tmp.b = tmp.b * exp(mesh->color.r * 0.15 * -r_ray.dist);
+					tmp = compute_color(e, &new_r, mesh_tmp, depth + 1, r, &inter);
+					if (mesh_tmp->type == T_SPHERE) // if perlin
+						col = perlin_marble(inter.x, inter.y, inter.z);
+					else
+						col = mesh_tmp->color;
+					tmp.r = tmp.r * exp(col.r * 0.15 * -new_r.dist);
+					tmp.g = tmp.g * exp(col.g * 0.15 * -new_r.dist);
+					tmp.b = tmp.b * exp(col.b * 0.15 * -new_r.dist);
 				}
 			}
 		}

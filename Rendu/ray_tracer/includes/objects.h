@@ -95,14 +95,25 @@ typedef struct		s_plan
 	t_vector		normal;
 }					t_plan;
 
+typedef struct		s_triangle
+{
+	t_vertex		v1;
+	t_vertex		v2;
+	t_vertex		v3;
+	t_vector		normal;
+}					t_triangle;
+
 typedef enum		e_type
 {
-	T_SPHERE, T_PLAN, T_CYLINDER, T_CONE, T_PARABOLE, T_HYPERBOLE, T_TORE
+	T_SPHERE, T_PLAN, T_CYLINDER, T_CONE, T_PARABOLE, T_HYPERBOLE, T_TRIANGLE
 }					t_type;
 
+/*
+** CHECKER 123 : only for plan
+*/
 typedef enum		e_mat_type
 {
-	WOOD, MARBLE, ZEBRA
+	WOOD, MARBLE, ZEBRA, CHECKER1, CHECKER2, CHECKER3, NO_MAT
 }					t_mat_type;
 
 typedef struct		s_mat
@@ -124,6 +135,7 @@ typedef union		u_prim
 	t_cone			cone;
 	t_parabole		parabole;
 	t_hyperbole		hyperbole;
+	t_triangle		triangle;
 }					t_prim;
 
 /*

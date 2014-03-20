@@ -159,31 +159,34 @@ double			inter_cone(t_mesh *mesh, t_ray *ray, t_ray *m_ray)
 	}
 	return (-1);
 }
-/*
+
 double			inter_triangle(t_mesh *mesh, t_ray *ray)
 {
 	t_triangle	*tri;
 	t_vector	w;
 	t_vector	tmp;
+	t_vector	dir;
+	t_vertex	pos;
 	double		d;
 	double		a;
 	double		b;
 	double		t;
 
+	pos = transform_pos(mesh->result, &ray->pos);
+	dir = transform_dir(mesh->result, &ray->dir);
 	tri = &mesh->prim.triangle;
-	normalize(&ray->dir);
-	if (!(d = -dot(&ray->dir, &tri->normal))) // si le triangle est parallele au rayon, on return 0
+	if (!(d = -dot(dir, tri->normal)))
 		return (0);
-	w.x = ray->pos.x - tri->v1.x;
-	w.y = ray->pos.y - tri->v1.y;
-	w.z = ray->pos.z - tri->v1.z;
-	mul_vec(&tmp, &w, &tri->v3);
-	a = -dot(&tmp, &ray->dir) / d;
-	mul_vec(&tmp, &tri->v2, &w);
-	b = -dot(&tmp, &ray->dir) / d;
-	mul_vec(&tmp, &tri->v2, &tri->v3);
-	t = dot(&tmp, &w) / d;
+	w.x = pos.x - tri->v1.x;
+	w.y = pos.y - tri->v1.y;
+	w.z = pos.z - tri->v1.z;
+	tmp = cross(w, tri->v3);
+	a = -dot(tmp, dir) / d;
+	tmp = cross(tri->v2, w);
+	b = -dot(tmp, dir) / d;
+	tmp = cross(tri->v2, tri->v3);
+	t = dot(tmp, w) / d;
 	if (a > 0 && b > 0 && a + b <= 1)
 		return (t);
 	return (0);
-}*/
+}

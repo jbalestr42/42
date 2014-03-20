@@ -10,8 +10,8 @@ objets :
 //utiliser les translations et rotations
 //lumiere diffuse
 //lumiere speculaire (brillance)
-reflexion
-refraction
+//reflexion
+refraction -> probleme avec la lumiere speculaire -> trop de lumiere
 textures
 transparence
 
@@ -27,5 +27,7 @@ idees :
 	ajouter des infos si on appuie sur une touche ? temps d'exec, nb objets, ....
 
 changer les droits de tous les fichiers !
+rajouter les header dans tous les fichier
+check en masse de la norme
 
 NE PAS OUBLIER D'ENLEVER LE FICHIER TODO
