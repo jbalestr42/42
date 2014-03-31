@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/13 13:49:36 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/19 16:37:15 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 15:35:49 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,13 +155,7 @@ typedef struct		s_mesh
 	double			**rot_x;
 	double			**rot_y;
 	double			**rot_z;
-	double			**inv_trans;
-	double			**inv_scale;
-	double			**inv_rot_x;
-	double			**inv_rot_y;
-	double			**inv_rot_z;
 	double			**result;
-	double			**inv_result;
 	double			diff;
 	double			spec;
 	double			refl;
@@ -170,4 +164,4 @@ typedef struct		s_mesh
 	t_mat			mat;
 }					t_mesh;
 
-#endif /* !OBJECTS_H */
+#endif

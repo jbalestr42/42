@@ -6,43 +6,39 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 13:17:13 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/13 13:52:01 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 20:01:26 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ray_tracer.h"
+#include "perlin.h"
 
-t_color			reflection(t_env *e, t_mesh *mesh, t_ray *ray_light, t_ray *ray, int depth, double refr)
+t_color			reflection(t_env *e, t_compute c, int depth, double refr)
 {
 	t_vector	n;
 	t_vector	r;
-	t_ray		new_r;
-	t_mesh		*mesh_tmp;
 	t_color		tmp;
-	t_vertex	inter;
 	t_color		col;
+	double		refl;
 
-	tmp.r = 0.0;
-	tmp.g = 0.0;
-	tmp.b = 0.0;
-	n = e->normals[mesh->type](mesh, &ray_light->pos);
-	r = sub(ray->dir, prod_val(n, 2.0 * dot(ray->dir, n)));
-	if (depth < 2)
+	tmp = init_color(0.0, 0.0, 0.0);
+	if (c.mesh->refl < 0.0001 || depth >= 2)
+		return (tmp);
+	n = e->normals[c.mesh->type](c.mesh, &c.ray_light.pos);
+	r = sub(c.ray.dir, prod_val(n, 2.0 * dot(c.ray.dir, n)));
+	c.ray.pos = add(c.ray.pos, prod_val(c.ray.dir, c.ray.dist));
+	c.ray.pos.x += perlin_ocean(e, c.ray.pos, c.mesh->type, INTER);
+	c.ray.dir = r;
+	if (intersect_mesh(e, &c.ray, &c.mesh, &c.inter))
 	{
-		new_r.pos = add(ray->pos, prod_val(ray->dir, ray->dist));
-		new_r.dir = r;
-		if (intersect_mesh(e, &new_r, &mesh_tmp, &inter))
-		{
-			tmp = compute_color(e, &new_r, mesh_tmp, depth + 1, refr, &inter);
-			if (mesh_tmp->type == T_SPHERE) // if perlin
-				col = perlin_marble(inter.x, inter.y, inter.z);
-			else
-				col = mesh_tmp->color;
-			tmp.r = tmp.r * mesh->refl * col.r;
-			tmp.g = tmp.g * mesh->refl * col.g;
-			tmp.b = tmp.b * mesh->refl * col.b;
-		}
+		refl = c.mesh->refl;
+		tmp = compute_color(e, c, depth + 1, refr);
+		col = e->effects[c.mesh->mat.type](c.inter, c.mesh->color,
+											c.mesh->mat.col1, 2);
+		tmp.r = tmp.r * refl * col.r;
+		tmp.g = tmp.g * refl * col.g;
+		tmp.b = tmp.b * refl * col.b;
 	}
 	return (tmp);
 }

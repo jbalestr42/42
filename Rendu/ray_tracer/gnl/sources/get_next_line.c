@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 16:02:08 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/02/13 13:41:53 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 13:27:06 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static t_read		*ft_newread(int fd)
 	return (red);
 }
 
-static int			ft_print(int n, t_read **tab, t_read **s, char** l)
+static int			ft_print(int n, t_read **tab, t_read **s, char **l)
 {
 	char			*tmpstr;
 	int				index;
@@ -121,7 +121,8 @@ int					get_next_line(int fd, char **line)
 	prevtmp = NULL;
 	if (!start)
 		start = ft_newread(fd);
-	red = start;
+	if (!(red = start))
+		return (-1);
 	while (red->fd != fd)
 	{
 		if (!(red->next))

@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/27 16:39:15 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/02/27 17:37:40 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 13:13:26 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ t_vector		prod(t_vector u, t_vector v)
 	return (new);
 }
 
-/*
-** Vectorial product : u^v
-*/
 t_vector		cross(t_vector u, t_vector v)
 {
 	t_vector	new;

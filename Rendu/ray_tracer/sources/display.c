@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdebelle <mdebelle@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/03/27 05:10:03 by mdebelle          #+#    #+#             */
+/*   Updated: 2014/03/27 05:10:04 by mdebelle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <mlx.h>
 #include "ray_tracer.h"
+#include "menu.h"
 
 void			display_background(t_button *b, t_img *i)
 {
@@ -34,16 +47,16 @@ void			display_choose(t_env *e)
 {
 	int			k;
 
-	if (e->cur_screen == CHOOSE)
+	if (e->cur_screen >= MENU && e->cur_screen < MENU + e->nb_panel)
 	{
-		k = e->screens[CHOOSE].nb_button;
+		k = e->screens[e->cur_screen].nb_button;
 		while (--k >= 0)
 		{
-			if (e->screens[CHOOSE].buttons[k].name)
+			if (e->screens[e->cur_screen].buttons[k].name)
 				mlx_string_put(e->mlx, e->win,
-					e->screens[CHOOSE].buttons[k].x_pos + 10,
-					e->screens[CHOOSE].buttons[k].y_pos + 10, 0xffffff,
-					e->screens[CHOOSE].buttons[k].name);
+					e->screens[e->cur_screen].buttons[k].x_pos + 10,
+					e->screens[e->cur_screen].buttons[k].y_pos + 10, 0xffffff,
+					e->screens[e->cur_screen].buttons[k].name);
 		}
 	}
 }

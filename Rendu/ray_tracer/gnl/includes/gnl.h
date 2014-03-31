@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 16:02:26 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/01/15 16:03:25 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 13:27:29 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ typedef struct		s_read
 	struct s_read	*next;
 }					t_read;
 
-int		get_next_line(int const fd, char **line);
+int					get_next_line(int const fd, char **line);
 
-#endif /* !GNL_H */
+#endif

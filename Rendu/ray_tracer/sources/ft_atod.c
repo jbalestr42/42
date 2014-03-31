@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atod.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: glasset <glasset@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/03/25 14:24:34 by glasset           #+#    #+#             */
+/*   Updated: 2014/03/27 15:57:17 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ray_tracer.h"
 #include "parser.h"
 
-static int	ft_isdigit(char c)
+static int		ft_isdigit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
 }
 
-double		ft_atod(char *str)
+double			ft_atod(char *str)
 {
 	double		total;
 	double		total_d;
@@ -17,6 +29,7 @@ double		ft_atod(char *str)
 
 	total = 0;
 	total_d = 0;
+	size = 1;
 	while ((*str >= '\t' && *str <= '\r') || *str == ' ')
 		str++;
 	if ((is_neg = *str == '-' ? -1 : 1) == -1 || *str == '+')
@@ -26,7 +39,6 @@ double		ft_atod(char *str)
 	if (*str && *str == '.')
 	{
 		str++;
-		size = 1;
 		while (*str && ft_isdigit(*str))
 		{
 			total_d = (total_d * 10) + (*str++ - '0');

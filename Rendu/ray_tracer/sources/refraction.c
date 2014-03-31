@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 13:18:37 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/13 13:54:25 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 05:17:40 by mdebelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,38 @@
 #include <stdlib.h>
 #include "ray_tracer.h"
 
-t_color				refraction(t_env *e, t_mesh *mesh, t_ray *ray_light, t_ray *ray, int depth, double refr)
+static t_color		final_color(t_refr v, double dist)
 {
-	t_mesh			*mesh_tmp;
-	t_color			tmp;
-	t_vector		n;
-	t_vector		t;
-	t_vertex		inter;
-	t_color			col;
-	double			r;
-	double			cos_i;
-	double			cos_t2;
-	t_ray			new_r;
+	v.tmp.r = v.tmp.r * exp(v.col.r * 0.15 * -dist);
+	v.tmp.g = v.tmp.g * exp(v.col.g * 0.15 * -dist);
+	v.tmp.b = v.tmp.b * exp(v.col.b * 0.15 * -dist);
+	return (v.tmp);
+}
 
-	tmp.r = 0;
-	tmp.g = 0;
-	tmp.b = 0;
-	if (mesh->type == T_SPHERE)
-	{
-		if (depth < 1)
-		{
-			r = refr / mesh->refr;
-			n = prod_val(e->normals[mesh->type](mesh, &ray_light->pos), ray->dist);
-			cos_i = -dot(n, ray->dir);
-			cos_t2 = 1.0f - (r * r * (1.0f - (cos_i * cos_i)));
-			if (cos_t2 > 0.0)
-			{
-				t = add(prod_val(ray->dir, r), prod_val(n, r * cos_i - sqrt(cos_t2)));
-				new_r.pos = add(ray->pos, prod_val(ray->dir, ray->dist));
-				new_r.dir = t;
-				if (intersect_mesh(e, &new_r, &mesh_tmp, &inter))
-				{
-					tmp = compute_color(e, &new_r, mesh_tmp, depth + 1, r, &inter);
-					if (mesh_tmp->type == T_SPHERE) // if perlin
-						col = perlin_marble(inter.x, inter.y, inter.z);
-					else
-						col = mesh_tmp->color;
-					tmp.r = tmp.r * exp(col.r * 0.15 * -new_r.dist);
-					tmp.g = tmp.g * exp(col.g * 0.15 * -new_r.dist);
-					tmp.b = tmp.b * exp(col.b * 0.15 * -new_r.dist);
-				}
-			}
-		}
-	}
-	return (tmp);
+t_color				refraction(t_env *e, t_compute c, int depth, double refr)
+{
+	t_refr			v;
+
+	v.tmp = init_color(0.0, 0.0, 0.0);
+	if (c.mesh->type == T_PLAN || c.mesh->type == T_TRIANGLE
+		|| c.mesh->refr < 0.0001 || depth >= 1)
+		return (v.tmp);
+	v.r = refr / c.mesh->refr;
+	v.n = prod_val(e->normals[c.mesh->type](c.mesh, &c.ray_light.pos),
+				c.ray.dist);
+	v.cos_i = -dot(v.n, c.ray.dir);
+	v.cos_t2 = 1.0f - (v.r * v.r * (1.0f - (v.cos_i * v.cos_i)));
+	if (v.cos_t2 <= 0.0)
+		return (v.tmp);
+	v.t = add(prod_val(c.ray.dir, v.r),
+				prod_val(v.n, v.r * v.cos_i - sqrt(v.cos_t2)));
+	c.ray.pos = add(c.ray.pos, prod_val(c.ray.dir, c.ray.dist));
+	c.ray.dir = v.t;
+	if (!(intersect_mesh(e, &c.ray, &c.mesh, &c.inter)))
+		return (v.tmp);
+	v.tmp = compute_color(e, c, depth + 1, v.r);
+	v.col = e->effects[c.mesh->mat.type](c.ray.pos,
+										c.mesh->color, c.mesh->mat.col1, 2);
+	v.tmp = final_color(v, c.ray.dist);
+	return (v.tmp);
 }

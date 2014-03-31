@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/22 16:48:16 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/02/22 16:49:59 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 05:12:04 by mdebelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void		ft_putstr(char *s)
 	int		i;
 
 	i = 0;
+	if (!s)
+		return ;
 	while (s[i])
 		write(1, &s[i++], 1);
 }

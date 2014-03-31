@@ -6,12 +6,11 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/12 15:42:52 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/19 18:01:06 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:01:54 by glasset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "ray_tracer.h"
 #include "parser.h"
 
 static char		*ft_strjoin(char *s1, char *s2)
@@ -33,10 +32,23 @@ static char		*ft_strjoin(char *s1, char *s2)
 	return (r);
 }
 
-void			init_scene(t_env *e, char *path)
+int				init_scene(t_env *e, char *path)
 {
 	char		*name;
 
+	if (e->check_parse == 1)
+	{
+		del_parse(e);
+		e->check_parse = 0;
+	}
+	e->nb_mesh = 0;
+	e->nb_light = 0;
+	e->nb_mesh_malloc = -1;
+	e->nb_light_malloc = -1;
 	name = ft_strjoin("./scenes/", path);
-	parse(e, name);
+	if (parse(e, name) == -1)
+		return (-1);
+	e->check_parse = 1;
+	free(name);
+	return (0);
 }

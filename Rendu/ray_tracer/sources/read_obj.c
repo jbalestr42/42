@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_obj.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdebelle <mdebelle@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/03/27 05:17:20 by mdebelle          #+#    #+#             */
+/*   Updated: 2014/03/27 17:14:47 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -6,9 +18,9 @@
 #include "obj_file.h"
 #include "parser.h"
 
-void			read_vertex(t_vertices **begin, char *s)
+static void		read_vertex(t_vertices **begin, char *s)
 {
-	t_vertex		vec;
+	t_vertex	vec;
 	char		**tmp;
 
 	tmp = ft_strsplit(s, ' ');
@@ -20,9 +32,11 @@ void			read_vertex(t_vertices **begin, char *s)
 		push_vertex(begin, new_vertex(vec));
 		free_split(tmp);
 	}
+	else if (tmp)
+		free_split(tmp);
 }
 
-void			find_vec(t_vertices *vertices, int index, t_vertex *vec)
+static void		find_vec(t_vertices *vertices, int index, t_vertex *vec)
 {
 	t_vertices	*tmp;
 	int			i;
@@ -43,7 +57,7 @@ void			find_vec(t_vertices *vertices, int index, t_vertex *vec)
 	}
 }
 
-void			read_face(t_obj **begin, t_vertices *vertices, char *s)
+static int		read_face(t_obj **begin, t_vertices *vertices, char *s)
 {
 	t_triangle	tri;
 	char		**tmp;
@@ -60,20 +74,22 @@ void			read_face(t_obj **begin, t_vertices *vertices, char *s)
 		find_vec(vertices, i[2], &tri.v3);
 		tri.v2 = sub(tri.v2, tri.v1);
 		tri.v3 = sub(tri.v3, tri.v1);
-		tri.normal = cross(tri.v2, tri.v3);
+		tri.normal = normalize(cross(tri.v2, tri.v3));
 		push_triangle(begin, new_triangle(tri));
 		free_split(tmp);
 	}
+	else if (tmp)
+		free_split(tmp);
+	return (1);
 }
 
-int				read_obj(t_env *e, int fd)
+static int		read_obj(t_env *e, int fd)
 {
 	char		*line;
 	t_vertices	*vertices;
 	t_obj		*triangles;
 	int			nb_face;
 
-	(void)e;
 	nb_face = 0;
 	line = NULL;
 	vertices = NULL;
@@ -82,18 +98,10 @@ int				read_obj(t_env *e, int fd)
 	{
 		if (line)
 		{
-			if (line[0] == 'v')
-			{
-				if (line[1] == 'n') // to delete
-					read_vertex(&vertices, &line[2]);
-				else if (line[1] == ' ' || line[1] == '\t')
-					read_vertex(&vertices, &line[1]);
-			}
+			if (line[0] == 'v' && (line[1] == ' ' || line[1] == '\t'))
+				read_vertex(&vertices, &line[1]);
 			else if (line[0] == 'f')
-			{
-				nb_face++;
-				read_face(&triangles, vertices, &line[1]);
-			}
+				nb_face += read_face(&triangles, vertices, &line[1]);
 			free(line);
 		}
 	}
@@ -102,15 +110,17 @@ int				read_obj(t_env *e, int fd)
 	return (1);
 }
 
-int			open_obj(t_env *e, char *path)
+int				open_obj(t_env *e, char *path)
 {
-	int		fd;
+	int			fd;
 
 	if ((fd = open(path, O_RDONLY)) == -1)
 		return (0);
 	if (!read_obj(e, fd))
 	{
+		close(fd);
 		return (0);
 	}
+	close(fd);
 	return (1);
 }

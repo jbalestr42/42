@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_items.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdebelle <mdebelle@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/03/27 05:12:32 by mdebelle          #+#    #+#             */
+/*   Updated: 2014/03/27 20:12:33 by fcorbel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <mlx.h>
 #include <stdlib.h>
 #include "ray_tracer.h"
@@ -25,7 +37,7 @@ t_img				init_img_xpm(void *mlx, char *path, int width, int height)
 	return (img);
 }
 
-t_button			init_button(int x, int y, mouse_event *event, t_img img)
+t_button			init_button(int x, int y, t_mouse_event *event, t_img img)
 {
 	t_button		button;
 

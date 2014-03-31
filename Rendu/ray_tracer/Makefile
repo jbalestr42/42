@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/02/22 15:58:47 by jbalestr          #+#    #+#              #
-#    Updated: 2014/03/19 17:37:11 by jbalestr         ###   ########.fr        #
+#    Updated: 2014/03/27 12:08:47 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,22 +20,30 @@ SDIR =	sources/
 ODIR =	objects/
 IDIR =	-I includes/ -I /usr/X11/include/ -I gnl/includes
 SRC =	main.c init.c events.c key_events.c helpers.c init_keys.c \
-		vector_op.c vector_fun.c draw.c init_tab.c intersect.c inter_mesh.c \
+		vector_op.c vector_fun.c draw.c init_tab.c intersect.c \
+		inter_mesh.c inter_mesh_2.c \
 		init_scene.c diffuse.c normal.c specular.c init_screens.c \
-		mouse_events.c reflection.c refraction.c save_ppm.c inv_matrix.c \
+		mouse_events1.c mouse_events2.c \
+		reflection.c refraction.c save_ppm.c inv_matrix.c \
 		matrix.c trans_matrix.c perlin_noise.c perlin_tools.c \
-		init_choose_scene.c init_items.c refresh_load.c display.c \
-		ft_atod.c ft_imc.c ft_strsplit.c init_info.c init_mesh.c parser.c \
-		tools.c ft_atoi.c ft_strcmp.c ft_strsub.c anti_aliasing.c \
-		init_obj.c read_obj.c obj_file_helper.c
+		init_items.c refresh_load.c display.c \
+		anti_aliasing.c init_obj.c read_obj.c obj_file_helper.c \
+		cell_shading.c perlin_effect.c checkerboard.c \
+		color_op.c video.c menu.c check_events.c \
+		ft_atod.c ft_atoi.c ft_info_1.c ft_info_2.c ft_light_1.c \
+		ft_meshe_1.c ft_meshe_2.c ft_meshe_3.c ft_meshe_4.c ft_strsplit.c \
+		init_info.c init_light.c init_mesh_2.c init_mesh.c parser.c tools_2.c \
+		tools.c normal_2.c draw_images_and_loader.c key_events_2.c \
+		post_process.c pixelise.c lst.c delete.c
 OBJ =	$(SRC:.c=.o)
-EXT =	includes/ray_tracer.h includes/objects.h includes/perlin.h
+EXT =	includes/ray_tracer.h includes/objects.h includes/perlin.h \
+		includes/parser.h includes/light.h includes/video.h
 S =		$(addprefix $(SDIR), $(SRC))
 O =		$(addprefix $(ODIR), $(OBJ))
 
 all: lib $(NAME)
 
-$(NAME): $(O) $(EXT)
+$(NAME): $(O)
 	@echo "-> Creating $(NAME)..."
 	@$(CC) $(FLAGS) -o $@ $^ $(IDIR) $(LIB)
 	@echo "-> Done !"

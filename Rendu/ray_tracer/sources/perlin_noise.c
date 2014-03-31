@@ -6,13 +6,30 @@
 /*   By: fcorbel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/14 13:17:59 by fcorbel           #+#    #+#             */
-/*   Updated: 2014/03/19 18:02:23 by fcorbel          ###   ########.fr       */
+/*   Updated: 2014/03/27 05:17:01 by mdebelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include <math.h>
 #include "perlin.h"
 
-double			smooth_noise(double x, double y, double z)
+static void		s_n_integer(t_perlin *p, double x, double y, double z)
+{
+	if (x >= 0)
+		p->integer.x = (int)x;
+	else
+		p->integer.x = (int)x - 1;
+	if (y >= 0)
+		p->integer.y = (int)y;
+	else
+		p->integer.y = (int)y - 1;
+	if (z >= 0)
+		p->integer.z = (int)z;
+	else
+		p->integer.z = (int)z - 1;
+}
+
+static double	smooth_noise(double x, double y, double z)
 {
 	t_perlin	p;
 
@@ -58,51 +75,4 @@ double			ft_perlin(double x, double y, double z)
 	}
 	result *= (1 - PERSISTANCE) / (1 - amplitude);
 	return (result);
-}
-
-t_color			perlin_zebra(double x, double y, double z, t_color pix)
-{
-	double		result;
-	t_color		col;
-
-	result = ft_perlin(x, y, z);
-	result = cos(((x * y * z) / (x / 3)) + result);
-	col.r = pix.r * result;
-	col.g = pix.g * result;
-	col.b = pix.b * result;
-	return (col);
-}
-
-t_color			perlin_marble(double x, double y, double z)
-{
-	t_effect	e;
-
-	e.result = ft_perlin(x, y, z);
-	e.value = sqrt(fabs(sin(2 * 3.141592 * e.result)));
-	e.c1 = init_vec(0.5, 0.5, 0.5);
-	e.c2 = init_vec(0.9, 0.9, 0.9);
-	e.color.r = e.c1.x * (1 - e.value) + e.c2.x * e.value;
-	e.color.g = e.c1.y * (1 - e.value) + e.c2.y * e.value;
-	e.color.b = e.c1.z * (1 - e.value) + e.c2.z * e.value;
-	return (e.color);
-}
-
-t_color			perlin_wood(double x, double y, double z)
-{
-	t_effect	e;
-	double		step;
-	double		f;
-
-	e.result = ft_perlin(x, y, z);
-	step = 0.2;
-	e.c1 = init_vec(0.0, 0.2, 0.4);
-	e.c2 = init_vec(0.0, 0.0, 0.2);
-	e.value = fmod(ft_perlin(x, y, z), step);
-	if (e.value > step / 2)
-			e.value = step - e.value;
-	f = (1 - cos(M_PI * e.value / (step / 2))) / 2;
-	e.color.r = e.c1.x * (1 - f) + e.c2.x * f;
-	e.color.g = e.c1.y * (1 - f) + e.c2.y * f;
-	e.color.b = e.c1.z * (1 - f) + e.c2.z * f;
-	return (e.color);
 }

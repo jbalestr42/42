@@ -6,15 +6,14 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/27 16:18:35 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/03/19 17:21:32 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/03/27 11:09:15 by fcorbel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h> // delete si on deplace la fonction de refresh
 #include <stdlib.h>
 #include "ray_tracer.h"
 
-static void		compute_up_left(t_env *e)
+void			compute_up_left(t_env *e)
 {
 	t_vector	tmp;
 
@@ -28,27 +27,7 @@ static void		compute_up_left(t_env *e)
 	e->up_left = tmp;
 }
 
-static void		put_pixel(t_env *e, int x, int y)
-{
-	int			k;
-
-	k = y * e->screens[RAY_TRACE].background.size_line
-		+ (x * e->screens[RAY_TRACE].background.bpp);
-	if (k >= 0 && k < e->screens[RAY_TRACE].background.max_size)
-	{
-		e->color.r = e->color.r > 1 ? 1 : e->color.r;
-		e->color.g = e->color.g > 1 ? 1 : e->color.g;
-		e->color.b = e->color.b > 1 ? 1 : e->color.b;
-		e->color.r = e->color.r < 0 ? 0 : e->color.r;
-		e->color.g = e->color.g < 0 ? 0 : e->color.g;
-		e->color.b = e->color.b < 0 ? 0 : e->color.b;
-		e->screens[RAY_TRACE].background.img[k] = (int)(e->color.r * 255);
-		e->screens[RAY_TRACE].background.img[k + 1] = (int)(e->color.g * 255);
-		e->screens[RAY_TRACE].background.img[k + 2] = (int)(e->color.b * 255);
-	}
-}
-
-void		compute_ray(t_env *e, t_ray *r, int x, int y)
+void			compute_ray(t_env *e, t_ray *r, int x, int y)
 {
 	t_vector	v;
 
@@ -59,47 +38,29 @@ void		compute_ray(t_env *e, t_ray *r, int x, int y)
 	r->dir = normalize(v);
 }
 
-void			draw_image(t_env *e)
+void			launch_ray(t_env *e, int x, int y)
 {
 	t_mesh		*mesh;
 	t_vertex	inter;
 	t_ray		ray;
-	int			x;
-	int			y;
+	t_compute	c;
 
-	x = -1;
 	mesh = NULL;
-	compute_up_left(e);
-	while (++x < WIDTH)
+	compute_ray(e, &ray, x, y);
+	if (intersect_mesh(e, &ray, &mesh, &inter))
 	{
-		y = -1;
-		while (++y < HEIGHT)
+		if (e->aa_active)
 		{
-			compute_ray(e, &ray, x, y);
-			if (intersect_mesh(e, &ray, &mesh, &inter))
-			{
-				if (e->aa_active)
-				{
-					e->aa.x = x;
-					e->aa.y = y;
-					e->color = compute_aa(e, &ray, &mesh, &inter);
-				}
-				else
-					e->color = compute_color(e, &ray, mesh, 0, 1.0, &inter);
-			}
-			else
-			{
-				e->color.r = 0.0;
-				e->color.g = 0.0;
-				e->color.b = 0.0;
-			}
-			put_pixel(e, x, y);
+			e->aa.x = x;
+			e->aa.y = y;
+			e->color = compute_aa(e, &ray, &mesh, &inter);
 		}
-		if (e->progressive_load)
-			refresh_load(e, x / (double)WIDTH);
-		ft_putnbr(x / (double)WIDTH * 100);
-		ft_putstr("%\n");
+		else
+		{
+			c = init_compute(ray, mesh, inter, ray);
+			e->color = compute_color(e, c, 0, 1.0);
+		}
 	}
-	ft_putstr("100%\n");
-	e->cur_screen = RAY_TRACE;
+	else
+		e->color = init_color(0.0, 0.0, 0.0);
 }
