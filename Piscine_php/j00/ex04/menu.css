@@ -1,0 +1,49 @@
+#menu
+{
+	margin-left: 150px;
+	margin-top: 150px;
+	font-size: 18px;
+}
+
+ul
+{
+	list-style: none;
+}
+
+li:hover
+{
+	background: #2ee;
+	-webkit-transition-property: background-color, padding-left;
+	-webkit-transition-duration: .5s, .3s;
+	-webkit-transition-timing-function: linear, ease-out;
+	-moz-transition-property: background-color, padding-left;
+	-moz-transition-duration: .5s, .3s;
+	-moz-transition-timing-function: linear, ease-out;
+	transition-property: background-color, padding-left;
+	transition-duration: .5s, .3s;
+	transition-timing-function: linear, ease-out;
+}
+
+li
+{
+	float: left;
+	clear: left;
+	background: #333;
+	-webkit-transition-property: background-color, padding-left;
+	-webkit-transition-duration: .5s, .3s;
+	-webkit-transition-timing-function: linear, ease-out;
+	-moz-transition-property: background-color, padding-left;
+	-moz-transition-duration: .5s, .3s;
+	-moz-transition-timing-function: linear, ease-out;
+	transition-property: background-color, padding-left;
+	transition-duration: .5s, .3s;
+	transition-timing-function: linear, ease-out;
+}
+
+#menu a
+{
+	display: block;
+	padding: 3px 8px;
+	color: #fff;
+	text-decoration: none;
+}

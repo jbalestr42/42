@@ -1,0 +1,207 @@
+body
+{
+	background-color: #505050;
+}
+
+#header
+{
+	width: 1800px;
+	margin-left: 200px;
+	background-color: #909090;
+	border-radius: 10px;
+	box-shadow: 13px 13px 12px #000;
+}
+
+.left_head
+{
+	float: left;
+	margin-left: 15px;
+	margin-top: 20px;
+	width: 500px;
+}
+
+.right_head
+{
+	float: right;
+	margin: 15px 15px 0 0;
+	width: 1.5%;
+}
+
+.right_bot_head
+{
+	float: right;
+	margin: 130px -25px 0 0;
+	width: 1.5%;
+}
+
+.loupe
+{
+	margin-left: 850px;
+	margin-bottom: -30px;
+	width: 350px;
+}
+
+#left
+{
+	text-align: center;
+	width: 200px;
+	height: 525px;
+	margin-left: 230px;
+	margin-top: 20px;
+	background-color: #909090;
+	border-radius: 10px;
+	box-shadow: 13px 13px 12px #000;
+}
+
+.avancer
+{
+	margin-top: 20px;
+	margin-bottom: 10px;
+	width: 80px;
+}
+
+.prendre
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 80px;
+}
+
+.regarder
+{
+	border: solid red 7px;
+	border-radius: 7px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 80px;
+}
+
+.utiliser
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 80px;
+}
+
+.parler
+{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	width: 80px;
+}
+
+#center
+{
+	z-index: 0;
+	width: 1220px;
+	height: 700px;
+	margin-left: 470px;
+	margin-top: -525px;
+	background-color: #909090;
+	border-radius: 10px;
+	box-shadow: 13px 13px 12px #000;
+}
+
+.cluster
+{
+	z-index: 1;
+	margin-left: 15px;
+	margin-top: 15px;
+	width: 1190px;
+}
+
+#right
+{
+	text-align:center;
+	width: 200px;
+	height: 525px;
+	margin-left: 1730px;
+	margin-top: -700px;
+	background-color: #909090;
+	border-radius: 10px;
+	box-shadow: 13px 13px 12px #000;
+}
+
+.book
+{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	width: 100px;
+}
+
+.towel
+{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	width: 100px;
+}
+
+.brick
+{
+	margin-left: 15px;
+	width: 170px;
+	height: 100px;
+	background-image: url("resources/brick.jpg");
+}
+
+#chat
+{
+	z-index: 10;
+	position: absolute;
+	margin-left: 170px;
+	margin-top: 100px;
+	width: 670px;
+	height: 200px;
+	background-color: #8cfd8e;
+	border-radius: 10px;
+	box-shadow: 13px 13px 12px #000;
+}
+
+.para1
+{
+	margin-left: 15px;
+	margin-top: 15px;
+	font-size: 21px;
+	letter-spacing: 2px;
+	font-family: Arial, serif;
+}
+
+.para2
+{
+	margin-left: 15px;
+	font-size: 21px;
+	letter-spacing: 1px;
+	font-family: Arial, serif;
+	font-style: italic;
+}
+
+.entrez
+{
+	font-size: 35px;
+}
+
+.ordinateur
+{
+	text-shadow: 8px 8px 6px #d00;
+}
+
+.form1
+{
+	margin-left: 15px;
+}
+
+.text_box
+{
+	border: 3px inset;
+	width: 480px;
+	height: 25px;
+}
+
+.button1
+{
+	margin-left: 5px;
+	width: 100px;
+	height: 25px;
+	font-size: 15px;
+	letter-spacing: 1px;
+}

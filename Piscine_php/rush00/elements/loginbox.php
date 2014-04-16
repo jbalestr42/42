@@ -1,0 +1,6 @@
+<input type="text">
+<?php
+
+
+
+?>

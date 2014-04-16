@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<style>
+			#ballon
+			{
+				width: 200px;
+				height: 200px;
+				background: red;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+			<script language="javascript">
+				var count = 0;
+				function changeSize (){
+					var div = document.getElementById("ballon");
+					var width = div.offsetWidth;
+					var height = div.offsetHeight;
+					width += 10;
+					height += 10;
+					div.style.width = width + 'px';
+					div.style.height = height + 'px';
+					if (div.offsetWidth > 420)
+					{
+						div.style.width = '200px';
+						div.style.height = '200px';
+					}
+					count++;
+					if (count > 2)
+						count = 0;
+					if (count == 0)
+						div.style.backgroundColor = "red";
+					else if (count == 1)
+						div.style.backgroundColor = "green";
+					else if (count == 2)
+						div.style.backgroundColor = "blue";
+				}
+				function mouseOut(){
+					var div = document.getElementById("ballon");
+					var width = div.offsetWidth;
+					var height = div.offsetHeight;
+					width -= 5;
+					height -= 5;
+					div.style.width = width + 'px';
+					div.style.height = height + 'px';
+					if (div.offsetWidth < 200)
+					{
+						div.style.width = '200px';
+						div.style.height = '200px';
+					}
+					count--;
+					if (count < 0)
+						count = 2;
+					if (count == 0)
+						div.style.backgroundColor = "red";
+					else if (count == 1)
+						div.style.backgroundColor = "green";
+					else if (count == 2)
+						div.style.backgroundColor = "blue";
+				}
+			</script>
+		<div id="ballon" onMouseOut="mouseOut()" onClick="changeSize()"><div>
+	</body>
+</html>

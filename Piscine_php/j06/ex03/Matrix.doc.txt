@@ -1,0 +1,15 @@
+Matrix ----------------------------------------------------------------------
+An instance can be constructed from the followin const and preset values:
+Matrix::IDENTITY -> no preset
+Matrix::RX -> angle
+Matrix::RY -> angle
+Matrix::RZ -> angle
+Matrix::SCALE -> scale
+Matrix::PROJECTION -> far ratio near fov
+Matrix::TRANSLATION -> vtc(Vertex)
+
+The Matrix class provides function the following methods:
+Matrix mult(Matrix);
+Vertex transformVertex(Vertex);
+
+---------------------------------------------------------------------- Matrix ->
