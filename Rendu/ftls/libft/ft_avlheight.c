@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/08 17:30:56 by jbalestr          #+#    #+#             */
-/*   Updated: 2013/12/08 17:33:58 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/04/16 17:54:37 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,3 @@ int		ft_avlheight(t_avl *node)
 	}
 	return (height);
 }
-

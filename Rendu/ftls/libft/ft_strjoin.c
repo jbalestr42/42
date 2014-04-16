@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/26 06:14:01 by jbalestr          #+#    #+#             */
-/*   Updated: 2013/11/26 06:28:07 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/04/16 17:55:48 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	r = malloc(sizeof (char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	r = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!r)
 		return (NULL);
 	i = 0;

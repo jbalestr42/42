@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/15 15:45:37 by jbalestr          #+#    #+#             */
-/*   Updated: 2013/12/15 15:45:43 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/04/16 17:49:46 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,4 @@
 void	ft_error(int num_error, int type_error, char *param, t_bool b_exit);
 void	ft_error_illegal_option(char *param);
 
-#endif /* FT_ERROR_H */
+#endif

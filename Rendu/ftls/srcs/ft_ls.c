@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/15 15:44:12 by jbalestr          #+#    #+#             */
-/*   Updated: 2013/12/15 15:44:38 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/04/16 17:44:55 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_add_file(t_data *data, char *path, char *name, t_avl **file)
 	if ((ft_strchr(data->opts, OPT_A) && *name == '.') || *name != '.')
 	{
 		tmp = ft_avlnew(ft_param_new(data, path, name), sizeof(t_param));
-		if (ft_strchr(data->opts, OPT_T) > 0)
+		if (ft_strchr(data->opts, OPT_T) != NULL)
 			*file = ft_avladd(*file, tmp, &ft_cmp_date);
 		else
 			*file = ft_avladd(*file, tmp, &ft_cmp_name);
@@ -49,7 +49,7 @@ void	ft_add_dir(t_data *data, char *path, char *name, t_avl **dir)
 	{
 		if (ft_dir_isvalid(tmp, name))
 		{
-			if (ft_strchr(data->opts, OPT_T) > 0)
+			if (ft_strchr(data->opts, OPT_T) != NULL)
 				*dir = ft_avladd(*dir, tmp, &ft_cmp_date);
 			else
 				*dir = ft_avladd(*dir, tmp, &ft_cmp_name);

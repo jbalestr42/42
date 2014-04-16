@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/15 15:43:44 by jbalestr          #+#    #+#             */
-/*   Updated: 2013/12/15 15:43:46 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/04/16 17:48:59 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 
 void	ft_print(t_data *data, t_avl *head)
 {
-	int		len[5] = {0};
+	int		len[5];
+	int		i;
 
+	i = -1;
+	while (++i < 5)
+		len[i] = 0;
 	if (!ft_strchr(data->opts, OPT_L))
 	{
 		if (ft_strchr(data->opts, OPT_REV))
@@ -62,7 +66,7 @@ void	ft_print_full_param(t_avl *head, int len[4])
 	ft_putendl(param->name);
 }
 
-void	ft_print_ls(t_avl * head, int len[4])
+void	ft_print_ls(t_avl *head, int len[4])
 {
 	if (!head)
 		return ;
@@ -71,7 +75,7 @@ void	ft_print_ls(t_avl * head, int len[4])
 	ft_print_ls(head->right, len);
 }
 
-void	ft_print_ls_rev(t_avl * head, int len[4])
+void	ft_print_ls_rev(t_avl *head, int len[4])
 {
 	if (!head)
 		return ;

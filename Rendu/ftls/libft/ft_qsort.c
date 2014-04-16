@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/01 10:40:55 by jbalestr          #+#    #+#             */
-/*   Updated: 2013/12/01 10:40:56 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/04/16 17:59:14 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,29 @@
 
 void	ft_quicksort(char **items, int left, int right)
 {
-	int		i;
-	int		j;
+	int		i_j[2];
 	char	*x;
 	char	*temp;
 
-	x = items[((i = left) + (j = right)) / 2];
-	while (i <= j)
+	i_j[0] = left;
+	i_j[1] = right;
+	x = items[(i_j[0] + i_j[1]) / 2];
+	while (i_j[0] <= i_j[1])
 	{
-		while (ft_strcmp(items[i], x) < 0 && i < right)
-			i++;
-		while (ft_strcmp(items[j], x) > 0 && j > left)
-			j--;
-		if (i <= j)
+		while (ft_strcmp(items[i_j[0]], x) < 0 && i_j[0] < right)
+			i_j[0]++;
+		while (ft_strcmp(items[i_j[1]], x) > 0 && i_j[1] > left)
+			i_j[1]--;
+		if (i_j[0] <= i_j[1])
 		{
 			temp = ft_strdup(items[i]);
-			ft_strcpy(items[i++], items[j]);
-			ft_strcpy(items[j--], temp);
+			ft_strcpy(items[i_j[0]++], items[i_j[1]]);
+			ft_strcpy(items[i_j[1]--], temp);
 			free(temp);
 		}
 	}
-	if (left < j)
-		ft_quicksort(items, left, j);
-	if (i < right)
-		ft_quicksort(items, i, right);
+	if (left < i_j[1])
+		ft_quicksort(items, left, i_j[1]);
+	if (i_j[0] < right)
+		ft_quicksort(items, i_j[0], right);
 }

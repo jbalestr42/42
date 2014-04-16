@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/15 15:45:19 by jbalestr          #+#    #+#             */
-/*   Updated: 2013/12/15 15:46:45 by jbalestr         ###   ########.fr       */
+/*   Updated: 2014/04/16 17:45:07 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_data		*ft_eval_option(char *s, t_data *data, int *opt)
 	{
 		if (ft_strchr(OPTS, *s))
 		{
-			if (ft_strchr(data->opts, *s) <= 0)
+			if (ft_strchr(data->opts, *s) == NULL)
 			{
 				data->opts[*opt] = *s;
 				*opt = *opt + 1;
