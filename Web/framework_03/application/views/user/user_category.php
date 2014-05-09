@@ -1,0 +1,1 @@
+<h1><?php url(lang('title_user'), 'user/user_category'); ?></h1><ul class="smart-list">	<li><?php url_icon(lang('user_cat_ticket'), 'ticket', 'user/user_ticket'); ?></li></ul>

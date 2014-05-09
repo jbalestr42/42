@@ -1,0 +1,278 @@
+/* line 17, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 61, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
+* html {
+  font-size: 100%;
+}
+
+/* line 64, ../../../../../../../../../../../nfs/zfs-student-3/users/2013/mpillet/.gem/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
+html {
+  font-size: 16px;
+  line-height: 1.5em;
+}
+
+/* line 11, ../scss/ui-shop.scss */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 13, ../scss/ui-shop.scss */
+body {
+  font-family: Arial;
+  padding: 1em;
+}
+
+/* line 18, ../scss/ui-shop.scss */
+.btn {
+  display: inline-block;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  background: #e6e6e6;
+  padding: 10px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.7);
+  text-shadow: white 0 1px 0;
+}
+
+/* line 31, ../scss/ui-shop.scss */
+body > header {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.75em;
+}
+@media screen and (max-width: 600px) {
+  /* line 31, ../scss/ui-shop.scss */
+  body > header {
+    flex-wrap: wrap;
+  }
+  /* line 39, ../scss/ui-shop.scss */
+  body > header > div {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* line 44, ../scss/ui-shop.scss */
+body > header > ul {
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  padding-top: .25em;
+  padding-left: .25em;
+  margin-left: auto;
+}
+@media screen and (max-width: 600px) {
+  /* line 44, ../scss/ui-shop.scss */
+  body > header > ul {
+    margin-left: 0;
+    width: 100%;
+    flex-direction: column-reverse;
+  }
+}
+/* line 55, ../scss/ui-shop.scss */
+body > header > ul > li {
+  border: 1px solid red;
+  padding: .25em;
+  margin-right: .25em;
+  margin-bottom: .25em;
+}
+
+/* line 65, ../scss/ui-shop.scss */
+.container {
+  display: flex;
+  margin-bottom: 0.75em;
+}
+@media screen and (max-width: 600px) {
+  /* line 65, ../scss/ui-shop.scss */
+  .container {
+    flex-wrap: wrap;
+  }
+}
+/* line 71, ../scss/ui-shop.scss */
+.container > nav {
+  width: 250px;
+  margin-right: 1em;
+  background: #e6e6e6;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  text-shadow: rgba(255, 255, 255, 0.8) 0 1px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+}
+@media screen and (max-width: 600px) {
+  /* line 71, ../scss/ui-shop.scss */
+  .container > nav {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 1em;
+  }
+}
+/* line 86, ../scss/ui-shop.scss */
+.container > nav > ul > li {
+  font-size: 0.8125em;
+  line-height: 1.84615em;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* line 87, ../scss/ui-shop.scss */
+.container > nav > ul > li > a {
+  display: block;
+  color: rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+  padding-left: 1em;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
+/* line 88, ../scss/ui-shop.scss */
+.container > nav > ul > li > a > i {
+  margin-right: 1em;
+}
+@media screen and (max-width: 600px) {
+  /* line 87, ../scss/ui-shop.scss */
+  .container > nav > ul > li > a {
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+  }
+}
+/* line 105, ../scss/ui-shop.scss */
+.container > nav > ul > li:first-child {
+  border-top: none;
+}
+/* line 108, ../scss/ui-shop.scss */
+.container > nav > ul > li.active {
+	background: rgba(0,0,0,.6);
+}
+.container > nav > ul > li.active > a {
+	color: rgba(255,255,255,.9);
+	text-shadow: none;
+}
+
+/* line 115, ../scss/ui-shop.scss */
+.container > section {
+  flex: 1;
+}
+@media screen and (max-width: 600px) {
+  /* line 115, ../scss/ui-shop.scss */
+  .container > section {
+    width: 100%;
+    flex: initial;
+  }
+}
+
+/* line 127, ../scss/ui-shop.scss */
+body > footer {
+  height: 150px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	font-size: 2em;
+	line-height: 2em;
+}
+
+ul.articles-list {
+	display:flex;
+	flex-wrap: wrap;
+}
+
+ul.articles-list > li > a {
+	position: relative;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	display: flex;
+}
+
+ul.articles-list > li > a > .name {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	text-align: center;
+	padding: 1em;
+	background: rgba(0,0,0,.1);
+}
+
+ul.articles-list > li > a > .price {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.article {
+}
+
+.article > img {
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
