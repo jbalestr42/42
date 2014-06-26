@@ -1,0 +1,249 @@
+/*
+ * SCHEDULE
+ */
+.schedule {}
+    .schedule-nav {
+    display: inline-block;
+    width: 30%;
+    margin-right: -5px;
+    vertical-align: top;
+    }
+    .schedule-content {
+    display: inline-block;
+    width: 70%;
+    padding-left: 20px;
+    }
+
+        .schedule table {
+        width: 100%;
+        }
+            .schedule-nav th {
+            border: 1px solid #ccc;
+            text-align: center;
+            }
+            .schedule-nav td {
+            border: 1px solid #ccc;
+            padding: 0;
+            text-align: center;
+            }
+                .schedule-nav .monthtableBody a {
+                color: #444;
+                padding: 10px;
+                display: block;
+                }
+                .schedule-nav .monthtableHeader td {
+                padding: 10px 0;
+                text-align: left;
+                }
+                .schedule-nav .monthtableHeader .dp-sb-nav {
+                text-align: right;
+                }
+
+            .offmonth a {
+            color: #aaa;
+            }
+
+            .schedule-nav table:first-child td {
+            border: 0;
+            padding: 10px;
+            }
+
+        .list-schedule-events {}
+            .list-schedule-events li {
+            list-style: none;
+            }
+
+                .schedule-content .day {}
+                    .schedule-content .day ~ .day {
+                    margin: 20px 0 0;
+                    }
+                    .day h2 {
+                    margin: 0;
+                    }
+                .appointment {
+                padding: 10px;
+                background: #fafafa;
+                border: 1px solid #ccc;
+                border-left: 6px solid;
+                margin: 10px 0;
+                border-radius: .3em;
+                font-size: .875em;
+                z-index: 100;
+                }
+                    .appointment.appointment-magenta {
+                        border-color: #ea5dc9;
+                    }
+                    .appointment.appointment-red {
+                        border-color: #f33d3f;
+                    }
+                    .appointment.appointment-green {
+                        border-color: #a7db63;
+                    }
+                    .appointment.appointment-blue {
+                        border-color: #6499d7;
+                    }
+                    .appointment.appointment-yellow {
+                        border-color: #ecdc3c;
+                    }
+                    .appointment.appointment-cyan {
+                        border-color: #43efda;
+                    }
+                    .appointment.appointment-gray {
+                        border-color: #ccc;
+                    }
+                    .appointment.appointment-white {
+                        border-color: #fafafa;
+                    }
+                    .appointment p {
+                    margin: 0;
+                    }
+
+    .appointment p {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+
+.timetable li {
+list-style: none;
+}
+.timetable-hour-block {
+border: 1px solid #ddd;
+padding: 10px 10px 10px 60px;
+min-height: 40px;
+}
+    .timetable-hour-block ~ .timetable-hour-block {
+    border-top: 0;
+    }
+    .timetable-hour {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    margin-top: -10px;
+    }
+    .timetable-hour-block .appointment {
+    display: inline-block;
+    margin: 0 10px 0 0;
+    width: 30%;
+    vertical-align: top;
+    }
+        .timetable-hour-block .appointment:nth-child(n+4) {
+        margin-top: 10px;
+        }
+
+
+.list-table {
+list-style: none;
+}
+    .list-table-row {
+    border: 1px solid #ccc;
+    border-top: 0;
+    }
+        .list-table-row:first-child {
+        border-top: 1px solid #ccc;
+        }
+        .list-table-header-cell,
+        .list-table-cell {
+        display: inline-block;
+        margin-right: -4px;
+        min-height: 40px;
+        border-left: 0;
+        vertical-align: top;
+        }
+            .list-table-header-cell ~ .list-table-header-cell,
+            .list-table-cell ~ .list-table-cell {
+            border-left: 1px solid #ccc;
+            }
+            .list-table-header-cell {
+            font-size: .875em;
+            text-align: center;
+            line-height: 40px;
+            }
+            .list-table-header .list-table-row,
+            .list-table-header .list-table-header-cell {
+            border: 0;
+            }
+/* SCHEDULE VIEW :: WEEK */
+.schedule-view-week .list-table-header-cell,
+.schedule-view-week .list-table-cell {
+width: 12.5%;
+}
+    .list-table-hour {
+    line-height: 40px;
+    text-align: center;
+    }
+    .schedule-view-week .appointment,
+    .schedule-view-month .appointment {
+    font-size: .75em;
+    padding: 2px 0 2px 4px;
+    }
+
+/* SCHEDULE VIEW :: MONTH */
+.schedule-view-month .list-table-header-cell,
+.schedule-view-month .list-table-cell {
+width: 14.25%;
+}
+    .schedule-view-month .list-table-cell {
+    min-height: 90px;
+    padding: 4px;
+    }
+    .schedule-view-month .day-other-month {
+    background: #f7f7f7;
+    }
+
+/*calendar event categories */
+[class*="event-color-"]:before {
+    background: #ff0;
+    display: inline-block;
+    content: '';
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+    margin-right: 5px;
+    border: 1px solid #aaa;
+}
+[class*="event-color-black"]:before   { background: #222222; }
+[class*="event-color-red"]:before     { background: #f33d3f; }
+[class*="event-color-green"]:before   { background: #a7db63; }
+[class*="event-color-blue"]:before    { background: #6499d7; }
+[class*="event-color-yellow"]:before  { background: #ecdc3c; }
+[class*="event-color-cyan"]:before    { background: #43efda; }
+[class*="event-color-magenta"]:before { background: #ea5dc9; }
+[class*="event-color-gray"]:before    { background: #cccccc; }
+[class*="event-color-white"]:before   { background: #fafafa; }
+
+.calendar-color.active:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    border: 5px solid #000;
+    border-color: transparent transparent #000 transparent;
+    left: 50%;
+    margin-left: -5px;
+}
+
+.event-category {
+    margin: 5px 0;
+}
+
+
+    .calendar-view-day   .appointment,
+    .calendar-view-week  .appointment,
+    .calendar-view-month .appointment {
+    max-width: 250px;
+    display: inline-block;
+    }
+
+.calendar-color {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.today {
+border-color: #333;
+border: 1px solid;
+box-shadow: inset 0 0 0 2px #adf;
+}

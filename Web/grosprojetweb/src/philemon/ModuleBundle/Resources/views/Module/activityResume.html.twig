@@ -1,0 +1,38 @@
+{% block body %}
+
+<h5 style="color:LightGrey;">
+	( {% if activity.type == 1 %}Projet
+	{% elseif activity.type == 2 %}TP
+	{% elseif activity.type == 3 %}Examen
+	{% endif %})
+</h5>
+{% if activity.dateEndInscription|date('Y-m-d') >= "now"|date("Y-m-d") %}
+<h5>{{ "Fin d'inscription le " ~ activity.dateEndInscription|date('Y-m-d') }}</h5>
+{% else %}
+<h5>{{ "Les inscriptions sont terminees" }} </h5>
+{% endif %}
+</h1>
+
+<h5>Etudiants inscrits :</h5>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%;">
+      <span>{{ current }}/{{ activity.maxplace }}</span>
+  </div>
+</div>
+
+<div class="highlight">
+<h5>Description :</h5>
+<p>
+	{{ activity.description }}
+</p>
+</div>
+
+<div class="highlight">
+<h5>E-Learning :</h5>
+{% for l in learnings %}
+	<a href="{{ asset('uploads/pdf/'~l.name) }}">{{ l.name }}</a>
+	<br>
+{% endfor %}
+</div>
+
+{% endblock %}

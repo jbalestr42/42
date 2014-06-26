@@ -1,0 +1,43 @@
+{%- spaceless -%}
+
+	<ul class="nav nav-pills nav-stacked">
+
+		{%- set route = app.request.attributes.get('_route') -%}
+
+		{%- if topic is not defined -%}
+			{%- if post is defined -%}
+				{%- set topic = post.getTopic -%}
+			{%- endif -%}
+		{%- endif -%}
+
+		{%- if board is not defined -%}
+			{%- if topic is defined -%}
+				{%- set board = topic.getBoard -%}
+			{%- else -%}
+				{%- if post is defined -%}
+					{%- set board = topic.getBoard -%}
+				{%- endif -%}
+			{%- endif -%}
+		{%- endif -%}
+
+		{%- if category is not defined -%}
+			{%- if board is defined -%}
+				{%- set category = board.getCategory -%}
+			{%- else -%}
+				{%- if topic is defined -%}
+					{%- set category = topic.getBoard -%}
+				{%- endif -%}
+			{%- endif -%}
+		{%- endif -%}
+
+
+
+		{%- if is_granted('ROLE_USER') -%}
+			{%- if route|slice(0,28) == 'ccdn_forum_user_subscription' -%}
+				{%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/Partial/user_subscriptions.html.twig' -%}
+			{%- endif -%}
+		{%- endif -%}
+
+	</ul>
+
+{%- endspaceless -%}

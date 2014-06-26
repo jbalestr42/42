@@ -1,0 +1,6 @@
+services:
+    philemon_module.category_listener:
+        class: philemon\ModuleBundle\Updates\CategoryListener
+        tags:
+            -  { name: doctrine.event_listener, event: prePersist }
+            -  { name: doctrine.event_listener, event: preRemove }

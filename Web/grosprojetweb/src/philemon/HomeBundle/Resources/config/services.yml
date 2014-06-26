@@ -1,0 +1,7 @@
+parameters:
+#    philemon_home.example.class: philemon\HomeBundle\Example
+
+services:
+#    philemon_home.example:
+#        class: %philemon_home.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

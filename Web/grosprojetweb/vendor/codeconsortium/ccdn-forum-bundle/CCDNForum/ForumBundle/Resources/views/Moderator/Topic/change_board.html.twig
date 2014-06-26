@@ -1,0 +1,65 @@
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_forum.topic.moderator.change_board.layout_template %}
+
+{%- block title -%}
+	{{- 'title.topic.change_board' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}
+{%- endblock title -%}
+
+{%- block sidebar -%}
+	{%- spaceless -%}
+	{{- parent() -}}
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
+	{%- endspaceless -%}
+{%- endblock sidebar -%}
+
+{%- block body_content -%}
+	{%- spaceless -%}
+
+	<section class="clearfix">
+		{%- form_theme form ccdn_forum_forum.topic.moderator.change_board.form_theme -%}
+		<form action="{{- path('ccdn_forum_moderator_topic_change_board_process', {'forumName': forumName, 'topicId': topic.getId} ) -}}"
+		 method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+			<fieldset>
+
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+						<h4>
+							{{- 'title.topic.change_board' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}
+						</h4>
+					</div>
+				</div>
+
+				{{- form_errors(form) -}}
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">
+						{{- 'topic.label' |trans({}, 'CCDNForumForumBundle') -}}
+					</label>
+					<div class="col-lg-10">
+						<pre>
+							{{- topic.getTitle -}}
+						</pre>
+					</div>
+				</div>
+
+				{{- form_widget(form) -}}
+
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+						<input type="submit" class="btn btn-danger" value="
+							{{- 'form.button.topic.move' | trans({}, 'CCDNForumForumBundle') -}}
+						" name="submit[post]" id="submit[post]">
+
+						<a class="btn btn-default" href="{{- path('ccdn_forum_user_topic_show', {'topicId': topic.id}) -}}">
+							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+						</a>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+	</section>
+
+	{%- endspaceless -%}
+{%- endblock body_content -%}

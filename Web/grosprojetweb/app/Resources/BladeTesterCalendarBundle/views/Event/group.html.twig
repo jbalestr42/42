@@ -1,0 +1,7 @@
+{% if events %}
+    <ul class="schedule-group-appointments">
+        {% for event in events %}
+            {% include 'BladeTesterCalendarBundle:Event:listItem.html.twig' with { 'event' : event } %}
+        {% endfor %}
+    </ul>
+{% endif %}

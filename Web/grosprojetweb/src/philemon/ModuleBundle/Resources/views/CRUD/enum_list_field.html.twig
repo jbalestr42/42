@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+    <div>
+        {% if object.type == 1 %}
+			Projet
+        {% elseif object.type == 2 %}
+			TP
+        {% elseif object.type == 3 %}
+			Examem
+        {% endif %}
+    </div>
+{% endblock %}

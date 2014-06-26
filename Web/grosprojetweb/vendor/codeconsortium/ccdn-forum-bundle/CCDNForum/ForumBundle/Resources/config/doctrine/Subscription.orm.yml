@@ -1,0 +1,42 @@
+CCDNForum\ForumBundle\Entity\Subscription:
+    type: entity
+    table: cc_forum_subscription
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        isRead:
+            type: boolean
+            column: is_read
+            nullable: false
+        isSubscribed:
+            type: boolean
+            column: is_subscribed
+            nullable: false
+    manyToOne:
+        forum:
+            targetEntity: CCDNForum\ForumBundle\Entity\Forum
+            cascade: []
+            nullable: true
+            joinColumn:
+                name: fk_forum_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        topic:
+            targetEntity: CCDNForum\ForumBundle\Entity\Topic
+            cascade: ["persist"]
+            inversedBy: subscriptions
+            nullable: true
+            joinColumn:
+                name: fk_topic_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        ownedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: ["persist"]
+            nullable: true
+            joinColumn:
+                name: fk_owned_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL

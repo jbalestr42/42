@@ -1,0 +1,37 @@
+{
+    "name": "hackzilla/ticket-bundle",
+    "description": "This Bundle provides ticketing functionality for Symfony2 applications. Multilingual capable",
+    "keywords": ["ticket", "ticketing", "help desk", "helpdesk", "support", "multilingual", "english"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Platt",
+            "email": "github@ofdan.co.uk",
+            "homepage": "http://www.hackzilla.org",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.3",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
+        "hackzilla/interfaces": "~0.1",
+        "knplabs/knp-paginator-bundle": "~2.3"
+    },
+    "suggest": {
+        "twitter/bootstrap": "used to define the layout (v3)"
+    },
+    "autoload": {
+        "psr-0": {
+            "Hackzilla\\Bundle\\TicketBundle": ""
+        }
+    },
+    "target-dir": "Hackzilla/Bundle/TicketBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

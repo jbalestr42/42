@@ -1,0 +1,46 @@
+
+#%ccdn_forum_forum.entity.forum.class%:
+CCDNForum\ForumBundle\Entity\Forum:
+    properties:
+        name:
+            - Type: { type: string, groups: [forum_forum_create, forum_forum_update] }
+            - NotBlank: { groups: [forum_forum_create, forum_forum_update] }
+            - Length: { min: 3, max: 255, groups: [forum_forum_create, forum_forum_update] }
+
+#%ccdn_forum_forum.entity.category.class%:
+CCDNForum\ForumBundle\Entity\Category:
+    properties:
+        name:
+            - Type: { type: string, groups: [forum_category_create, forum_category_update] }
+            - NotBlank: { groups: [forum_category_create, forum_category_update] }
+            - Length: { min: 3, max: 255, groups: [forum_category_create, forum_category_update] }
+
+#%ccdn_forum_forum.entity.board.class%:
+CCDNForum\ForumBundle\Entity\Board:
+    properties:
+        name:
+            - Type: { type: string, groups: [forum_board_create, forum_board_update] }
+            - NotBlank: { groups: [forum_board_create, forum_board_update] }
+            - Length: { min: 3, max: 255, groups: [forum_board_create, forum_board_update] }
+        description:
+            - Type: { type: string, groups: [forum_board_create, forum_board_update] }
+            - NotBlank: { groups: [forum_board_create, forum_board_update] }
+            - Length: { min: 10, max: 30000, groups: [forum_board_create, forum_board_update] }
+
+#%ccdn_forum_forum.entity.topic.class%:
+CCDNForum\ForumBundle\Entity\Topic:
+    properties:
+        board:
+            - NotNull: { groups: [forum_topic_create, forum_topic_update] }
+        title:
+            - Type: { type: string, groups: [forum_topic_create, forum_topic_update] }
+            - NotBlank: { groups: [forum_topic_create, forum_topic_update] }
+            - Length: { min: 10, max: 225, groups: [forum_topic_create, forum_topic_update] }
+
+#%ccdn_forum_forum.entity.post.class%:
+CCDNForum\ForumBundle\Entity\Post:
+    properties:
+        body:
+            - Type: { type: string, groups: [forum_post_create, forum_post_update] }
+            - NotBlank: { groups: [forum_post_create, forum_post_update] }
+            - Length: { min: 15, max: 30000, groups: [forum_post_create, forum_post_update] }

@@ -1,0 +1,97 @@
+CCDNForum\ForumBundle\Entity\Topic:
+    type: entity
+    table: cc_forum_topic
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        title:
+            type: string
+            length: 100
+        cachedViewCount:
+            type: integer
+            column: cached_view_count
+            nullable: false
+        cachedReplyCount:
+            type: integer
+            column: cached_reply_count
+            nullable: false
+        isClosed:
+            type: boolean
+            column: is_closed
+            nullable: false
+        closedDate:
+            type: datetime
+            column: closed_date
+            nullable: true
+        isDeleted:
+            type: boolean
+            column: is_deleted
+            nullable: false
+        deletedDate:
+            type: datetime
+            column: deleted_date
+            nullable: true
+        isSticky:
+            type: boolean
+            column: is_sticky
+            nullable: false
+        stickiedDate:
+            type: datetime
+            column: stickied_date
+            nullable: true
+    oneToMany:
+        posts:
+            targetEntity: CCDNForum\ForumBundle\Entity\Post
+            mappedBy: topic
+            cascade: ["persist", "remove"]
+        subscriptions:
+            targetEntity: CCDNForum\ForumBundle\Entity\Subscription
+            mappedBy: topic
+            cascade: ["persist", "remove"]
+    manyToOne:
+        board:
+            targetEntity: CCDNForum\ForumBundle\Entity\Board
+            inversedBy: topics
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_board_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        firstPost:
+            targetEntity: CCDNForum\ForumBundle\Entity\Post
+            cascade: ["persist", "remove"]
+            joinColumn:
+                name: fk_first_post_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        lastPost:
+            targetEntity: CCDNForum\ForumBundle\Entity\Post
+            cascade: ["persist", "remove"]
+            nullable: true
+            joinColumn:
+                name: fk_last_post_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        closedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: []
+            joinColumn:
+                name: fk_closed_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        deletedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: []
+            joinColumn:
+                name: fk_deleted_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        stickiedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: []
+            joinColumn:
+                name: fk_stickied_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL

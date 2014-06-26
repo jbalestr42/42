@@ -1,0 +1,20 @@
+parameters:
+    hackzilla_ticket.user_load.class: Hackzilla\Bundle\TicketBundle\EventListener\UserLoad
+    hackzilla_ticket.twig_user.class: Hackzilla\Bundle\TicketBundle\Extension\UserExtension
+
+services:
+    hackzilla_ticket.listener:
+        class: %hackzilla_ticket.user_load.class%
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+
+    hackzilla_ticket_user_extension:
+        class: %hackzilla_ticket.twig_user.class%
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }
+
+    hackzilla_ticket.user:
+        class: %hackzilla_ticket.user_bridge.class%
+        arguments: ['@service_container']

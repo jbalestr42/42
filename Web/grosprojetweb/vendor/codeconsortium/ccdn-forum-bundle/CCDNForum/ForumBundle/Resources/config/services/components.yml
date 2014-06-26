@@ -1,0 +1,91 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+
+services:
+
+    ccdn_forum_forum.component.helper.post_lock:
+        class: %ccdn_forum_forum.component.helper.post_lock.class%
+        arguments:
+            - %ccdn_forum_forum.post.user.lock.enable%
+            - %ccdn_forum_forum.post.user.lock.after_days%
+
+    ccdn_forum_forum.component.helper.pagination_config:
+        class: %ccdn_forum_forum.component.helper.pagination_config.class%
+        arguments:
+            - %ccdn_forum_forum.subscription.list.topics_per_page%
+            - %ccdn_forum_forum.board.user.show.topics_per_page%
+            - %ccdn_forum_forum.topic.user.show.posts_per_page%
+
+    ccdn_forum_forum.component.helper.role:
+        class: %ccdn_forum_forum.component.helper.role.class%
+        arguments:
+            - @security.context
+            - %security.role_hierarchy.roles%
+
+    #
+    # Flood Control.
+    #
+    ccdn_forum_forum.component.flood_control:
+       class: %ccdn_forum_forum.component.flood_control.class%
+       arguments:
+           - @security.context
+           - @session
+           - %kernel.environment%
+           - %ccdn_forum_forum.topic.user.flood_control.post_limit%
+           - %ccdn_forum_forum.topic.user.flood_control.block_for_minutes%
+
+    #
+    # Dashboard Integrator.
+    #
+    ccdn_forum_forum.component.integrator.dashboard:
+        class: %ccdn_forum_forum.component.integrator.dashboard.class%
+        tags:
+            - { name: ccdn_component_dashboard.integrator }
+
+    #
+    # Event Subscribers.
+    #
+    ccdn_forum_forum.component.event_listener.flash:
+        class: %ccdn_forum_forum.component.event_listener.flash.class%
+        arguments: [@session]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ccdn_forum_forum.component.event_listener.subscriber:
+        class: %ccdn_forum_forum.component.event_listener.subscriber.class%
+        arguments:
+            - @ccdn_forum_forum.model.subscription
+            - @security.context
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ccdn_forum_forum.component.event_listener.stats:
+        class: %ccdn_forum_forum.component.event_listener.stats.class%
+        arguments:
+            - @ccdn_forum_forum.model.board
+            - @ccdn_forum_forum.model.topic
+            - @ccdn_forum_forum.model.post
+            - @ccdn_forum_forum.model.registry
+        tags:
+            - { name: kernel.event_subscriber }
+
+    #
+    # Crumbs.
+    #
+    ccdn_forum_forum.component.crumb_factory:
+        class: %ccdn_forum_forum.component.crumb_factory.class%
+        arguments:
+            - @translator
+            - @router
+
+    ccdn_forum_forum.component.crumb_builder:
+        class: %ccdn_forum_forum.component.crumb_builder.class%
+        arguments:
+            - @ccdn_forum_forum.component.crumb_factory
+
+    ccdn_forum_forum.component.security.authorizer:
+        class: %ccdn_forum_forum.component.security.authorizer.class%
+        arguments:
+            - @security.context
+            - @ccdn_forum_forum.component.helper.post_lock

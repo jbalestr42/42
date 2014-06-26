@@ -1,0 +1,68 @@
+{% extends 'philemonHomeBundle::layout.html.twig' %}
+
+{% block body %}
+<div class="highlight" onclick="$('#target').toggle();"> <i class="fa fa-book"></i> <b>Projet &agrave; venir</b>
+<div id="target">
+{% for a in mod %}
+	{% if a.module.dateEnd|date('Y-m-d') >= "now"|date('Y-m-d') %}
+			{% set po = 0 %}
+				{% for b in modl %}
+					{% if a.module.id == b.module.id %}
+						{% set po = 1 %}
+					{% endif %}
+				{% endfor %}
+				<ul>
+					{% set one = 0 %}
+					{% for al in actl %}
+						{% if a.id == al.activity.id %}
+							{% set one = 1 %}
+						{% endif %}
+					{% endfor %}
+					{% if a.dateEnd|date('Y-m-d') >= "now"|date('Y-m-d') %}
+						<li><a href="{{ path('philemon_activity_show', {'activity_id': a.id}) }}"><b>{{ a.name }}</b></a> (<a href="{{ path('philemon_module_show', {'id': a.module.id}) }}">{{ a.module }}</a>).</li>
+					{% if one == 1 and po == 1 %}
+						{{ "Vous &ecirc;tes bien inscrit au projet " }}<a href="{{ path('philemon_activity_show', {'activity_id': a.id}) }}">{{ a.name }}</a>.</br>
+						{{"Faites votre rendu avant le " ~ a.dateEnd|date('Y-m-d') }} &agrave; {{ a.dateEnd|date(' H:i:s') }}
+					{% elseif po == 1 %}
+						{{ "Vous n'&ecirc;tes pas inscrit au projet " }}<a href="{{ path('philemon_activity_show', {'activity_id': a.id}) }}">{{ a.name }}</a>.</br>
+						{{"Fin d'inscription le " ~ a.dateEndInscription|date('Y-m-d') }} &agrave; {{ a.dateEndInscription|date(' H:i:s') }}
+					{% endif %}
+					{% endif %}
+				</ul>
+	{% endif %}
+{% endfor %}
+</div>
+</div>
+<div class="highlight" onclick="$('#target1').toggle();"><i class="fa fa-share-square-o"></i> <b>Corrections</b>
+<div id="target1">
+{% for al in actl %}
+	{% if al.activity.dateStartCo('Y-m-d') <= "now"|date('Y-m-d') and al.activity.dateEndCo('Y-m-d') >= "now"|date('Y-m-d') %}
+		<a href="{{ path('philemon_find_peer', {'activity_id': al.activity.id}) }}"><div class="btn btn-primary">{{ 'Trouver un correcteur pour '~ al.activity }} </div></a>
+	{% endif %}
+{% endfor %}
+{% for last in cor %}
+{% if last.score is null %}
+ <li> Vous devez <a href="{{ path('philemon_bareme_index', { 'activity_id': last.activity.id }) }}">noter </a> l'&eacute;tudiant <a href="{{ path('philemon_profile', { 'slug': last.user }) }}">{{ last.user }}</a> sur <a href="{{ path('philemon_activity_show', {'activity_id': last.activity.id}) }}">{{ last.activity }}</a>. </li>
+{% else %}
+ <li> Vous avez not&eacute; <a href="{{ path('philemon_profile', { 'slug': last.user }) }}">{{ last.user }}</a> {{ last.score }} sur <a href="{{ path('philemon_activity_show', {'activity_id': last.activity.id}) }}">{{ last.activity }}</a> (<a href="{{ path('philemon_ratev', { 'activity_id': last.activity.id, 'use': last.user.id }) }}">appreciation</a>).</li>
+{% endif %}
+{% endfor %}
+-
+{% for last in mark %}
+{% if last.score is null %}
+ <li> Vous devez &ecirc;tre notez par <a href="{{ path('philemon_profile', { 'slug': last.corrector }) }}">{{ last.corrector }}</a> sur <a href="{{ path('philemon_activity_show', {'activity_id': last.activity.id}) }}">{{ last.activity }}</a>. </li>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+
+<div class="highlight" onclick="$('#target2').toggle();"><i class="fa fa-bookmark-o"></i> <b>Notes</b>
+<div id="target2">
+{% for last in mark %}
+{% if last.score and last.activity.dateEndCo|date('Y-m-d') <= "now"|date('Y-m-d') %}
+<li><a href="{{ path('philemon_profile', { 'slug': last.corrector }) }}">{{ last.corrector }}</a> vous a notez {{ last.score }} sur <a href="{{ path('philemon_activity_show', {'activity_id': last.activity.id}) }}">{{ last.activity }}</a> pensez a <a href="{{ path('philemon_rate', { 'activity_id': last.activity.id, 'corrector': last.corrector.id }) }}">appr&eacute;cier</a> la note. </li>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+{% endblock %}

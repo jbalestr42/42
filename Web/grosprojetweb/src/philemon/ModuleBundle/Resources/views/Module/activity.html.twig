@@ -1,0 +1,59 @@
+{% extends "::base.html.twig" %}
+
+{% block title%}Activites{% endblock %}
+{% block body %}
+<h1>{{ activity.name }}
+{% if activity.dateEndInscription|date('Y-m-d') >= "now"|date("Y-m-d") %}
+	{% if register == 1 %}
+		<a href="{{ path('philemon_activity_unregister', {'activity_id': activity.id}) }}">
+			<div class="btn btn-danger">Se desinscrire <span class="glyphicon glyphicon-remove-circle"></span></div>
+		</a>
+	{% elseif register == 2 %}
+	{% else %}
+		<a href="{{ path('philemon_activity_register', {'activity_id': activity.id}) }}">
+			<div class="btn btn-success">S'inscrire <span class="glyphicon glyphicon-ok-circle"></span></div>
+		</a>
+{% endif %}
+
+<h5 style="color:LightGrey;">
+	( {% if activity.type == 1 %}Projet
+	{% elseif activity.type == 2 %}TP
+	{% elseif activity.type == 3 %}Examen
+	{% endif %})
+</h5>
+
+<h5>{{ "Fin d'inscription le " ~ activity.dateEndInscription|date('Y-m-d') }}</h5>
+
+{% else %}
+<h5>{{ "Les inscriptions sont terminees" }} </h5>
+{% endif %}
+</h1>
+
+<div class="highlight">
+<h5>Etudiants inscrits :</h5>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%;">
+      <span>{{ current }}/{{ activity.maxplace }}</span>
+  </div>
+</div>
+<div class="highlight">
+<h5>Description :</h5>
+<p>
+	{{ activity.description }}
+</p>
+</div>
+
+<div class="highlight" onclick="$('#documents').toggle();" ><i class="fa fa-share-square-o"></i>
+	<b>
+		E-Learning
+	</b>
+	<div style="display:none;text-align:center;" id="documents">
+		{% for l in learnings %}
+			<p><a href="{{ asset('uploads/pdf/'~l.name) }}">{{ l.name }}</a></p>
+			<iframe src="{{ asset('uploads/pdf/'~l.name) }}" width="800" height="600" align="middle"></iframe>
+			<br>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}

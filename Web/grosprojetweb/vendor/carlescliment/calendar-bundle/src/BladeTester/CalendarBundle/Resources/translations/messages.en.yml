@@ -1,0 +1,48 @@
+bladetester_calendar.label.event.add: Add event
+bladetester_calendar.label.event.update: Update event
+bladetester_calendar.label.event.delete: Delete
+bladetester_calendar.label.event.delete_warning: Do you really want to remove this event?
+bladetester_calendar.label.event_category.delete_warning: Do you really want to remove this category?
+bladetester_calendar.label.event.category.none: Uncategorized
+bladetester_calendar.label.agenda: Agenda
+bladetester_calendar.label.day: Day
+bladetester_calendar.label.week: Week
+bladetester_calendar.label.month: Month
+bladetester_calendar.label.print: Print
+bladetester_calendar.label.settings: Settings
+bladetester_calendar.label.cancel: Cancel
+bladetester_calendar.label.configuration_parameters: Configuration parameters
+bladetester_calendar.label.back_to_calendar: go back to calendar
+
+bladetester_calendar.label.category.add: Add category
+bladetester_calendar.title.category.add: Add new category
+bladetester_calendar.label.category.edit: Update
+bladetester_calendar.title.category.edit: Edit category
+bladetester_calendar.label.category.delete: Delete
+bladetester_calendar.title.category.list: Category list
+
+bladetester_calendar.label.settings.update: Save
+bladetester_calendar.label.settings.default_view: Default view
+
+bladetester_calendar.list.no_events: No events found
+bladetester_calendar.list.no_categories: No categories found
+
+bladetester_calendar.flash.event_added: The new event "%title%" has been created
+bladetester_calendar.flash.event_updated: The event "%title%" has been updated
+bladetester_calendar.flash.event_deleted: The event "%title%" has been deleted
+bladetester_calendar.flash.category_added: A new category with name %name% has been added
+bladetester_calendar.flash.category_updated: The category %name% has been updated
+bladetester_calendar.flash.category_deleted: The category %name% has been deleted
+bladetester_calendar.flash.settings_updated: Calendar settings have been updated
+
+bladetester_calendar.exception.event_not_found: Event with id %id% not found
+bladetester_calendar.exception.category_not_found: Category with id %id% not found
+
+bladetester_calendar.abbr.monday: Mon
+bladetester_calendar.abbr.tuesday: Tue
+bladetester_calendar.abbr.wednesday: Wed
+bladetester_calendar.abbr.thursday: Thu
+bladetester_calendar.abbr.friday: Fri
+bladetester_calendar.abbr.saturday: Sat
+bladetester_calendar.abbr.sunday: Sun
+

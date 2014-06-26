@@ -1,0 +1,33 @@
+{% extends 'BladeTesterCalendarBundle:Event:base.html.twig' %}
+
+{% block calendar_date_selector %}
+    <table class="dp-monthtable" role="presentation">
+        <tbody>
+        <tr id="dp_0_header" class="monthtableHeader">
+            <td colspan="5" id="dp_0_cur" class="dp-cell dp-sb-cur">
+                <span class="calHeaderSpace">
+                    {{ '%week_day%, %month% %day%th of %year%'|trans({'%week_day%': current|date('l')|trans, '%day%': current|date('d'), '%month%': current|date('F')|trans, '%year%': current|date('Y')}) }}
+                </span>
+            </td>
+            <td colspan="2" class="dp-cell dp-sb-nav">
+                <a href="{{ path('calendar_event_list_by_day', {'year': previous|date('Y'), 'month': previous|date('m'), 'day':previous|date('d')}) }}" class="btn">&lt;</a>
+                <a href="{{ path('calendar_event_list_by_day', {'year': next|date('Y'), 'month': next|date('m'), 'day':next|date('d')}) }}" class="btn">&gt;</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block calendar_body %}
+    <section class="schedule-content schedule-view-day">
+        <ul class="timetable">
+            {% for hour in 0..23 %}
+            <li class="timetable-hour-block">
+                <time datetime="{{ current|date('Y-m-d') }} {{ hour }}:00" class="timetable-hour">{{ hour }}:00</time>
+                {% include 'BladeTesterCalendarBundle:Event:group.html.twig' with {'events': events.allByDateAndTime(current, hour)} %}
+                <a href="{{ path('calendar_event_add') }}?year={{ current|date('Y')}}&month={{ current|date('m') }}&day={{ current|date('d') }}&hour={{ hour }}&destination={{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" class="full-link"></a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

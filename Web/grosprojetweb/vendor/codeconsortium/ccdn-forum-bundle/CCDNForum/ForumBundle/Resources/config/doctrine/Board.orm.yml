@@ -1,0 +1,55 @@
+CCDNForum\ForumBundle\Entity\Board:
+    type: entity
+    table: cc_forum_board
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+        description:
+            type: text
+        cachedTopicCount:
+            type: integer
+            column: cached_topic_count
+        cachedPostCount:
+            type: integer
+            column: cached_post_count
+        listOrderPriority:
+            type: integer
+            column: list_order_priority
+        readAuthorisedRoles:
+            type: array
+            column: read_authorised_roles
+            nullable: true
+        topicCreateAuthorisedRoles:
+            type: array
+            column: topic_create_authorised_roles
+            nullable: true
+        topicReplyAuthorisedRoles:
+            type: array
+            column: topic_reply_authorised_roles
+            nullable: true
+    oneToMany:
+        topics:
+            targetEntity: CCDNForum\ForumBundle\Entity\Topic
+            mappedBy: board
+            cascade: ["remove"]
+    manyToOne:
+        category:
+            targetEntity: CCDNForum\ForumBundle\Entity\Category
+            inversedBy: boards
+            nullable: true
+            joinColumn:
+                name: fk_category_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        lastPost:
+            targetEntity: CCDNForum\ForumBundle\Entity\Post
+            cascade: ["persist", "detach"]
+            nullable: true
+            joinColumn:
+                name: fk_last_post_id
+                referencedColumnName: id
+                onDelete: SET NULL

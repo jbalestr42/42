@@ -1,0 +1,11 @@
+#services:
+#    sonata.admin.user:
+#        class: philemon\UserBundle\Admin\UserAdmin
+#        tags:
+#            - { name: sonata.admin, manager_type: orm, group: "Content", label: "User" }
+#        arguments:
+#            - ~
+#            - philemon\UserBundle\Entity\User
+#            - ~
+#        calls:
+#            - [ setTranslationDomain, [philemonUserBundle]]

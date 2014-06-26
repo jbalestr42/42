@@ -1,0 +1,21 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+{% for key, comment in res %}
+<div class="highlight">
+<h5>{{ res3[key] }} (points: {{ res2[key] }})</h5>
+{{ comment  }}
+</div>
+{% endfor %}
+<div class="highlight">
+<h4>Appr&eacute;ciation:</h4>
+{{ form_start(form) }}
+</br>
+{{ form_widget(form.notes, {'attr': {'class':'form-control'}}) }}
+</br>
+{{ form_widget(form.comment, {'attr': {'class':'form-control'}}) }}
+</br>
+<input type="submit" class="btn btn-primary" />
+{{ form_end(form) }}
+</div>
+{% endblock %}
+

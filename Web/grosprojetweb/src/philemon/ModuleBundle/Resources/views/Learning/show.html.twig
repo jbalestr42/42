@@ -1,0 +1,14 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}E-Learning{% endblock %}
+{% block body %}
+<h1>E-Learning</h1>
+{% for l in learnings %}
+	<li>
+		<a href="{{ asset('uploads/pdf/'~l.name) }}">{{ l.name }}</a>
+		<br>
+		<iframe src="{{ asset('uploads/pdf/'~l.name) }}" width="800" height="600" align="middle"></iframe>
+		<br>
+	</li>
+{% endfor %}
+{% endblock %}

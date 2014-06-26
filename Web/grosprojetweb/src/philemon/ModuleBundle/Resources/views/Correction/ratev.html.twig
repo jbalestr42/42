@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+<div class="highlight">
+	{% if all.rate is not null %}
+		{{"La note a &eacute;t&eacute; appr&eacute;ci&eacute;e : "}} {{ all.rate ~ " / 5" }}</br>
+		{{'Commentaire : '~  all.ratetext }}
+	{% else %}
+		{{ "La note n'a pas encore &eacute;t&eacute; appr&eacute;ci&eacute;e" }}
+	{% endif %}
+</div>
+{% endblock %}

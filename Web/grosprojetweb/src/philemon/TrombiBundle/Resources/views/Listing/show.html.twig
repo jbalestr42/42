@@ -1,0 +1,45 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+<div class="bloc" id="trombi">
+
+		<div class="blocs">
+
+			<div class="bloc resume">
+				<span class="value">{{NbUsers}} éléments</span>
+			</div>
+
+			<div class="bloc list_logins" style="display: none;">
+			    {% for user in ListeUser %}
+
+			        <a class="item" title="{{ user.cn }}" href="/app_dev.php/profile/{{ user.uid }}">
+			          <span class="picture">
+			            <img src="https://cdn.42.fr/userprofil/trombiview/{{ user.uid }}.jpg">
+			          </span>
+			          <span class="login">{{ user.uid }}</span>
+								<span class="title">{{ user.cn }}</span>
+
+							</a>
+
+			    {% endfor %}
+			</div>
+
+
+			<div class="bloc empty 2" style="display: none;">
+				<i>Select your criteria. Location and year are required</i>
+			</div>
+			<div class="bloc empty 1" style="display: none;">
+				<i>No match for your criteria</i>
+			</div>
+		<div class="buttons"><a class="button showmore"><span>Show more</span></a></div></div>
+	</div>
+
+
+<link rel="stylesheet" href="{{ asset('bundles/trombi/css/assets.css') }}">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script>
+$( document ).ready(function() {
+	$('.list_logins').fadeIn();
+});
+</script>
+
+{% endblock %}

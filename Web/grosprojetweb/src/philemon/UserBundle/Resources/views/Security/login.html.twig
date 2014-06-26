@@ -1,0 +1,8 @@
+{% extends "::baselogin.html.twig" %}
+
+{# Dans notre layout, il faut définir le block body #}
+{% block body %}
+  {% block fos_user_content %}
+	{% include "philemonUserBundle:Security:login_content.html.twig" %}
+  {% endblock fos_user_content %}
+{% endblock %}

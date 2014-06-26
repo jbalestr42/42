@@ -1,0 +1,82 @@
+CCDNForum\ForumBundle\Entity\Post:
+    type: entity
+    table: cc_forum_post
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        body:
+            type: text
+        createdDate:
+            type: datetime
+            column: created_date
+        editedDate:
+            type: datetime
+            column: edited_date
+            nullable: true
+        isDeleted:
+            type: boolean
+            column: is_deleted
+            nullable: false
+        deletedDate:
+            type: datetime
+            column: deleted_date
+            nullable: true
+        unlockedDate:
+            type: datetime
+            column: unlocked_date
+            nullable: true
+        unlockedUntilDate:
+            type: datetime
+            column: unlocked_until_date
+            nullable: true
+    manyToOne:
+        topic:
+            targetEntity: CCDNForum\ForumBundle\Entity\Topic
+            cascade: ["persist"]
+            inversedBy: posts
+            #nullable: true
+            joinColumn:
+                name: fk_topic_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        createdBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: []
+            nullable: true
+            joinColumn:
+                name: fk_created_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        editedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: []
+            nullable: true
+            joinColumn:
+                name: fk_edited_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        deletedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: []
+            nullable: true
+            joinColumn:
+                name: fk_deleted_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        unlockedBy:
+            targetEntity: Symfony\Component\Security\Core\User\UserInterface
+            cascade: []
+            nullable: true
+            joinColumn:
+                name: fk_unlocked_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+#        attachment:
+#            targetEntity: CCDNComponent\AttachmentBundle\Entity\Attachment
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_attachment_id
+#                referencedColumnName: id
+#                onDelete: SET NULL

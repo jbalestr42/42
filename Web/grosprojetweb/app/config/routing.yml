@@ -1,0 +1,58 @@
+philemon_trombi:
+    resource: "@philemonTrombiBundle/Resources/config/routing.yml"
+    prefix:   /
+
+philemon_ft_calendar:
+    resource: "@philemonFtCalendarBundle/Resources/config/routing.yml"
+    prefix:   /
+
+philemon_module:
+    resource: "@philemonModuleBundle/Resources/config/routing.yml"
+    prefix:   /
+
+philemon_ldap:
+    resource: "@philemonLdapBundle/Resources/config/routing.yml"
+    prefix:   /
+
+philemon_profile:
+    resource: "@philemonUserBundle/Resources/config/routing.yml"
+    prefix: /
+
+philemon_home:
+    resource: "@philemonHomeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
+CCDNForumForumBundle:
+    resource: "@CCDNForumForumBundle/Resources/config/routing.yml"
+
+ccdn_homepage:
+    pattern: /forum
+    defaults: { _controller: CCDNForumForumBundle:UserCategory:index, _locale: en, forumName: default }
+
+hackzilla_ticket:
+    resource: "@HackzillaTicketBundle/Resources/config/routing.yml"
+    prefix:   /
+
+BladeTesterCalendarBundle:
+    resource: "@BladeTesterCalendarBundle/Resources/config/routing.yml"
+    prefix:   /
