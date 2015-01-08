@@ -9,11 +9,11 @@ class $1
 public:
 	$1(void);
 	$1($1 const & p_$1);
-	~$1(void);
+	virtual ~$1(void);
 
 	$1 &	operator=($1 const & p_$1);
 
-}
+};
 
 #endif /* !${name}_HPP */
 
@@ -39,9 +39,10 @@ $1::~$1(void)
 
 }
 
-$1 &	$1::operator=($1 const & p_$1)
+$1 & $1::operator=($1 const & p_$1)
 {
 
+	return (*this);
 }
 
 EOF
