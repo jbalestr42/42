@@ -1,4 +1,0 @@
-
-ccdn_forum_admin_index:
-    pattern: /
-    defaults: { _controller: CCDNForumForumBundle:AdminPanel:Index, _locale: en }

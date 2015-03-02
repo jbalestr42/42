@@ -1,7 +1,0 @@
-philemon_ldap_homepage:
-    pattern:  /ldap
-    defaults: { _controller: philemonLdapBundle:Ldap:index }
-
-philemon_ldap_contacts:
-    pattern:  /ldap/contacts
-    defaults: { _controller: philemonLdapBundle:Ldap:contacts }

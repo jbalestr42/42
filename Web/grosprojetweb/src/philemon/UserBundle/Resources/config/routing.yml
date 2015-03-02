@@ -1,4 +1,0 @@
-philemon_profile:
-    pattern:  /profile/{slug}
-    defaults: { _controller: philemonUserBundle:Profile:show }
-

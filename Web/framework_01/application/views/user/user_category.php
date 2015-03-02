@@ -1,1 +1,0 @@
-Vous etes dans le panel Utilisateur

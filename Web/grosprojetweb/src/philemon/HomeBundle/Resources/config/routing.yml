@@ -1,3 +1,0 @@
-philemon_home_homepage:
-    pattern:  /
-    defaults: { _controller: philemonHomeBundle:Home:index }

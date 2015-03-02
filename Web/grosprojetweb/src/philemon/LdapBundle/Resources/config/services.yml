@@ -1,7 +1,0 @@
-parameters:
-#    philemon_ldap.example.class: philemon\LdapBundle\Example
-
-services:
-#    philemon_ldap.example:
-#        class: %philemon_ldap.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
