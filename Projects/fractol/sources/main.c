@@ -1,41 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events.c                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/02 20:10:28 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/01/02 20:29:01 by jbalestr         ###   ########.fr       */
+/*   Created: 2013/12/06 01:10:12 by jbalestr          #+#    #+#             */
+/*   Updated: 2015/03/02 15:14:23 by pciavald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf.h"
-#include <stdlib.h>
+#include "fractol.h"
+#include <mlx.h>
 
-int		key_hook(int keycode, t_env *e)
+int		main(void)
 {
-	(void)keycode;
-	(void)e;
-	return (0);
-}
+	t_env	*e;
 
-int		expose_hook(t_env *e)
-{
-	(void)e;
-	return (0);
-}
-
-int		mouse_hook(int x, int y, t_env *e)
-{
-	(void)x;
-	(void)y;
-	(void)e;
-	return (0);
-}
-
-int		loop_hook(t_env *e)
-{
-	expose_hook(e);
+	if (!(e = ft_envnew()))
+		return (1);
+	mlx_hook(e->win, 2, (1L << 0), key_hook_press, e);
+	mlx_expose_hook(e->win, expose_hook, e);
+	mlx_loop(e->mlx);
 	return (0);
 }

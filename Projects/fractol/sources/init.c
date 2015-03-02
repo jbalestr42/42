@@ -5,46 +5,44 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/02 20:13:09 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/01/02 20:29:40 by jbalestr         ###   ########.fr       */
+/*   Created: 2013/12/06 01:10:12 by jbalestr          #+#    #+#             */
+/*   Updated: 2015/03/02 15:29:06 by pciavald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "fractol.h"
+#include <mlx.h>
 #include <stdlib.h>
 
-void		ft_envdel(t_env *e)
+void		init_screen(t_img *img, void *mlx, int width, int height)
 {
-	int		i;
-	int		j;
+	img->ptr = mlx_new_image(mlx, width, height);
+	img->img = mlx_get_data_addr(img->ptr, &img->bpp, &img->size_line, &img->endian);
+	img->bpp /= 8;
+	img->max_size = img->size_line * height + img->bpp * width;
+}
 
-	i = 0;
+void			ft_envdel(t_env *e)
+{
 	if (!e)
 		return ;
-	if (e->points)
-	{
-		while (i < e->nb_line)
-		{
-			j = 0;
-			while (j < e->size[i])
-				free(e->points[i][j++]);
-			i++;
-		}
-	}
-	if (e->size)
-		free(e->size);
+	if (e->screen.ptr)
+		mlx_destroy_image(e->mlx, e->screen.ptr);
+	if (e->mlx)
+		free(e->mlx);
+	if (e->win)
+		free(e->win);
 	free(e);
 }
 
-t_env		*ft_envnew(void)
+t_env			*ft_envnew(void)
 {
 	t_env	*e;
 
 	if (!(e = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
-	e->screen = NULL;
-	e->points = NULL;
-	e->size = NULL;
-	e->nb_line = 0;
+	e->mlx = mlx_init();
+	e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, NAME);
+	init_screen(&e->screen, e->mlx, WIDTH, HEIGHT);
 	return (e);
 }

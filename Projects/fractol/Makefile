@@ -6,27 +6,27 @@
 #    By: jbalestr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/09/25 09:27:42 by jbalestr          #+#    #+#              #
-#    Updated: 2014/01/02 19:55:40 by jbalestr         ###   ########.fr        #
+#    Updated: 2015/03/02 16:48:08 by pciavald         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = wolf3d
-LMLX = -lSDLmain -lSDL
-FLAGS = -Wall -Werror -Wextra
+NAME = fractol
+LMLX = -L/usr/X11/lib/ -lmlx -lXext -lX11 -lm
+FLAGS = -g -Wall -Werror -Wextra
 IDIR = includes/
 SDIR = sources/
-SRC = $(SDIR)main.c $(SDIR)events.c $(SDIR)draw.c $(SDIR)init.c
+SRC = $(SDIR)main.c $(SDIR)events.c $(SDIR)init.c $(SDIR)draw.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "-> Creating $(NAME)..."
-	@gcc $(FLAGS) -o $@ $^ -I $(IDIR) $(LMLX)
+	@gcc $(FLAGS) -o $@ $^ -I $(IDIR) -I /usr/X11/include/ $(LMLX)
 
 %.o:%.c
 	@echo "-> Compiling $<..."
-	@gcc $(FLAGS) -c -o $@ $< -I $(IDIR) $(LMLX)
+	@gcc $(FLAGS) -c -o $@ $< -I $(IDIR) -I /usr/X11/include/
 
 clean:
 	@echo "-> Cleaning object files..."
@@ -40,4 +40,4 @@ re: fclean all
 
 run: re
 
-.PHONY: all $(NAME) clean fclean re
+.PHONY: clean fclean re
