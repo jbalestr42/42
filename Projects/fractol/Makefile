@@ -6,7 +6,7 @@
 #    By: jbalestr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/09/25 09:27:42 by jbalestr          #+#    #+#              #
-#    Updated: 2015/03/02 16:48:08 by pciavald         ###   ########.fr        #
+#    Updated: 2015/03/02 18:40:21 by pciavald         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LMLX = -L/usr/X11/lib/ -lmlx -lXext -lX11 -lm
 FLAGS = -g -Wall -Werror -Wextra
 IDIR = includes/
 SDIR = sources/
-SRC = $(SDIR)main.c $(SDIR)events.c $(SDIR)init.c $(SDIR)draw.c
+SRC = $(SDIR)main.c $(SDIR)events.c $(SDIR)init.c $(SDIR)draw.c $(SDIR)fractal.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/02 19:57:21 by jbalestr          #+#    #+#             */
-/*   Updated: 2015/03/02 16:48:08 by pciavald         ###   ########.fr       */
+/*   Updated: 2015/03/02 18:40:21 by pciavald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,10 @@
 
 typedef struct	s_fractal
 {
-	float	x_min;
-	float	x_max;
-	float	y_min;
-	float	y_max;
-	int	depth;
-	int	depth_max;
-	float	zoom_x;
-	float	zoom_y;
+	double	zoom;
+	double	move_x;
+	double	move_y;
+
 }		t_fractal;
 
 typedef struct	s_img
@@ -68,5 +64,8 @@ void		ft_envdel(t_env *e);
 t_env *		ft_envnew(void);
 
 void		draw(t_env *e);
+
+int		mandelbrot(int x, int y, int max_iterations);
+int		julia(double cx, double cy, int max_iterations);
 
 #endif
