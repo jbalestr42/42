@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/06 01:10:12 by jbalestr          #+#    #+#             */
-/*   Updated: 2015/03/03 14:01:00 by pciavald         ###   ########.fr       */
+/*   Updated: 2015/03/03 23:13:53 by pciavald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ t_env			*ft_envnew(void)
 	e->move_pos_x = 0;
 	e->move_pos_y = 0;
 	e->pal = init_image(e->mlx, T_COLORS, 256, 1);
+	e->hsv = init_image(e->mlx, T_HSV, 512, 512);
 	return (e);
 }

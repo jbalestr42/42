@@ -6,15 +6,17 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/02 19:57:21 by jbalestr          #+#    #+#             */
-/*   Updated: 2015/03/03 16:45:00 by pciavald         ###   ########.fr       */
+/*   Updated: 2015/03/03 23:13:52 by pciavald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define WIDTH			600
-# define HEIGHT			440
+# define WIDTH			800
+# define HEIGHT			600
+# define HALF_WIDTH		WIDTH / 2
+# define HALF_HEIGHT		HEIGHT / 2
 # define NAME			"Fract'ol"
 
 /*
@@ -25,7 +27,8 @@
 /*
 ** Textures
 */
-# define T_COLORS		"textures/pal.xpm"
+# define T_COLORS		"textures/pal2.xpm"
+# define T_HSV			"textures/hsv.xpm"
 
 /*
 ** Keys
@@ -69,6 +72,7 @@ typedef struct	s_env
 	int	move_pos_x;
 	int	move_pos_y;
 	t_img	pal;
+	t_img	hsv;
 }		t_env;
 
 /*
@@ -86,8 +90,16 @@ void		ft_envdel(t_env *e);
 t_env *		ft_envnew(void);
 
 void		draw(t_env *e);
+void		put_pixel(t_img *img, int x, int y, unsigned int color);
+unsigned int	get_color_from_img(t_img *img, double it, int max_iterations);
+unsigned int	get_color_hsv(t_img *img, double x, double y);
+unsigned int	create_color(int r, int g, int b);
 
 int		mandelbrot(t_env *e, int x, int y, int max_iterations);
+int		mandelbrot_broken(t_env *e, int x, int y, int max_iterations);
+int		mandelbrot_tunnel(t_env *e, int x, int y, int max_iterations);
 int		julia(t_env *e, double cx, double cy, int max_iterations);
+int		burning_ship(t_env *e, double cx, double cy, int max_iterations);
+int		newton(t_env *e, double cx, double cy, int max_iterations);
 
 #endif
