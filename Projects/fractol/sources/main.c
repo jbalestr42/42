@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/06 01:10:12 by jbalestr          #+#    #+#             */
-/*   Updated: 2015/03/02 15:14:23 by pciavald         ###   ########.fr       */
+/*   Updated: 2015/03/03 12:17:14 by pciavald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int		main(void)
 	if (!(e = ft_envnew()))
 		return (1);
 	mlx_hook(e->win, 2, (1L << 0), key_hook_press, e);
+	mlx_hook(e->win, 4, (1L << 2), mouse_hook_press, e);
+	mlx_hook(e->win, 6, (1L << 6), mouse_hook_move, e);
 	mlx_expose_hook(e->win, expose_hook, e);
 	mlx_loop(e->mlx);
 	return (0);

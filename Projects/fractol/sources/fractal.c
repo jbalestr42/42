@@ -1,10 +1,9 @@
 #include "fractol.h"
 
-int mandelbrot(int x, int y, int max_iterations)
+int mandelbrot(t_env *e, int x, int y, int max_iterations)
 {
-	double zoom = 1, moveX = 0, moveY = 0;
-	double cx = 1.5 * (x - WIDTH / 2) / (0.5 * zoom * WIDTH) + moveX;
-	double cy = (y - HEIGHT / 2) / (0.5 * zoom * HEIGHT) + moveY;
+	double cx = 1.5 * (x - e->move_pos_x) / (0.5 * e->zoom * WIDTH) + e->offset_x;
+	double cy = (y - e->move_pos_y) / (0.5 * e->zoom * HEIGHT) + e->offset_y;
 	double zx = 0, zy = 0;
 	int i = 1;
 	while (i < max_iterations)
@@ -21,15 +20,12 @@ int mandelbrot(int x, int y, int max_iterations)
 	return (i);
 }
 
-int julia(double x, double y, int max_iterations)
+int julia(t_env *e, double x, double y, int max_iterations)
 {
-	double zoom = 0.6, moveX = 1, moveY = 1;
-	double zx = 0, zy = 0;
-	// faire varier les parametre avec la souris
-	double cx = -0.7;	//0.285
-	double cy = 0.27015;	//0.01
-	zx = x / (zoom * (WIDTH / 2)) - moveX / zoom;
-	zy = y / (zoom * (HEIGHT / 2)) - moveY / zoom;
+	double cx = -0.7+ e->move_pos_x / (double)WIDTH;	//0.285
+	double cy = 0.27015 - (e->move_pos_y / (double)HEIGHT / 5);	//0.01
+	double zx = 1.5 * (x - WIDTH / 2) / (0.5 * e->zoom * WIDTH) + e->offset_x;
+	double zy = (y - HEIGHT / 2) / (0.5 * e->zoom * HEIGHT) + e->offset_y;
 	int i = 1;
 	while (i < max_iterations)
 	{
