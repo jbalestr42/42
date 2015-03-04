@@ -13,8 +13,8 @@ unsigned int	create_color(int r, int g, int b)
 unsigned int	get_color_hsv(t_img *img, double x, double y)
 {
 	int vx = (double)(x * 100.0 + (double)HALF_WIDTH);
-	int vy = (double)(y *100.0 + (double)HALF_HEIGHT);
-	unsigned int color;
+	int vy = (double)(y * 100.0 + (double)HALF_HEIGHT);
+	unsigned int color =0;
 	int i = vy * img->size_line + vx * img->bpp;
 	if (i > 0 && i < img->max_size)
 	{
@@ -28,7 +28,7 @@ unsigned int	get_color_hsv(t_img *img, double x, double y)
 unsigned int	get_color_from_img(t_img *img, double it, int max_iterations)
 {
 	unsigned int color;
-	int i = (float)it / (float)max_iterations * img->width;
+	int i = it / (double)max_iterations * (double)img->width;
 	i *= img->bpp;
 	if (i > 0 && i < img->max_size)
 	{
@@ -54,8 +54,11 @@ void		put_pixel(t_img *img, int x, int y, unsigned int color)
 
 void			draw(t_env *e)
 {
-	//int max_iterations = 28;
+	//int max_iterations = 48;
 	int max_iterations = sqrt(ABS(2 * sqrt(ABS(1 - sqrt(5 * e->zoom))))) * 66.5;
+	double cx = -1 + (e->move_pos_x / (double)WIDTH);	//02.285
+	double cy = 0.5 - (e->move_pos_y / (double)HEIGHT / 5);	//0.01
+	printf("%f %f\n", cx, cy);
 	printf("%f %f\n", e->offset_x, e->offset_y);
 	printf("%d %d\n", e->move_pos_x, e->move_pos_y);
 	printf("%f\n", e->zoom);
@@ -69,9 +72,10 @@ void			draw(t_env *e)
 		{
 			//calculate the iniial real and imaginary part of z, based on the pixel location and zoom and posiion values
 			//color = newton(e, x, y, max_iterations);
-			//color = julia(e, x, y, max_iterations);
+			color = julia(e, x, y, max_iterations);
 			//color = burning_ship(e, x, y, max_iterations);
-			color = mandelbrot(e, x, y, max_iterations);
+			//color = mandelbrot(e, x, y, max_iterations);
+			//color = mandelbrot_rainbow(e, x, y, max_iterations);
 			//color = mandelbrot_broken(e, x, y, max_iterations);
 			//color = mandelbrot_tunnel(e, x, y, max_iterations);
 

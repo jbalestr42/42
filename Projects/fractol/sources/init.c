@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/06 01:10:12 by jbalestr          #+#    #+#             */
-/*   Updated: 2015/03/03 23:13:53 by pciavald         ###   ########.fr       */
+/*   Updated: 2015/03/04 18:42:34 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	init_screen(t_img *img, void *mlx, int width, int height)
 	img->max_size = img->size_line * height + img->bpp * width;
 }
 
-#include <stdio.h>
 static t_img	init_image(void *mlx, char *path, int width, int height)
 {
 	t_img	img;
@@ -33,7 +32,6 @@ static t_img	init_image(void *mlx, char *path, int width, int height)
 	img.img = mlx_get_data_addr(img.ptr, &img.bpp, &img.size_line, &img.endian);
 	img.bpp /= 8;
 	img.max_size = img.size_line * height + img.bpp * width;
-	printf("%d %d %d %d\n", img.bpp, img.size_line, img.max_size, img.endian);
 	return (img);
 }
 
@@ -59,6 +57,8 @@ t_env			*ft_envnew(void)
 	e->mlx = mlx_init();
 	e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, NAME);
 	init_screen(&e->screen, e->mlx, WIDTH, HEIGHT);
+	e->offset_zoom_x = 0.f;
+	e->offset_zoom_y = 0.f;
 	e->offset_x = 0.f;
 	e->offset_y = 0.f;
 	e->zoom = 1.f;
@@ -66,7 +66,7 @@ t_env			*ft_envnew(void)
 	e->click_pos_y= 0;
 	e->move_pos_x = 0;
 	e->move_pos_y = 0;
-	e->pal = init_image(e->mlx, T_COLORS, 256, 1);
+	e->pal = init_image(e->mlx, T_PAL, 256, 1);
 	e->hsv = init_image(e->mlx, T_HSV, 512, 512);
 	return (e);
 }
