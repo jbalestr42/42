@@ -1,34 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/03/05 16:15:55 by jbalestr          #+#    #+#             */
+/*   Updated: 2015/03/05 18:16:30 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 #include <stdio.h>
 #include <math.h>
 #include <mlx.h>
 
-unsigned int	create_color(int r, int g, int b)
+unsigned int		create_color(int r, int g, int b)
 {
-	int color;
-	color = (b + (g << 8) + (r << 16));
-	return (color);
+	return (b + (g << 8) + (r << 16));
 }
 
-unsigned int	get_color_hsv(t_img *img, double x, double y)
+unsigned int		get_color_from_img(t_env *e, double it, int max_iter)
 {
-	int vx = (double)(x * 100.0 + (double)HALF_WIDTH);
-	int vy = (double)(y * 100.0 + (double)HALF_HEIGHT);
-	unsigned int color =0;
-	int i = vy * img->size_line + vx * img->bpp;
-	if (i > 0 && i < img->max_size)
-	{
-		color = img->img[i + 0];
-		color += img->img[i + 1] << 8;
-		color += img->img[i + 2] << 16;
-	}
-	return color;
-}
+	unsigned int	color;
+	int				i;
+	t_img			*img;
 
-unsigned int	get_color_from_img(t_img *img, double it, int max_iterations)
-{
-	unsigned int color;
-	int i = it / (double)max_iterations * (double)img->width;
+	img = &e->pals[e->current_pal];
+	i = it / (double)max_iter * (double)img->width;
 	i *= img->bpp;
 	if (i > 0 && i < img->max_size)
 	{
@@ -41,9 +40,11 @@ unsigned int	get_color_from_img(t_img *img, double it, int max_iterations)
 	return (color);
 }
 
-void		put_pixel(t_img *img, int x, int y, unsigned int color)
+void				put_pixel(t_img *img, int x, int y, unsigned int color)
 {
-	int i = y * img->size_line + x * img->bpp;
+	int				i;
+
+	i = y * img->size_line + x * img->bpp;
 	if (i > 0 && i < img->max_size)
 	{
 		img->img[i + 0] = color;
@@ -52,33 +53,23 @@ void		put_pixel(t_img *img, int x, int y, unsigned int color)
 	}
 }
 
-void			draw(t_env *e)
+void				draw(t_env *e)
 {
-	//int max_iterations = 48;
-	int max_iterations = sqrt(ABS(2 * sqrt(ABS(1 - sqrt(5 * e->zoom))))) * 66.5;
-	double cx = -1 + (e->move_pos_x / (double)WIDTH);	//02.285
-	double cy = 0.5 - (e->move_pos_y / (double)HEIGHT / 5);	//0.01
-	printf("%f %f\n", cx, cy);
-	printf("%f %f\n", e->offset_x, e->offset_y);
-	printf("%d %d\n", e->move_pos_x, e->move_pos_y);
-	printf("%f\n", e->zoom);
-	printf("%d\n", max_iterations);
-	int color;
-	int x = 0;
+	int				max_iter;
+	int				color;
+	int				x;
+	int				y;
+
+	max_iter = sqrt(ABS(2 * sqrt(ABS(1 - sqrt(5 * e->zoom))))) * 66.5;
+	x = 0;
 	while (x < WIDTH)
 	{
-		int y = 0;
+		y = 0;
 		while (y < HEIGHT)
 		{
-			//calculate the iniial real and imaginary part of z, based on the pixel location and zoom and posiion values
-			//color = newton(e, x, y, max_iterations);
-			color = julia(e, x, y, max_iterations);
-			//color = burning_ship(e, x, y, max_iterations);
-			//color = mandelbrot(e, x, y, max_iterations);
-			//color = mandelbrot_rainbow(e, x, y, max_iterations);
-			//color = mandelbrot_broken(e, x, y, max_iterations);
-			//color = mandelbrot_tunnel(e, x, y, max_iterations);
-
+			e->u.zx = 0.0;
+			e->u.zy = 0.0;
+			color = e->fractal_fun[e->current_fractal](e, x, y, max_iter);
 			put_pixel(&e->screen, x, y, color);
 			y++;
 		}
