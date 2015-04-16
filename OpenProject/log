@@ -1,0 +1,30 @@
+================================================
+ Event log - 13/04/2015
+================================================
+
+[12:00:30] Init GameManager
+[12:00:30] Create Resources Manager
+[12:00:30] Loading 13 file(s).
+==== bob.jpg (7) 142758 bits.
+==== gary.png (8) 158900 bits.
+==== grass.png (9) 3783 bits.
+==== grass32.jpg (11) 1172 bits.
+==== isaac.png (9) 687377 bits.
+==== rock32.png (10) 928 bits.
+==== tile.png (8) 211 bits.
+==== tile32.png (10) 335 bits.
+==== tileLeftDown.png (16) 2875 bits.
+==== tileLeftUp.png (14) 2877 bits.
+==== tileRightDown.png (17) 2868 bits.
+==== tileRightUp.png (15) 2875 bits.
+==== water.png (9) 126 bits.
+[12:00:30] Loading 1 file(s).
+==== Chunkfive_Ex.ttf (16) 457984 bits.
+[12:00:30] Loading 0 file(s).
+[12:00:30] Load Options : Can't open configuration file, default options used...
+[12:00:35] Save Options
+[12:00:35] Destroy GameManager
+
+================================================
+ Event log - 12:00:35
+================================================
