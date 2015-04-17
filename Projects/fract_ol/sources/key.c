@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/05 18:05:21 by jbalestr          #+#    #+#             */
-/*   Updated: 2015/03/05 18:22:13 by jbalestr         ###   ########.fr       */
+/*   Updated: 2015/03/27 20:28:35 by pciavald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,25 @@ void		update_zoom(t_env *e)
 
 void		key_press_color_fractal(int keycode, t_env *e)
 {
-	if (keycode == SHIFT)
+	if (keycode == 65505)
 	{
 		e->current_fractal--;
 		if (e->current_fractal < 0)
 			e->current_fractal = NB_FRACTAL - 1;
 	}
-	else if (keycode == PLUS)
+	else if (keycode == 65451)
 	{
 		e->zoom += e->zoom * 0.1f;
 		update_zoom(e);
 	}
-	else if (keycode == MINUS)
+	else if (keycode == 65453)
 	{
 		e->zoom -= e->zoom * 0.1f;
 		update_zoom(e);
 	}
-	else if (keycode == KEY_1)
+	else if (keycode == 38)
 		e->current_pal = (e->current_pal + 1) % NB_PAL;
-	else if (keycode == KEY_2)
+	else if (keycode == 233)
 	{
 		e->current_pal--;
 		if (e->current_pal < 0)

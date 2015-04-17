@@ -6,28 +6,30 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/02 20:10:28 by jbalestr          #+#    #+#             */
-/*   Updated: 2015/03/10 13:12:59 by jbalestr         ###   ########.fr       */
+/*   Updated: 2015/03/27 20:28:35 by pciavald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <mlx.h>
+#include <stdio.h>
 
 int			key_hook_press(int keycode, t_env *e)
 {
-	if (keycode == ESC)
+	printf("%d\n", keycode);
+	if (keycode == 65307)
 		ft_envdel(e);
-	else if (keycode == LEFT)
+	else if (keycode == 65361)
 		e->offset_x -= 0.1f / e->zoom;
-	else if (keycode == RIGHT)
+	else if (keycode == 65363)
 		e->offset_x += 0.1f / e->zoom;
-	else if (keycode == UP)
+	else if (keycode == 65362)
 		e->offset_y -= 0.1f / e->zoom;
-	else if (keycode == DOWN)
+	else if (keycode == 65364)
 		e->offset_y += 0.1f / e->zoom;
-	else if (keycode == KEY_R)
+	else if (keycode == 114)
 		init_var(e);
-	else if (keycode == TAB)
+	else if (keycode == 65289)
 		e->current_fractal = (e->current_fractal + 1) % NB_FRACTAL;
 	key_press_color_fractal(keycode, e);
 	expose_hook(e);
