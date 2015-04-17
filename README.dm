@@ -1,1 +1,1 @@
-On dirait que c'est fini les copier/coller :)
+Fini les copier/coller, au boulot !
