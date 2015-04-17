@@ -1,0 +1,26 @@
+================================================
+ Event log - 17/03/2015
+================================================
+
+[12:41:01] Init Data Converter
+[12:41:01] Create Resources Manager
+[12:41:01] Found image: ../Resources/Textures/bob.jpg
+[12:41:01] Found image: ../Resources/Textures/gary.png
+[12:41:01] Found image: ../Resources/Textures/grass.png
+[12:41:01] Found image: ../Resources/Textures/grass32.jpg
+[12:41:01] Found image: ../Resources/Textures/isaac.png
+[12:41:01] Found image: ../Resources/Textures/rock32.png
+[12:41:01] Found image: ../Resources/Textures/tile.png
+[12:41:01] Found image: ../Resources/Textures/tile32.png
+[12:41:01] Found image: ../Resources/Textures/tileLeftDown.png
+[12:41:01] Found image: ../Resources/Textures/tileLeftUp.png
+[12:41:01] Found image: ../Resources/Textures/tileRightDown.png
+[12:41:01] Found image: ../Resources/Textures/tileRightUp.png
+[12:41:01] Found image: ../Resources/Textures/water.png
+[12:41:01] Found font: ../Resources/Font/Chunkfive_Ex.ttf
+[12:41:01] Generating data...
+[12:41:01] Destoy Resources Manager
+
+================================================
+ Event log - 12:41:01
+================================================
