@@ -1,5 +1,0 @@
-2013-12-24 12:27 - Dans la description de 'add', remplacement de "deuxieme" par
-"troisieme" (Simple coquille).
-
-2013-12-24 12:51 - Reparation de l'oubli catastrophique de la liste de musiques
-conseillees pour ce sujet.
