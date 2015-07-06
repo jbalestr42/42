@@ -1,0 +1,83 @@
+# ************************************************************************* #
+# ...####....####...######..##..##..######..........#####...######..##..##. #
+# ..##......##..##..##......###.##..##..............##..##....##....##..##. #
+# ...####...##......####....##.###..####............#####.....##....##..##. #
+# ......##..##..##..##......##..##..##........##....##..##....##.....####.. #
+# ...####....####...######..##..##..######....##....##..##....##......##... #
+# .By:......Mdebelle........Jbalestr..........Fcorbel.........Glasset...... #
+# ************************************************************************* #
+
+information
+{
+	numbers of light: 4;
+	numbers of object: 4;
+	point of view: -30, 15, -100;
+	look at: 5, 5, 0;
+	color ambient: 0.2;
+}
+
+light
+{
+	position: 50, 50, -140;
+	color: 0xeeeeee;
+}
+
+Plan
+{
+	scale: 1, 1, 1;
+	normal: 0, 1, 0;
+	rotation: 0, 0, 0;
+	position: 0, 0, 0;
+	diffuse: 0.8;
+	specular: 0.5;
+	reflection: 1.0;
+	refraction: 0.0;
+	color: 0x999999;
+	material: checker3;
+	perlin: 0Xaa22aa, 0Xff11ff, 0Xff11ff;
+}
+
+Sphere
+{
+	position: -5, 6, 0;
+	scale: 1.0, 1, 1;
+	rotation: 0, 0, 0;
+	radius: 6;
+	diffuse: 1.0;
+	specular: 1.0;
+	reflection: 1.0;
+	refraction: 0.0;
+	color: 0xff5555;
+	material: wood;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+Sphere
+{
+	scale: 1, 1, 1;
+	rotation: 0, 0, 0;
+	position: 12, 6, 15;
+	radius: 6;
+	diffuse: 1.0;
+	specular: 1.0;
+	reflection: 1.0;
+	refraction: 0.0;
+	color: 0x5533cc;
+	material: zebra;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+Sphere
+{
+	scale: 1, 1, 1;
+	rotation: 0, 0, 0;
+	position: 12, 6, -15;
+	radius: 6;
+	diffuse: 0.8;
+	specular: 0.8;
+	reflection: 1.0;
+	refraction: 0.0;
+	color: 0xfdee23;
+	material: marble;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}

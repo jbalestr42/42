@@ -1,0 +1,33 @@
+body {background-image: url("https://intra.42.fr/static6669/img/background.gif"); background-repeat: no-repeat;}
+table {width: 100%; height:80%;}
+caption {font-size: 3vw;}
+td {width: 5%; text-align:center;}
+sub {font-size:1vw;}
+sup {font-size:1vw;}
+.elem {border:solid 1px;}
+.elem_font {font-size:2vw;}
+.nonmetals {background-color: #ab91ff; border:solid 1px black;}
+.metalloids {background-color: #91ff9e; border:solid 1px black;}
+.alkali_metal {background-color: #ffcf91; border:solid 1px black;}
+.alkaline_metal {background-color: #ffdf91; border:solid 1px black;}
+.other_metal {background-color: #fff991; border:solid 1px black;}
+.transition_metal {background-color: #ecff91; border:solid 1px black;}
+.lanthanoids {background-color: #d2ff91; border:solid 1px black;}
+.actinoids {background-color: #b8ff91; border:solid 1px black;}
+.halogens {background-color: #f991ff; border:solid 1px black;}
+.noble_gases {background-color: #91dfff; border:solid 1px black;}
+.unknown {background-color: #c8c8c8; border:solid 1px black;}
+.subd {text-align:left; font-size:13px;}
+.supd {text-align:right; font-size:13px;}
+
+@media (min-width: 400) {body {font-size: 3vw;}}
+@media (min-width: 600) {body {font-size: 3vw;}}
+@media (min-width: 800) {body {font-size: 3vw;}}
+@media (min-width: 1200) {body {font-size: 3vw;}}
+@media (min-width: 1400) {body {font-size: 3vw;}}
+
+@media (max-width: 400) {body {font-size: 3vw;}}
+@media (max-width: 600) {body {font-size: 3vw;}}
+@media (max-width: 800) {body {font-size: 3vw;}}
+@media (max-width: 1200) {body {font-size: 3vw;}}
+@media (max-width: 1400) {body {font-size: 3vw;}}

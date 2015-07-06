@@ -1,0 +1,103 @@
+# ************************************************************************* #
+# ...####....####...######..##..##..######..........#####...######..##..##. #
+# ..##......##..##..##......###.##..##..............##..##....##....##..##. #
+# ...####...##......####....##.###..####............#####.....##....##..##. #
+# ......##..##..##..##......##..##..##........##....##..##....##.....####.. #
+# ...####....####...######..##..##..######....##....##..##....##......##... #
+# .By:......Mdebelle........Jbalestr..........Fcorbel.........Glasset...... #
+# ************************************************************************* #
+
+information
+{
+	numbers of light: 1;
+	numbers of object: 2;
+	point of view: 0, 10, -150;
+	look at: 0, 3, 0;
+	color ambient: 0.2;
+}
+
+light
+{
+	position: 10, 50, -100;
+	color: 0xeeeeee;
+}
+
+Sphere
+{
+	position: 10, 5, 0;
+	scale: 1.0, 1.0, 1;
+	rotation: 0, 0, 0;
+	radius: 2;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0x551111;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+Sphere
+{
+	scale: 1, 1, 1;
+	rotation: 0, 0, 0;
+	position: 2, 10, 15;
+	radius: 10;
+	diffuse: 0.8;
+	specular: 0.6;
+	reflection: 1.0;
+	refraction: 0.0;
+	color: 0xEE0000;
+	material: wd;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+Parabole
+{
+	coef: 0.1;
+	position: 9, 9, 0;
+	rotation: -1, 0, 0;
+	color: 0xee0010;
+}
+
+Hyperbole
+{
+	scale: 0.2, 0.2, 0.2;
+	coef: 0.1;
+	open: 5;
+	position: 39, 19, 0;
+	rotation: 2, 0, 0.4;
+	diffuse: 0.8;
+	specular: 0.8;
+	color: 0xf011ee;
+}
+
+Cone
+{
+	position: 19, 9, 0;
+	scale: 0.2, 0.2, 0.2;
+	rotation: 1, 0, 0;
+	coef: 0.2;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0xff55ff;
+	mat: BOIS;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+Cylinder
+{
+	scale: 0.2, 0.2, 0.2;
+	rotation: 0, 1, 0;
+	position: 19, 9, 0;
+	radius: 5;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0x5555ff;
+	mat: BOIS;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}

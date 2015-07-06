@@ -1,0 +1,35 @@
+- lire une premiere fois la chaine et en extraire tous les noeuds
+   - creer une structre de type noeud (val, visited, int* voisin, int nb_voisin, noeud *next)
+   - creer une liste qui contient tous les noeuds
+- malloc des voisins (nb_noeuds - 1)
+- lire une seconde fois la chaine, pour chaque mot, définir les deux noeuds impliqués
+   - ajouter le lien dans chacun des deux noeuds
+      - ajouter le numero de voisin dans le tableau de voisin a la position nb_voisin
+      - augmenter le nombre de voisin
+
+max = 0;
+tmpmax = 0;
+for each node
+{
+	for each node
+		node->visited = 0;
+	recursve(nodes, node, tmpmax);
+	if (tmp_max > max)
+		max = tmp_max;
+}
+
+recursive (nodes, node, max)
+{
+	node	tmp;
+
+	for (i = 0; i < node->nb_voisin; i++)
+	{
+		tmp = find_node(node->voisin[i]);
+		if (tmp->visted = 0)
+		{
+			tmp->visited = 1
+			max++;
+			recursive (nodes, tmp, max);
+		}
+	}
+}

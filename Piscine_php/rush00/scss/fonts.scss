@@ -1,0 +1,4 @@
+@import 'compass/css3';
+@include font-face("Open Sans", font-files("open-sans/OpenSans-Regular.ttf"));
+@include font-face("Open Sans Bold", font-files("open-sans/OpenSans-Bold.ttf"));
+@include font-face("Open Sans Light Italic", font-files("open-sans/OpenSans-LightItalic.ttf"));

@@ -1,0 +1,378 @@
+@import 'compass/reset';
+@import 'compass/css3';
+@import 'compass/typography';
+
+@import 'bloc';
+@import 'table';
+@import 'smart-list';
+@import 'fonts';
+
+$c1: #bfd28a;
+
+$base-font-size: 16px;
+$base-line-height: 24px;
+
+@include establish-baseline;
+
+* { @include box-sizing(border-box); }
+
+body {
+	font-family: "Open Sans";
+	padding: 1em;
+	color: rgba(black, .8);
+}
+
+strong {
+	font-family: "Open Sans Bold";
+}
+
+.btn {
+	display: inline-block;
+	@include border-radius(3px);
+	background: $c1;
+	padding: 10px;
+	border: none;
+	border: 1px solid darken($c1, 20);
+	cursor: pointer;
+	color: darken($c1, 40);
+	font-size: 16px;
+	@include text-shadow(lighten($c1, 20) 0 1px 0);
+	&:hover {
+		background: lighten($c1, 10);
+		text-decoration: none;
+	}
+	&:active {
+		border-color: darken($c1, 30);
+	}
+}
+
+a {
+	text-decoration: none;
+	color: darken($c1, 20);
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+img {
+	display: block;
+}
+
+body {
+	> header {
+		overflow: hidden;
+		display: flex;
+		align-items: flex-start;
+		@include margin-trailer(1);
+		@media screen and (max-width: 970px) {
+			flex-wrap: wrap;
+			> div {
+				width: 100%;
+				text-align: center;
+			}
+		}
+		> ul {
+			background: rgba(black, .1);
+			display: flex;
+			padding-top: .25em;
+			padding-left: .25em;
+			margin-left: auto;
+			@media screen and (max-width: 970px) {
+				margin-left: 0;
+				width: 100%;
+				flex-direction: column-reverse;
+			}
+			> li {
+				border: 1px solid red;
+				padding: .25em;
+				margin-right: .25em;
+				margin-bottom: .25em;
+			}
+		}
+	}
+}
+
+.container {
+	display: flex;
+	align-items: flex-start;
+	@include margin-trailer(.5);
+	@media screen and (max-width: 970px) {
+		flex-wrap: wrap;
+	}
+	> nav {
+		margin-right: 2em;
+		width: 350px;
+		@media screen and (max-width: 970px) {
+			width: 100%;
+			margin: 0;
+			margin-bottom: 1em;
+		}
+		> ul {
+			width: 350px;
+			margin-bottom: 1em;
+			background: darken(white, 10);
+			border: 1px solid rgba(black, .1);
+			@include text-shadow(rgba(white, .8) 0 1px);
+			@include box-shadow(
+			rgba(black, .3) 0 0 5px
+			);
+			@media screen and (max-width: 970px) {
+				width: 100%;
+				margin: 0;
+				margin-bottom: 1em;
+			}
+			> li {
+				&.validate {
+					border-top: none;
+					.btn {
+						@include border-radius(0);
+					}
+				}
+				&.active {
+					background: rgba(0,0,0,.6);
+					> a {
+						color: white;
+						@include text-shadow(none);
+					}
+				}
+				> a, span.title {
+					> i {
+						margin-right: 1em;
+					}
+					display: block;
+					color: rgba(black, .4);
+					text-decoration: none;
+					padding-left:1em;
+					@include padding-leader(1);
+					@include padding-trailer(1);
+					@media screen and (max-width: 970px) {
+						@include padding-leader(.5);
+						@include padding-trailer(.5);
+					}
+				}
+				border-top: 1px solid rgba(white, .3);
+				border-bottom: 1px solid rgba(black, .1);
+				&:first-child {
+					border-top: none;
+				}
+			}
+		}
+	}
+	> section {
+		min-height: 600px;
+		@media screen and (max-width: 970px) {
+			width: 100%;
+			flex: initial;
+		}
+		flex: 1;
+	}
+}
+
+body {
+	> footer {
+		border-top: 1px dashed rgba(black, .1);
+		padding-top: 1em;
+		> .lists {
+			font-size: 13px;
+			display:flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			> ul {
+				min-width: 350px;
+			}
+		}
+		> .copyright {
+			text-align: right;
+			margin-top: 1em;
+			padding: 1em;
+			font-size: 13px;
+		}
+	}
+}
+
+h1 {
+	font-family: "Open Sans Light Italic";
+	color: $c1;
+	font-size: 2em;
+	line-height: 2em;
+	padding-left: .5em;
+	@include border-radius(5px);
+}
+
+ul.articles-list {
+	display:flex;
+	flex-wrap: wrap;
+	> li {
+		&:hover {
+			.name {
+				background: $c1;
+			}
+		}
+	}
+}
+
+ul.articles-list > li > a {
+	position: relative;
+	color: rgba(white, .8);
+	margin-right: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	> img {
+		width: 200px;
+		height: 200px;
+	}
+}
+
+ul.articles-list > li > a > .name {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	text-align: center;
+	padding: 1em;
+	background: rgba(0,0,0,.5);
+}
+
+ul.articles-list > li > a > .price {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.article {
+	position: relative;
+	.price {
+		position: absolute;
+		top: 0; right: 0;
+		font-family: "Open Sans Bold";
+		font-size: 36px;
+		display: block;
+		width: 130px;
+		height: 130px;
+		border-radius: 130px;
+		background: white;
+		border: 2px solid $c1;
+		padding-top: 52px;
+		text-align: center;
+	}
+	> img {
+		float: left;
+		margin-right: 10px;
+		margin-bottom: 10px;
+	}
+}
+
+ul.errors {
+	margin-bottom: .5em;
+	background: rgba(#9a4d4d, .3);
+	color: #9a4d4d;
+	padding: 1em 1em 1em 2em;
+	border: 1px solid rgba(#9a4d4d, .2);
+	@include border-radius(5px);
+	list-style-type: disc;
+	&.unstyled {
+		list-style-type: none;
+		padding-left: 1em;
+	}
+}
+
+.success {
+	margin-bottom: .5em;
+	background: rgba(#5a8643, .3);
+	color: #5a8643;
+	padding: 1em 1em 1em 1em;
+	border: 1px solid rgba(#5a8643, .2);
+	@include border-radius(5px);
+}
+
+.flex-centered {
+	display: flex;
+	align-items: center;
+	img {
+		margin: 1em;
+	}
+}
+
+hr {
+	border:none;
+	border-bottom: 1px dashed rgba(black, .1);
+}
+
+.present-list {
+	display: flex;
+	flex-wrap: wrap;
+	> li {
+		margin-right: 1em;
+		margin-bottom: 1em;
+	}
+	img {
+		@include filter(grayscale(100%));
+		&:hover {
+			@include filter(grayscale(0%));
+		}
+	}
+}
+
+.header-right {
+	margin-left: auto;
+	padding: .5em;
+	border: 1px dashed rgba(black, .1);
+	form {
+		width: 300px;
+		input[type=text], input[type=password] {
+			min-width: 0;
+			width: 100%;
+		}
+	}
+	a {
+		margin-top: 5px;
+	}
+}
+
+ul.selection {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 1em;
+	> li {
+		font-size: 13px;
+		margin-right: 5px;
+		margin-bottom: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		a {
+			color: rgba(black, .7);
+		}
+		&.selected {
+			background: $c1;
+		}
+	}
+}
+
+ul.cart {
+	ul {
+		margin: 0 1em 1em 1em;
+		padding: 3px;
+		> li {
+			background: white;
+			display: flex;
+			margin-bottom: 5px;
+			span.quantity {
+				background: red;
+				padding: 0 3px;
+				margin-right: 5px;
+				font-family: "Open Sans Bold";
+				color: white;
+				background: rgba(black, .6);
+				@include text-shadow(none);
+			}
+			a {
+				margin-left: auto;
+				margin-right: 5px;
+				color: #b45858;
+				&:hover {
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}

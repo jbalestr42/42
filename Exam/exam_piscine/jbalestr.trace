@@ -1,0 +1,236 @@
+EX: auteur
+Note = 1
+
+EX: aff_z
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpLsgu32deepthought-work-directory/aff_z.c
+
+$ diff --suppress-common-lines /tmp/tmp9cexyEdeepthoughtht-compare-output /tmp/tmpVZsQxKdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_print_numbers
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmp9P_abYdeepthought-work-directory/ft_print_numbers.c
+
+$ diff --suppress-common-lines /tmp/tmpHI3ZKYdeepthoughtht-compare-output /tmp/tmpBvAX_gdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_putstr
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpkaVK02deepthought-work-directory/ft_putstr.c
+
+$ diff --suppress-common-lines /tmp/tmpvBIFDLdeepthoughtht-compare-output /tmp/tmpstfg7Zdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_strlen
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpDhFzPxdeepthought-work-directory/ft_strlen.c
+
+$ diff --suppress-common-lines /tmp/tmphsQxgzdeepthoughtht-compare-output /tmp/tmpbljxcodeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_swap
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpXrbeLydeepthought-work-directory/ft_swap.c
+
+$ diff --suppress-common-lines /tmp/tmpi9dNtDdeepthoughtht-compare-output /tmp/tmpqrpcRYdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_djamal
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpFCTmDzdeepthought-work-directory/ft_djamal.c
+
+$ diff --suppress-common-lines /tmp/tmpekHaSEdeepthoughtht-compare-output /tmp/tmp0oRoRFdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_strcapitalize
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpCtIEKzdeepthought-work-directory/ft_strcapitalize.c
+
+$ diff --suppress-common-lines /tmp/tmpZkqD4Zdeepthoughtht-compare-output /tmp/tmpIaU1kVdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: aff_first_param
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpuWXE4mdeepthought-work-directory/aff_first_param.c
+
+$ diff --suppress-common-lines /tmp/tmpzuRALGdeepthoughtht-compare-output /tmp/tmpA1EaUAdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ulstr
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpdP1Wzwdeepthought-work-directory/ulstr.c
+
+$ diff --suppress-common-lines /tmp/tmpF2s4v0deepthoughtht-compare-output /tmp/tmpGygt2Fdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_strcpy
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpvQesV7deepthought-work-directory/ft_strcpy.c
+
+$ diff --suppress-common-lines /tmp/tmpljOHAAdeepthoughtht-compare-output /tmp/tmpiiVIHHdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: half_str
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmphi6Bpedeepthought-work-directory/half_str.c
+
+$ diff --suppress-common-lines /tmp/tmpMseJa1deepthoughtht-compare-output /tmp/tmpOV8eqrdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: rotone
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpKGaOhzdeepthought-work-directory/rotone.c
+
+$ diff --suppress-common-lines /tmp/tmpTIt3NHdeepthoughtht-compare-output /tmp/tmpDmbC6Vdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_strcmp
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpKA7ohsdeepthought-work-directory/ft_strcmp.c
+
+$ diff --suppress-common-lines /tmp/tmpbmweAmdeepthoughtht-compare-output /tmp/tmp_I1kpTdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: wdmatch
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpuUpSOFdeepthought-work-directory/wdmatch.c
+
+$ diff --suppress-common-lines /tmp/tmprHF9q3deepthoughtht-compare-output /tmp/tmpqwxjVRdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_strrev
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpJTUfF4deepthought-work-directory/ft_strrev.c
+
+$ diff --suppress-common-lines /tmp/tmpP4CPz2deepthoughtht-compare-output /tmp/tmpdIWVRvdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: union
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpV2C1oSdeepthought-work-directory/union.c
+
+$ diff --suppress-common-lines /tmp/tmp9UBcuMdeepthoughtht-compare-output /tmp/tmpwCTKzndeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_strdup
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpNhP5ygdeepthought-work-directory/ft_strdup.c
+
+$ diff --suppress-common-lines /tmp/tmp4RMjGFdeepthoughtht-compare-output /tmp/tmpYy5Wgodeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_range
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmp76oNPwdeepthought-work-directory/ft_range.c
+
+$ diff --suppress-common-lines /tmp/tmpsDL7xIdeepthoughtht-compare-output /tmp/tmpSRKxcpdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: inter
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmplK5Yhgdeepthought-work-directory/inter.c
+
+$ diff --suppress-common-lines /tmp/tmp4yhrSgdeepthoughtht-compare-output /tmp/tmpIK6iZRdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: epur_str
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpS5_QsLdeepthought-work-directory/epur_str.c
+
+$ diff --suppress-common-lines /tmp/tmpRLjsJ7deepthoughtht-compare-output /tmp/tmpS4mDnMdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: rostring
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmp982pU0deepthought-work-directory/rostring.c
+
+$ diff --suppress-common-lines /tmp/tmp8eh4lrdeepthoughtht-compare-output /tmp/tmpZmm1aQdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: tab_mult
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpOkTafwdeepthought-work-directory/tab_mult.c
+
+$ diff --suppress-common-lines /tmp/tmpT9kHjLdeepthoughtht-compare-output /tmp/tmpr6gRE7deepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: str_maxlenox
+Aborted: No such file or directory: 'ex22/str_maxlenoc.c'
+Note = 0
+
+EX: ft_sort_params
+Aborted: No such file or directory: 'ex23/ft_sort_params.c'
+Note = 0
+
+EX: ft_split
+Aborted: No such file or directory: 'ex24/ft_split.c'
+Note = 0
+
+EX: ft_list_size
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpuyjaZZdeepthought-work-directory/ft_list_size.c
+
+$ diff --suppress-common-lines /tmp/tmpPzwF9Fdeepthoughtht-compare-output /tmp/tmp8rpq5Xdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: ft_list_foreach
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmp_8ylp_deepthought-work-directory/ft_list_foreach.c
+
+$ diff --suppress-common-lines /tmp/tmpiLG8WVdeepthoughtht-compare-output /tmp/tmpis_GTIdeepthoughtht-compare-output | cat -e
+Good !
+Note = 1
+
+EX: count_island
+
+$ gcc -fno-builtin -fno-stack-protector -c /tmp/tmpncN63jdeepthought-work-directory/main.c
+
+$ diff --suppress-common-lines test-user test-correction | cat -e
+KO :(
+Difference: < le votre, > le notre
+1c1$
+< ./user_exe 'test_count_island0'  got killed by a: Segmentation Fault$
+\ No newline at end of file$
+---$
+> $
+
+Note = 0
+
+EX: secu1
+Good!
+Note = 1
+
+EX: secu2
+Good!
+Note = 1
+
+EX: secu3
+Good!
+Note = 1
+
+Note Finale: 28
+Commentaire: auteur: OK (1 pts) / aff_z: OK (1 pts) / ft_print_numbers: OK (1 pts) / ft_putstr: OK (1 pts) / ft_strlen: OK (1 pts) / ft_swap: OK (1 pts) / ft_djamal: OK (1 pts) / ft_strcapitalize: OK (1 pts) / aff_first_param: OK (1 pts) / ulstr: OK (1 pts) / ft_strcpy: OK (1 pts) / half_str: OK (1 pts) / rotone: OK (1 pts) / ft_strcmp: OK (1 pts) / wdmatch: OK (1 pts) / ft_strrev: OK (1 pts) / union: OK (1 pts) / ft_strdup: OK (1 pts) / ft_range: OK (1 pts) / inter: OK (1 pts) / epur_str: OK (1 pts) / rostring: OK (1 pts) / tab_mult: OK (1 pts) / str_maxlenox: Rendu incomplet / ft_sort_params: Rendu incomplet / ft_split: Rendu incomplet / ft_list_size: OK (1 pts) / ft_list_foreach: OK (1 pts) / count_island: 0 pts / secu1: OK (1 pts) / secu2: OK (1 pts) / secu3: OK (1 pts)
