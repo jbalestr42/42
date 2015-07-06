@@ -1,0 +1,20 @@
+<- Vector ----------------------------------------------------------------------
+The Vector class handles x, y, z direction.
+
+An instance can be constructed from destination, origine value:
+new Vector( array( 'dest' => new Vertex(...), 'orig' => new Vertex(...) ) );
+
+w is optional and set by default as 1.0.
+
+The class provide getters for each variables and the following methods:
+float    magnitude();
+Vector   normalize();
+Vector   add(Vector);
+Vector   sub(Vector);
+Vector   opposite();
+Vector   scalarProduct(Vector);
+Vector   dotProduct(Vector);
+Vector   crossProduct(Vector);
+float    cos(Vector);
+
+---------------------------------------------------------------------- Vector ->

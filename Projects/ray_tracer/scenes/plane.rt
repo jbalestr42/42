@@ -1,0 +1,229 @@
+# ************************************************************************* #
+# ...####....####...######..##..##..######..........#####...######..##..##. #
+# ..##......##..##..##......###.##..##..............##..##....##....##..##. #
+# ...####...##......####....##.###..####............#####.....##....##..##. #
+# ......##..##..##..##......##..##..##........##....##..##....##.....####.. #
+# ...####....####...######..##..##..######....##....##..##....##......##... #
+# .By:......Mdebelle........Jbalestr..........Fcorbel.........Glasset...... #
+# ************************************************************************* #
+
+information
+{
+	numbers of light: 3;
+	numbers of object: 12;
+	point of view: -100, 50, -100;
+	look at: 0, 0, 0;
+	color ambient: 0.1;
+}
+
+light
+{
+	position: 20, 50, -100;
+	color: 0xeeeeee;
+}
+
+light
+{
+	position: 10, 60, -100;
+	color: 0xffaaaa;
+}
+
+light
+{
+	position: 0, 50, -100;
+	color: 0xeeeeaa;
+}
+
+#rond de l'helice
+Sphere
+{
+	position: -10, 0, 0;
+	scale: 1.0, 1.0, 1.0;
+	rotation: 0, 0, 0;
+	radius: 0.8;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0x2ecc71;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#pal de l'helice
+Sphere
+{
+	position: -100, -2.5, 0;
+	scale: 0.1, 1.0, 0.3;
+	rotation: 0, 0, 0;
+	radius: 1.8;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0xf1c40f;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#pal de l'helice
+Sphere
+{
+	position: -100, 2.5, 0;
+	scale: 0.1, 1.0, 0.3;
+	rotation: 0, 0, 0;
+	radius: 1.8;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0xf1c40f;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+
+#pal de l'helice
+Sphere
+{
+	position: -100, 0, -2.5;
+	scale: 0.1, 0.3, 1.0;
+	rotation: 0, 0, 0;
+	radius: 1.8;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0xf1c40f;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#pal de l'helice
+Sphere
+{
+	position: -100, 0, 2.5;
+	scale: 0.1, 0.3, 1.0;
+	rotation: 0, 0, 0;
+	radius: 1.8;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0xf1c40f;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+
+#corp de l'avion
+Sphere
+{
+	position: 0, 0, 0;
+	scale: 1.0, 0.28, 0.3;
+	rotation: 0, 0, 0;
+	radius: 10;
+	diffuse: 0.5;
+	specular: 0.6;
+	reflection: 0.4;
+	refraction: 0.0;
+	color: 0x2980b9;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#ailes
+Sphere
+{
+	position: -10, -20, 0;
+	scale: 0.2, 0.05, 1.0;
+	rotation: 0, 0, 0;
+	radius: 12;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0xc0392b;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#ail arriere
+Sphere
+{
+	position: 50, 5, 0;
+	scale: 0.2, 0.01, 1.0;
+	rotation: 0, 0, 0;
+	radius: 6;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0xc0392b;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#arriere
+Sphere
+{
+	position: 28, 3, 0;
+	scale: 0.3, 1.0, 0.01;
+	rotation: 0, 0, 0;
+	radius: 3;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0xc0392b;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#pilote
+Sphere
+{
+	position: -1, 3, 0;
+	scale: 1.0, 1.0, 1.0;
+	rotation: 0, 0, 0;
+	radius: 2.4;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 1.0;
+	color: 0xecf0f1;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#tete de pilote
+Sphere
+{
+	position: -1, 3.5, 0;
+	scale: 1.0, 1.0, 1.0;
+	rotation: 0, 0, 0;
+	radius: 1.2;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 0.0;
+	refraction: 0.0;
+	color: 0x34495e;
+	material: m;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}
+
+#sur l'ocean
+Plan
+{
+	scale: 1, 1, 1;
+	normal: 0, 1, 0;
+	rotation: 0, 0, 0;
+	position: 0, -10, 0;
+	diffuse: 0.8;
+	specular: 1.0;
+	reflection: 1.0;
+	refraction: 0.0;
+	color: 0x9999FF;
+	material: NO_MAT;
+	perlin: 0Xff11ff, 0Xff11ff, 0Xff11ff;
+}

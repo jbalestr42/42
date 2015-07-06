@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<style>
+			#ballon
+			{
+				width: 200px;
+				height: 200px;
+				background: red;
+				border-radius: 50%;
+			}
+		</style>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	</head>
+	<body>
+		<script language="javascript">
+			var count = 0;
+			function changeSize (el){
+				var size = $('#ballon').width() + 10;
+				if (size > 420)
+					size = 200;
+				$(el).css({height:size+'px'});
+				$(el).css({width:size+'px'});
+				count++;
+				if (count > 2)
+					count = 0;
+				if (count == 0)
+					$(el).css('background-color', 'red');
+				else if (count == 1)
+					$(el).css('background-color', 'green');
+				else if (count == 2)
+					$(el).css('background-color', 'blue');
+			}
+			function mouseOut(el){
+				var size = $('#ballon').width() - 5;
+				if (size < 200)
+					size = 200;
+				$(el).css({height:size+'px'});
+				$(el).css({width:size+'px'});
+				count--;
+				if (count < 0)
+					count = 2;
+				if (count == 0)
+					$(el).css('background-color', 'red');
+				else if (count == 1)
+					$(el).css('background-color', 'green');
+				else if (count == 2)
+					$(el).css('background-color', 'blue');
+			}
+		</script>
+		<div id="ballon" onMouseOut="mouseOut(this)" onClick="changeSize(this)"><div>
+	</body>
+</html>

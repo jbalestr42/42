@@ -1,0 +1,2 @@
+
+Fatal error: Class CrippledSoldier contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (Fighter::fight) in /Volumes/Data/nfs/zfs-student-2/users/2013/jbalestr/42/PHP/j07/ex06/test2.php on line 6

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	</head>
+	<body>
+		<input id="leftop" type="text" name="leftop">
+		<select id="op" name="mydropdown">
+			<option value="+">+</option>
+			<option value="-">-</option>
+			<option value="*">*</option>
+			<option value="/">/</option>
+			<option value="%">%</option>
+		</select>
+		<input id="rightop" type="text" name="rightop">
+		<input id="btn" type="submit" value="Try me!" onclick="compute()"/>
+		<script>
+			setInterval(function () { alert("Please, use me..."); }, 30000);
+			function compute(){
+				var l = $('#leftop').val();
+				var r = $('#rightop').val();
+				var op = $('#op').val();
+				if (op == '/' || op == '%')
+				{
+					if (r == 0)
+					{
+						console.log("It\'s over 9000!");
+						return;
+					}
+				}
+				if (!is_int(l) || !is_int(r) || l < 0 || r < 0)
+				{
+					console.log("Error :(");
+					return;
+				}
+				var res;
+				res = eval(l + op + r);
+				console.log(res);
+				alert(res);
+			}
+			function is_int(value){
+				if((parseFloat(value) == parseInt(value)) && !isNaN(value))
+					return true;
+				return false;
+			}
+		</script>
+	</body>
+</html>

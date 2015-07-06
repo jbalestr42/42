@@ -1,0 +1,30 @@
+@import 'fonts';
+
+ul.smart-list {
+	display: flex;
+	flex-wrap: wrap;
+	> li {
+		min-width: 150px;
+		> a {
+			text-decoration: none;
+			color: rgba(black, .5);
+			font-family: "Open Sans Bold";
+			display: block;
+			background: rgba(black, .2);
+			margin: 0 1em 1em 0;
+			text-align: center;
+			padding: 1em;
+			@include box-shadow(rgba(black, .5) 0 0 5px);
+			border: 1px solid rgba(white, .5);
+			> i {
+				font-size: 48px;
+				display: block;
+				padding: 20px 0;
+			}
+			&:hover {
+				background: rgba(black, .5);
+				color: rgba(white, .8);
+			}
+		}
+	}
+}

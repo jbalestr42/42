@@ -1,0 +1,41 @@
+.bloc {
+	position: relative;
+	background: rgba(black, .05);
+	border: 1px dashed rgba(black, .2);
+	padding: 1em;
+	margin-bottom: 1em;
+	margin-top: 2em;
+	> h3 {
+		position: absolute;
+		left: 0;
+		top: -30px;
+		height: 30px;
+		padding-left: .5em;
+		padding-right: .5em;
+		padding-top: 5px;
+		background: rgba(black, .5);
+		color: rgba(white, .7);
+		font-size: 13px;
+		line-height: 18px;
+	}
+}
+
+form {
+	input[type=text], input[type=password], input[type=number], textarea {
+		font-size: 16px;
+		padding: .5em;
+	}
+	input[type=text] {
+		min-width: 400px;
+	}
+	.field {
+		margin-bottom: 1em;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+	.full {
+		display: block;
+		width: 100%;
+	}
+}
