@@ -1,0 +1,13 @@
+; -------------
+; sample.avm -
+; -------------
+
+push int8(23)
+	print
+push int8(7)
+	print
+	dump
+	sub
+	print
+	dump
+exit
