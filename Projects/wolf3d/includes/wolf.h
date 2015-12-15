@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/02 19:57:21 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/01/19 22:49:09 by jbalestr         ###   ########.fr       */
+/*   Updated: 2015/07/09 15:20:29 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@
 /*
 ** Keys
 */
-# define ESC			65307
-# define LEFT			65361
-# define UP				65362
-# define RIGHT			65363
-# define DOWN			65364
+# define ESC			53//65307
+# define LEFT			0//65361
+# define UP				13//65362
+# define RIGHT			2//65363
+# define DOWN			1//65364
 # define PLUS			65451
 # define MOINS			65453
 # define KEY_W			119

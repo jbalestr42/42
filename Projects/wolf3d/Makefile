@@ -6,12 +6,12 @@
 #    By: jbalestr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/09/25 09:27:42 by jbalestr          #+#    #+#              #
-#    Updated: 2014/01/19 22:55:01 by jbalestr         ###   ########.fr        #
+#    Updated: 2015/07/09 15:16:14 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = wolf3d
-LMLX = -L/usr/X11/lib/ -lmlx -lXext -lX11 -lm
+LMLX = -L/usr/local/lib/ -lmlx -lm -framework OpenGL -framework AppKit
 FLAGS = -g -Wall -Werror -Wextra
 IDIR = includes/
 SDIR = sources/
@@ -26,11 +26,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "-> Creating $(NAME)..."
-	@gcc $(FLAGS) -o $@ $^ -I $(IDIR) -I /usr/X11/include/ $(LMLX)
+	@gcc $(FLAGS) -o $@ $^ -I $(IDIR) -I /usr/local/include/ $(LMLX)
 
 %.o:%.c
 	@echo "-> Compiling $<..."
-	@gcc $(FLAGS) -c -o $@ $< -I $(IDIR) -I /usr/X11/include/
+	@gcc $(FLAGS) -c -o $@ $< -I $(IDIR) -I /usr/local/include/
 
 clean:
 	@echo "-> Cleaning object files..."

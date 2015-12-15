@@ -6,18 +6,20 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/02 20:10:28 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/01/19 23:05:13 by jbalestr         ###   ########.fr       */
+/*   Updated: 2015/07/09 15:19:31 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 #include <mlx.h>
 #include <time.h>
+#include <stdio.h>
 
 int				key_hook_press(int keycode, t_env *e)
 {
 	int		i;
 
+	printf("%d\n",keycode);
 	i = 0;
 	while (i < NB_KEY_EVENT)
 	{

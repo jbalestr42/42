@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <array>
+#include <vector>
 #include <cctype>
 
 int main(int argc, char **argv)
@@ -11,21 +11,27 @@ int main(int argc, char **argv)
 		return (1);
 	}
 
-	int i = 0;
-	int j = 0;
-	std::array<std::string, 0> words;
-	while (argv[1][i])
+	std::vector<std::string> words;
+	std::string str = argv[1];
+	std::string newExpr;
+	for (std::string::iterator it = str.begin(); it != str.end(); ++it)
 	{
-		if (isdigit(argv[1][i]))
+		if (isdigit(*it))
+			newExpr.push_back(*it);
+		else
 		{
-			words[j] += argv[1][i];
+			if (newExpr.length())
+			{
+				words.push_back(newExpr);
+				newExpr = "";
+			}
 		}
-		else if (argv[1][i] == ' ')
-			j++;
-		i++;
 	}
-	for (auto it = words.begin(); auto it = words.begin() != words.end(); auto it = words.begin()++)
-		std::cout << *it << std::endl;
-	
+	if (newExpr.length() > 0)
+		words.push_back(newExpr);
+
+	for (std::vector<std::string>::iterator it = words.begin(); it != words.end(); it++)
+		std::cout << (*it) << std::endl;
+
 	return (0);
 }
