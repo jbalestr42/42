@@ -4,6 +4,8 @@
 #include "Matrix.hpp"
 #include "Math.hpp"
 #include "Shader.hpp"
+#include "Animation.hpp"
+#include "Animator.hpp"
 #include <iostream>
 
 int main(void)
@@ -11,8 +13,21 @@ int main(void)
 	Windows win(800, 600, "HumanGL");
 	win.setClearColor(Color::White);
 
-	Mesh mesh;
-	Mesh mesh2;
+	Animation	anima;
+	anima.pushAnimator(std::unique_ptr<IAnimatorBase>(new Animator<Anim::Rotate>(Vector3(0.f, 45.f, 0.f), 0.f, 1.f)));
+
+	std::unique_ptr<Animation>	animChild(new Animation());
+	animChild->pushAnimator(std::unique_ptr<IAnimatorBase>(new Animator<Anim::Scale>(Vector3(.5f, 0.5f, 0.5f), 0.f, -1.f)));
+	animChild->pushAnimator(std::unique_ptr<IAnimatorBase>(new Animator<Anim::Rotate>(Vector3(45.f, 0.f, 0.f), 0.f, 1.f)));
+	animChild->pushAnimator(std::unique_ptr<IAnimatorBase>(new Animator<Anim::Translate>(Vector3(0.5f, 0.5f, 0.f), 0.f, -1.f)));
+
+	std::unique_ptr<Animation>	animChildB(new Animation());
+	animChildB->pushAnimator(std::unique_ptr<IAnimatorBase>(new Animator<Anim::Scale>(Vector3(.25f, 0.25f, 0.25f), 0.f, -1.f)));
+	animChildB->pushAnimator(std::unique_ptr<IAnimatorBase>(new Animator<Anim::Rotate>(Vector3(45.f, 0.f, 0.f), 0.f, 1.f)));
+	animChildB->pushAnimator(std::unique_ptr<IAnimatorBase>(new Animator<Anim::Translate>(Vector3(0.5f, 0.5f, 0.f), 0.f, -1.f)));
+	animChild->addChild(std::move(animChildB));
+	anima.addChild(std::move(animChild));
+
 	Shader shader("resources/default.frag" ,"resources/default.vert");
 
 	glEnable(GL_DEPTH_TEST);
@@ -27,14 +42,6 @@ int main(void)
 	//glDisable(GL_FOG);
 	Matrix		m_view;
 	Matrix		m_projection;
-
-	mesh.translate(Vector3(1.f, -1.f, 0.f));
-	mesh.setScale(Vector3(0.5f, 1.f, 0.5f));
-	mesh.rotate(Vector3(0.f, 90.f, 0.f));
-
-	mesh2.translate(Vector3(-1.f, 1.f, 0.f));
-	mesh2.setScale(Vector3(0.5f, 1.f, 0.5f));
-	mesh2.rotate(Vector3(0.f, 90.f, 0.f));
 
 	m_view.identity();
 	m_view.translate(Vector3(0.f, 0.f, -3.f));
@@ -52,18 +59,16 @@ int main(void)
 		float frameTime = (currentTime - lastTime);
 		lastTime = currentTime;
 
-		// Update
 		if (glfwGetKey(win.getWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			win.close();
 
-		mesh.rotate(Vector3(0.f, 0.f, 1.f) * frameTime);
-		mesh2.rotate(Vector3(6.f, 3.f, 1.f) * frameTime);
+		// Update
+		anima.update(frameTime);
 
 		// Draw
 		win.clear();
 
-		mesh.draw(shader);
-		mesh2.draw(shader);
+		anima.draw(shader);
 
 		win.display();
 		win.pollEvents();

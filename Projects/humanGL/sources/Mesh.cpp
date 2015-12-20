@@ -1,10 +1,8 @@
 #include "Mesh.hpp"
-#include "Shader.hpp"
 #include <iostream>
 #include <cassert>
 
 Mesh::Mesh(void) :
-	Transformable(),
 	m_vertexArrayObject(-1),
 	m_indiceCount(0)
 {
@@ -33,7 +31,20 @@ Mesh::Mesh(void) :
 		1,6,5,  1,2,6,
 		7,5,6,  7,4,5
 	};
-	init(vertices, indices);
+
+	std::copy(vertices.begin(), vertices.end(), std::back_inserter(m_vertices));
+	std::copy(indices.begin(), indices.end(), std::back_inserter(m_indices));
+	init();
+}
+
+Mesh::Mesh(Mesh && mesh)
+{
+	*this = std::move(mesh);
+}
+
+Mesh::Mesh(Mesh const & mesh)
+{
+	*this = mesh;
 }
 
 Mesh::~Mesh(void)
@@ -42,14 +53,40 @@ Mesh::~Mesh(void)
 	glDeleteVertexArrays(1, &m_vertexArrayObject);
 }
 
-void Mesh::init(std::vector<Vertex> const & vertices, std::vector<GLuint> const & indices)
+Mesh & Mesh::operator=(Mesh const & mesh)
 {
-	m_indiceCount = indices.size();
+	m_vertices.clear();
+	m_indices.clear();
+	std::copy(mesh.m_vertices.begin(), mesh.m_vertices.end(), std::back_inserter(m_vertices));
+	std::copy(mesh.m_indices.begin(), mesh.m_indices.end(), std::back_inserter(m_indices));
+	init();
+	return (*this);
+}
+
+Mesh & Mesh::operator=(Mesh && mesh)
+{
+	m_vertexArrayObject = mesh.m_vertexArrayObject;
+	mesh.m_vertexArrayObject = -1;
+	for (std::size_t i = 0u; i < IndexCount; i++)
+		m_vertexBufferObject[i] = std::move(mesh.m_vertexBufferObject[i]);
+	m_indiceCount = std::move(mesh.m_indiceCount);
+	m_vertices.clear();
+	m_indices.clear();
+	std::move(mesh.m_vertices.begin(), mesh.m_vertices.end(), std::back_inserter(m_vertices));
+	std::move(mesh.m_indices.begin(), mesh.m_indices.end(), std::back_inserter(m_indices));
+	mesh.m_vertices.clear();
+	mesh.m_indices.clear();
+	return (*this);
+}
+
+void Mesh::init(void)
+{
+	m_indiceCount = m_indices.size();
 	glGenVertexArrays(1, &m_vertexArrayObject);
 	glBindVertexArray(m_vertexArrayObject);
 	glGenBuffers(IndexCount, m_vertexBufferObject);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[VBOIndex::VertexIndex]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_vertices.size(), &m_vertices[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
 	glEnableVertexAttribArray(1);
@@ -58,7 +95,7 @@ void Mesh::init(std::vector<Vertex> const & vertices, std::vector<GLuint> const 
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vector3)));
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexBufferObject[VBOIndex::Index]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indices.size(), &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * m_indices.size(), &m_indices[0], GL_STATIC_DRAW);
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 		std::cout << "mesh " << error << std::endl;
@@ -66,9 +103,8 @@ void Mesh::init(std::vector<Vertex> const & vertices, std::vector<GLuint> const 
 	glBindVertexArray(0);
 }
 
-void Mesh::draw(Shader & shader)
+void Mesh::draw(void)
 {
-	shader.setParameter("ModelMatrix", getMatrix());
 	glBindVertexArray(m_vertexArrayObject);
 	glDrawElements(GL_TRIANGLES, m_indiceCount, GL_UNSIGNED_INT, (GLvoid*)0);
 	glBindVertexArray(0);

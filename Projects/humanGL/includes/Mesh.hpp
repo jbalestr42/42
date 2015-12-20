@@ -3,20 +3,19 @@
 
 # include <GL/glew.h>
 # include <vector>
-# include "Transformable.hpp"
 # include "Vertex.hpp"
 
-class Shader;
-
-class Mesh : public Transformable
+class Mesh
 {
 public:
 	Mesh(void);
-	Mesh(Mesh const & mesh) = delete;
+	Mesh(Mesh const & mesh);
+	Mesh(Mesh && mesh);
 	virtual ~Mesh(void);
 
-	Mesh & operator=(Mesh const & mesh) = delete;
-	void draw(Shader & shader);
+	Mesh & operator=(Mesh const & mesh);
+	Mesh & operator=(Mesh && mesh);
+	void draw(void);
 
 private:
 	static const std::size_t IndexCount = 2;
@@ -26,11 +25,13 @@ private:
 		Index = 1
 	};
 
-	GLuint		m_vertexArrayObject;
-	GLuint		m_vertexBufferObject[IndexCount];
-	int			m_indiceCount;
+	GLuint				m_vertexArrayObject;
+	GLuint				m_vertexBufferObject[IndexCount];
+	int					m_indiceCount;
+	std::vector<Vertex>	m_vertices;
+	std::vector<GLuint>	m_indices;
 
-	void init(std::vector<Vertex> const & vertices, std::vector<GLuint> const & indices);
+	void init(void);
 
 };
 
