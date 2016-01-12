@@ -23,6 +23,7 @@ Node::Node(Node && node) :
 
 Node & Node::operator=(Node const & node)
 {
+	Transformable::operator=(node);
 	m_parent = node.m_parent;
 	removeChilds();
 	for (auto & it : node.m_childs)
@@ -35,6 +36,7 @@ Node & Node::operator=(Node const & node)
 
 Node & Node::operator=(Node && node)
 {
+	Transformable::operator=(std::move(node));
 	m_parent = node.m_parent;
 	removeChilds();
 	std::move(node.m_childs.begin(), node.m_childs.end(), std::back_inserter(m_childs));
@@ -45,6 +47,30 @@ Node & Node::operator=(Node && node)
 	node.removeChilds();
 	node.m_animation = nullptr;
 	return (*this);
+}
+
+void Node::play(void)
+{
+	if (m_animation)
+		m_animation->play();
+	for (auto & child : m_childs)
+		child->play();
+}
+
+void Node::stop(void)
+{
+	if (m_animation)
+		m_animation->stop();
+	for (auto & child : m_childs)
+		child->stop();
+}
+
+void Node::pause(void)
+{
+	if (m_animation)
+		m_animation->pause();
+	for (auto & child : m_childs)
+		child->pause();
 }
 
 Matrix const & Node::getGlobalMatrix(void) const
@@ -61,6 +87,11 @@ void Node::setAnimation(AnimationPtr && animation)
 {
 	m_animation = std::move(animation);
 	m_animation->setTransformable(this);
+}
+
+Node::AnimationPtr const & Node::getAnimation(void) const
+{
+	return m_animation;
 }
 
 void Node::addChild(NodePtr const & node)

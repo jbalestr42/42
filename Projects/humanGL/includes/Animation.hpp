@@ -29,7 +29,6 @@ public:
 	Animation & operator=(Animation const & animation);
 	Animation & operator=(Animation && animation);
 
-	//TODO properly and test it
 	void play(void);
 	void stop(void);
 	void pause(void);

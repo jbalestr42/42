@@ -23,15 +23,14 @@ public:
 			float f30, float f31, float f32, float f33);
 	Matrix(Matrix const & matrix);
 	Matrix(Matrix && matrix);
-	~Matrix(void) = default;
+	virtual ~Matrix(void) = default;
 
 	Matrix & operator=(Matrix const & matrix);
 	Matrix & operator=(Matrix && matrix);
 	float & operator[](int index);
 	Matrix operator*(Matrix const & matrix) const;
 
-	//TODO Shearing
-	//Interpolation between matrices
+	//TODO Interpolation between matrices
 	////transpose
 	Matrix & multiply(Matrix const & matrix);
 	Matrix & rotateX(float angle);

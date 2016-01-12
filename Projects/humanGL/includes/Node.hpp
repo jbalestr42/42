@@ -22,9 +22,14 @@ public:
 	Node & operator=(Node const & node);
 	Node & operator=(Node && node);
 
+	void play(void);
+	void stop(void);
+	void pause(void);
+
 	Matrix const & getGlobalMatrix(void) const;
 	void setAnimation(AnimationPtr const & animation);
 	void setAnimation(AnimationPtr && animation);
+	AnimationPtr const & getAnimation(void) const;
 	void addChild(NodePtr const & node);
 	void addChild(NodePtr && node);
 	void removeChilds(void);

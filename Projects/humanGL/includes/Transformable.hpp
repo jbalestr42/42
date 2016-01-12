@@ -21,6 +21,7 @@ public:
 	void setScale(Vector3 const & scale);
 	void setParentScale(Vector3 const & parentScale);
 
+	Vector3 const & getOrigin(void) const;
 	Vector3 const & getPosition(void) const;
 	Vector3 const & getRotation(void) const;
 	Vector3 const & getScale(void) const;

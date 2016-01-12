@@ -5,7 +5,8 @@
 #include "Math.hpp"
 #include "Shader.hpp"
 #include "Animation.hpp"
-#include "Animator.hpp"
+#include "AddAnimator.hpp"
+#include "SetAnimator.hpp"
 #include "Node.hpp"
 #include <iostream>
 
@@ -15,34 +16,30 @@ int main(void)
 	win.setClearColor(Color::White);
 
 	std::unique_ptr<Animation>	trunkAnim(new Animation());
-	//trunkAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Translate>(-Vector3(.75f, 1.f, .25f), 0.f)));
-	//trunkAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Translate>(Vector3(.75f, 1.f, .25f), 0.f, 2.f)));
-	//trunkAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Translate>(-Vector3(.75f, 1.f, .25f), 2.f, 2.f)));
-	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::SetScale>(Vector3(0.25f, 0.5f, 0.1f), 0.f)));
-	//trunkAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.1f), 0.f, 2.f)));
-	//trunkAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Scale>(-Vector3(0.25f, 0.5f, 0.1f), 2.f, 2.f)));
-	trunkAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Rotate>(Vector3(0.f, 45.f, 0.f), 0.f, 4.f)));
+	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.f, 0.f, 0.f), 0.f)));
+	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.1f), 0.f)));
+	trunkAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateY>(45.f, 0.f, 4.f)));
 
 	std::unique_ptr<Animation>	armRightAnim(new Animation());
-	armRightAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
-	armRightAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Translate>(Vector3(-0.62f, 0.5f, 0.0f), 0.f)));
-	armRightAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::SetScale>(Vector3(0.25f, 0.5f, 0.5f), 0.f)));
-	armRightAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Rotate>(-Vector3(135.f, 0.f, 0.f), 0.f)));
-	armRightAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::RotateX>(-135.f, 0.f, 0.6f)));
-	armRightAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::RotateX>(135.f, 0.6f, 0.6f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(-0.62f, 0.5f, 0.0f), 0.f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.5f), 0.f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(-Vector3(135.f, 0.f, 0.f), 0.f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateX>(-135.f, 0.f, 0.6f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateX>(135.f, 0.6f, 0.6f)));
 
 	std::unique_ptr<Animation>	armLeftAnim(new Animation());
-	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
-	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Translate>(Vector3(0.62f, 0.5f, 0.0f), 0.f)));
-	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::SetScale>(Vector3(0.25f, 0.5f, 0.5f), 0.f)));
-	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Rotate>(Vector3(135.f, 0.f, 0.f), 0.f)));
-	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::RotateX>(135.f, 0.f, 0.6f)));
-	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::RotateX>(-135.f, 0.6f, 0.6f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.62f, 0.5f, 0.0f), 0.f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.5f), 0.f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(135.f, 0.f, 0.f), 0.f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateX>(135.f, 0.f, 0.6f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateX>(-135.f, 0.6f, 0.6f)));
 
 	std::unique_ptr<Animation>	subArmLeftAnim(new Animation());
-	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
-	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Translate>(Vector3(0.f, 0.5f, 0.0f), 0.f)));
-	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new Animator<Anim::Rotate>(Vector3(45.0f, 0.0f, 0.0f), 0.f)));
+	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.5f, 0.0f), 0.f)));
+	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(45.0f, 0.0f, 0.0f), 0.f)));
 
 	Node::NodePtr trunk(new Node());
 	trunk->setAnimation(std::move(trunkAnim));
@@ -92,6 +89,15 @@ int main(void)
 
 		if (glfwGetKey(win.getWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			win.close();
+
+		if (glfwGetKey(win.getWindow(), GLFW_KEY_R) == GLFW_PRESS)
+			trunk->play();
+
+		if (glfwGetKey(win.getWindow(), GLFW_KEY_E) == GLFW_PRESS)
+			trunk->pause();
+
+		if (glfwGetKey(win.getWindow(), GLFW_KEY_T) == GLFW_PRESS)
+			trunk->stop();
 
 		// Update
 		trunk->update(frameTime);

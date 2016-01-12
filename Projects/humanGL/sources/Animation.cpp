@@ -56,6 +56,8 @@ void Animation::stop(void)
 {
 	m_state = State::Stop;
 	m_timer = 0.f;
+	for (auto & it : m_animators)
+		it->restart();
 }
 
 void Animation::pause(void)
@@ -65,7 +67,6 @@ void Animation::pause(void)
 
 void Animation::update(float frameTime)
 {
-	//TODO: update the transformable if
 	if (m_state == State::Play)
 	{
 		m_timer += frameTime;
@@ -79,8 +80,8 @@ void Animation::update(float frameTime)
 		for (auto & it : m_animators)
 		{
 			it->update(m_timer, frameTime);
-			it->animate(*m_transformable);
-			//m_localMatrix.multiply(it->getMatrix());
+			if (m_transformable)
+				it->animate(*m_transformable);
 		}
 	}
 }

@@ -74,6 +74,11 @@ void Transformable::setParentScale(Vector3 const & parentScale)
 	m_needRecompute = true;
 }
 
+Vector3 const & Transformable::getOrigin(void) const
+{
+	return m_origin;
+}
+
 Vector3 const & Transformable::getPosition(void) const
 {
 	return m_position;
