@@ -37,9 +37,9 @@ void Quaternion::fromEuler(Vector3 const & euler)
 
 void Quaternion::fromEuler(float eulerX, float eulerY, float eulerZ)
 {
-	float hx = eulerX / 2.f;
-	float hy = eulerY / 2.f;
-	float hz = eulerZ / 2.f;
+	float hx = Deg2Rad * eulerX / 2.f;
+	float hy = Deg2Rad * eulerY / 2.f;
+	float hz = Deg2Rad * eulerZ / 2.f;
 	float sinX = std::sin(hx);
 	float cosX = std::cos(hx);
 	float sinY = std::sin(hy);

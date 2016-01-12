@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2015/12/20 23:36:25 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/01/11 19:57:03 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC =	main.cpp \
 		Vector2.cpp \
 		Vector3.cpp \
 		Animation.cpp \
+		Node.cpp \
 		Color.cpp
 INC =	Matrix.hpp \
 		Transformable.hpp \
@@ -46,6 +47,7 @@ INC =	Matrix.hpp \
 		Animation.hpp \
 		IAnimatorBase.hpp \
 		Animator.hpp \
+		Node.hpp \
 		Color.hpp
 OBJ =	$(SRC:.cpp=.o)
 I =		$(addprefix $(IDIR), $(INC))

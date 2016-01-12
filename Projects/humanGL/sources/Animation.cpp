@@ -1,12 +1,13 @@
 #include "Animation.hpp"
 #include "IAnimatorBase.hpp"
-#include "Shader.hpp"
+#include "Transformable.hpp"
 
 Animation::Animation(void) :
 	m_timer(0.f),
 	m_duration(0.f),
 	m_loopMode(true),
-	m_parent(nullptr)
+	m_state(State::Play),
+	m_transformable(nullptr)
 { }
 
 Animation::Animation(Animation const & animation)
@@ -24,15 +25,11 @@ Animation & Animation::operator=(Animation const & animation)
 	m_timer = animation.m_timer;
 	m_duration = animation.m_duration;
 	m_loopMode = animation.m_loopMode;
-	m_animators.clear();
+	removeAnimators();
 	for (auto & it : animation.m_animators)
 		pushAnimator(it);
-	m_localMatrix = animation.m_localMatrix;
-	m_mesh = animation.m_mesh;
-	m_parent = animation.m_parent;
-	removeChilds();
-	for (auto & it : animation.m_childs)
-		addChild(it);
+	m_state = animation.m_state;
+	setTransformable(animation.m_transformable);
 	return (*this);
 }
 
@@ -41,70 +38,70 @@ Animation & Animation::operator=(Animation && animation)
 	m_timer = animation.m_timer;
 	m_duration = animation.m_duration;
 	m_loopMode = animation.m_loopMode;
-	m_animators.clear();
+	removeAnimators();
 	std::move(animation.m_animators.begin(), animation.m_animators.end(), std::back_inserter(m_animators));
-	animation.m_animators.clear();
-	m_localMatrix = animation.m_localMatrix;
-	m_mesh = std::move(animation.m_mesh);
-	m_parent = animation.m_parent;
-	animation.m_parent = nullptr;
-	removeChilds();
-	std::move(animation.m_childs.begin(), animation.m_childs.end(), std::back_inserter(m_childs));
-	animation.removeChilds();
+	m_state = animation.m_state;
+	setTransformable(animation.m_transformable);
+	animation.removeAnimators();
+	animation.m_transformable = nullptr;
 	return (*this);
+}
+
+void Animation::play(void)
+{
+	m_state = State::Play;
+}
+
+void Animation::stop(void)
+{
+	m_state = State::Stop;
+	m_timer = 0.f;
+}
+
+void Animation::pause(void)
+{
+	m_state = State::Pause;
 }
 
 void Animation::update(float frameTime)
 {
-	m_timer += frameTime;
-	if (m_timer > m_duration)
+	//TODO: update the transformable if
+	if (m_state == State::Play)
 	{
-		if (m_loopMode)
-			m_timer -= m_duration;
+		m_timer += frameTime;
+		if (m_timer > m_duration)
+		{
+			if (m_loopMode)
+				m_timer -= m_duration;
+			else
+				m_state = State::Stop;
+		}
+		for (auto & it : m_animators)
+		{
+			it->update(m_timer, frameTime);
+			it->animate(*m_transformable);
+			//m_localMatrix.multiply(it->getMatrix());
+		}
 	}
-	m_localMatrix.identity();
-	for (auto & it : m_animators)
-	{
-		it->update(m_timer, frameTime);
-		m_localMatrix.multiply(it->getMatrix());
-	}
-	if (m_parent)
-		m_localMatrix.multiply(m_parent->m_localMatrix);
-	for (auto & child : m_childs)
-		child->update(frameTime);
 }
 
-void Animation::draw(Shader & shader)
+void Animation::setTransformable(Transformable * transformable)
 {
-	shader.setParameter("ModelMatrix", m_localMatrix);
-	m_mesh.draw();
-	for (auto & it : m_childs)
-		it->draw(shader);
+	m_transformable = transformable;
 }
 
-void Animation::addChild(std::unique_ptr<Animation> const & animation)
+void Animation::setLoopMode(bool loopMode)
 {
-	m_childs.emplace_back(new Animation(*animation));
+	m_loopMode = loopMode;
 }
 
-void Animation::addChild(std::unique_ptr<Animation> && animation)
-{
-	animation->m_parent = this;
-	m_childs.push_back(std::move(animation));
-}
-
-void Animation::removeChilds(void)
-{
-	m_childs.clear();
-}
-
-void Animation::pushAnimator(std::unique_ptr<IAnimatorBase> const & animator)
+void Animation::pushAnimator(AnimatorPtr const & animator)
 {
 	computeDuration(animator);
-	m_animators.emplace_back(animator->clone());
+	pushAnimator(std::move(AnimatorPtr(animator->clone())));
 }
 
-void Animation::pushAnimator(std::unique_ptr<IAnimatorBase> && animator)
+void Animation::pushAnimator(AnimatorPtr && animator)
 {
 	computeDuration(animator);
 	m_animators.push_back(std::move(animator));
@@ -114,4 +111,9 @@ void Animation::computeDuration(std::unique_ptr<IAnimatorBase> const & animator)
 {
 	if (animator->getTimerEnd() > m_duration)
 		m_duration = animator->getTimerEnd();
+}
+
+void Animation::removeAnimators(void)
+{
+	m_animators.clear();
 }

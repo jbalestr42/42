@@ -22,14 +22,17 @@ public:
 			float f20, float f21, float f22, float f23,
 			float f30, float f31, float f32, float f33);
 	Matrix(Matrix const & matrix);
+	Matrix(Matrix && matrix);
 	~Matrix(void) = default;
 
 	Matrix & operator=(Matrix const & matrix);
+	Matrix & operator=(Matrix && matrix);
 	float & operator[](int index);
-	Matrix operator*(Matrix const & matrix);
+	Matrix operator*(Matrix const & matrix) const;
 
 	//TODO Shearing
 	//Interpolation between matrices
+	////transpose
 	Matrix & multiply(Matrix const & matrix);
 	Matrix & rotateX(float angle);
 	Matrix & rotateY(float angle);
@@ -37,10 +40,11 @@ public:
 	Matrix & rotate(Vector3 const & vector, EulerOrder order = XYZ);
 	Matrix & translate(Vector3 const & vector);
 	Matrix & scale(Vector3 const & vector);
+	// change to return Matrix &
 	Matrix eulerAnglesToMatrix(Vector3 const & angles, EulerOrder order = XYZ);
 
-	Matrix inverse(void);
-	float determinant(void);
+	Matrix inverse(void) const;
+	float determinant(void) const;
 	Matrix coFactor(void);
 	float const * getMatrix(void) const;
 	void identity(void);
@@ -51,8 +55,8 @@ public:
 private:
 	float	m_matrix[16];
 
-	int getMinor(Matrix const & src, Matrix & dest, int row, int col);
-	float determinant3(Matrix const & matrix);
+	int getMinor(Matrix const & src, Matrix & dest, int row, int col) const;
+	float determinant3(Matrix const & matrix) const;
 };
 
 #endif

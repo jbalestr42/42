@@ -9,9 +9,9 @@ Matrix::Matrix(void)
 }
 
 Matrix::Matrix(float f00, float f01, float f02, float f03,
-		float f10, float f11, float f12, float f13,
-		float f20, float f21, float f22, float f23,
-		float f30, float f31, float f32, float f33)
+				float f10, float f11, float f12, float f13,
+				float f20, float f21, float f22, float f23,
+				float f30, float f31, float f32, float f33)
 {
 	m_matrix[0] = f00; m_matrix[1] = f01; m_matrix[2] = f02; m_matrix[3] = f03;
 	m_matrix[4] = f10; m_matrix[5] = f11; m_matrix[6] = f12; m_matrix[7] = f13;
@@ -19,9 +19,20 @@ Matrix::Matrix(float f00, float f01, float f02, float f03,
 	m_matrix[12] = f30; m_matrix[13] = f31; m_matrix[14] = f32; m_matrix[15] = f33;
 }
 
+Matrix::Matrix(Matrix && matrix)
+{
+	*this = std::move(matrix);
+}
+
 Matrix::Matrix(Matrix const & matrix)
 {
 	*this = matrix;
+}
+
+Matrix & Matrix::operator=(Matrix && matrix)
+{
+	std::move(std::begin(matrix.m_matrix), std::end(matrix.m_matrix), std::begin(m_matrix));
+	return (*this);
 }
 
 Matrix & Matrix::operator=(Matrix const & matrix)
@@ -35,7 +46,7 @@ float & Matrix::operator[](int index)
 	return (m_matrix[index]);
 }
 
-Matrix Matrix::operator*(Matrix const & matrix)
+Matrix Matrix::operator*(Matrix const & matrix) const
 {
 	Matrix	result;
 	for (int i = 0, offset = 0; i < 4; i++, offset = i * 4)
@@ -53,13 +64,13 @@ Matrix Matrix::operator*(Matrix const & matrix)
 
 Matrix & Matrix::multiply(Matrix const & matrix)
 {
-	Matrix tmp = *this;
+	Matrix tmp(std::move(*this));
 
 	for (int i = 0, offset = 0; i < 4; i++, offset = i * 4)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			m_matrix[offset + j] = tmp.m_matrix[offset + 0] * matrix.m_matrix[j + 0];
+			m_matrix[offset + j] =  tmp.m_matrix[offset + 0] * matrix.m_matrix[j + 0];
 			m_matrix[offset + j] += tmp.m_matrix[offset + 1] * matrix.m_matrix[j + 4];
 			m_matrix[offset + j] += tmp.m_matrix[offset + 2] * matrix.m_matrix[j + 8];
 			m_matrix[offset + j] += tmp.m_matrix[offset + 3] * matrix.m_matrix[j + 12];
@@ -213,7 +224,7 @@ Matrix & Matrix::scale(Vector3 const & vector)
 	return multiply(scale);
 }
 
-float Matrix::determinant(void)
+float Matrix::determinant(void) const
 {
 	float const * m = m_matrix;
 	float det =
@@ -235,7 +246,7 @@ float Matrix::determinant(void)
 	return (det);
 }
 
-Matrix Matrix::inverse(void)
+Matrix Matrix::inverse(void) const
 {
 	Matrix inverse;
 	float det = 1.f / determinant();
@@ -272,7 +283,7 @@ void Matrix::perspectiveProjection(float fov, float aspectRatio, float nearPlane
 {
 	float		scaleY = 1.f / std::tan(Deg2Rad * (fov / 2.f));
 	float		scaleX = scaleY / aspectRatio;
-	float		frustumLength = farPlane - nearPlane;
+	float		frustumLength = nearPlane - farPlane;
 
 	m_matrix[0] = scaleX;
 	m_matrix[1] = 0.f;
@@ -284,11 +295,11 @@ void Matrix::perspectiveProjection(float fov, float aspectRatio, float nearPlane
 	m_matrix[7] = 0.f;
 	m_matrix[8] = 0.f;
 	m_matrix[9] = 0.f;
-	m_matrix[10] = -((farPlane + nearPlane) / frustumLength);
+	m_matrix[10] = (farPlane + nearPlane) / frustumLength;
 	m_matrix[11] = -1.f;
 	m_matrix[12] = 0.f;
 	m_matrix[13] = 0.f;
-	m_matrix[14] = -((2.f * nearPlane * farPlane) / frustumLength);
+	m_matrix[14] = (2.f * nearPlane * farPlane) / frustumLength;
 	m_matrix[15] = 0.f;
 }
 
@@ -302,7 +313,7 @@ void Matrix::dump(void)
 	}
 }
 
-int Matrix::getMinor(Matrix const & src, Matrix & dest, int row, int col)
+int Matrix::getMinor(Matrix const & src, Matrix & dest, int row, int col) const
 {
 	int colCount;
 	int rowCount = 0;
@@ -326,7 +337,7 @@ int Matrix::getMinor(Matrix const & src, Matrix & dest, int row, int col)
 	return 1;
 }
 
-float Matrix::determinant3(Matrix const & matrix)
+float Matrix::determinant3(Matrix const & matrix) const
 {
 	float const * m = matrix.m_matrix;
 	float det =

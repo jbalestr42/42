@@ -3,16 +3,24 @@
 
 # include <vector>
 # include <memory>
-# include <type_traits>
 # include "Matrix.hpp"
-# include "Mesh.hpp"
 
-class Shader;
 class IAnimatorBase;
+class Transformable;
 
 class Animation
 {
+	enum State
+	{
+		Play,
+		Pause,
+		Stop
+	};
+
 public:
+	typedef std::unique_ptr<IAnimatorBase>	AnimatorPtr;
+	typedef std::vector<AnimatorPtr>		Animators;
+
 	Animation(void);
 	Animation(Animation const & animation);
 	Animation(Animation && animation);
@@ -21,33 +29,25 @@ public:
 	Animation & operator=(Animation const & animation);
 	Animation & operator=(Animation && animation);
 
-	//TODO
+	//TODO properly and test it
 	void play(void);
 	void stop(void);
 	void pause(void);
 	void update(float frameTime);
-	void draw(Shader & shader);
 
-	void addChild(std::unique_ptr<Animation> const & animation);
-	void addChild(std::unique_ptr<Animation> && animation);
-	void removeChilds(void);
-
-	void setLoopMode(bool isLoop);
-	void pushAnimator(std::unique_ptr<IAnimatorBase> const & animator);
-	void pushAnimator(std::unique_ptr<IAnimatorBase> && animator);
+	void setTransformable(Transformable * transformable);
+	void setLoopMode(bool loopMode);
+	void pushAnimator(AnimatorPtr const & animator);
+	void pushAnimator(AnimatorPtr && animator);
+	void removeAnimators(void);
 
 private:
-	typedef std::vector<std::unique_ptr<IAnimatorBase>>	AnimatorList;
-	typedef std::vector<std::unique_ptr<Animation>>		AnimationList;
-
-	float				m_timer;
-	float				m_duration;
-	bool				m_loopMode;
-	AnimatorList		m_animators;
-	Matrix				m_localMatrix;
-	Mesh				m_mesh;
-	Animation const *	m_parent;
-	AnimationList		m_childs;
+	float					m_timer;
+	float					m_duration;
+	bool					m_loopMode;
+	Animators				m_animators;
+	State					m_state;
+	Transformable *			m_transformable;
 
 	void computeDuration(std::unique_ptr<IAnimatorBase> const & animator);
 

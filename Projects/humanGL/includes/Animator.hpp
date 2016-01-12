@@ -3,104 +3,111 @@
 
 # include "IAnimatorBase.hpp"
 # include "Math.hpp"
+# include "Transformable.hpp"
 # include <cassert>
 # include <memory>
 # include <type_traits>
 
-class Matrix;
 enum class Anim : std::int8_t
 {
-	Translate = 0,
-	Scale = 1,
-	Rotate = 2,
-	RotateX = 3,
-	RotateY = 4,
-	RotateZ = 5
+	RotateX = 0,
+	RotateY = 1,
+	RotateZ = 2,
+	Origin = 3,
+	Translate = 4,
+	Scale = 5,
+	Rotate = 6,
+	SetScale = 7
 };
 
 template <Anim A>
 class Animator : public IAnimatorBase
 {
-	typedef typename std::conditional<(int)A <= 2, Vector3, float>::type T;
+protected:
+	typedef typename std::conditional<(int)A <= 2, float, Vector3>::type T;
+	enum class AnimStyle : std::int8_t
+	{
+		ComputeOnce,
+		Additive,
+		Lerp
+	};
+
 public:
 	Animator(void) :
 		Animator(T(), T(), 0.f, 0.f)
 	{}
 
+	// Set the desire value at a fixed time until the end of the animation
+	Animator(T const & value, float timerStart) :
+		m_value(value),
+		m_computedValue(value),
+		m_timerStart(timerStart),
+		m_timerEnd(0.f),
+		m_duration(0.f),
+		m_needToCompute(false),
+		m_computeOnce(true),
+		m_animStyle(AnimStyle::ComputeOnce)
+	{
+		assert(timerStart >= 0.f);
+	}
+
+	// Set a value to be added at the current value from start to start + duration
 	Animator(T const & value, float timerStart, float duration) :
-		m_start(T()),
-		m_end(T()),
 		m_value(value),
 		m_computedValue(T()),
 		m_timerStart(timerStart),
 		m_timerEnd(timerStart + duration),
 		m_duration(duration),
 		m_needToCompute(false),
-		m_useLerp(false),
-		m_computeOnce(duration < 0.f ? true : false)
+		m_computeOnce(false),
+		m_animStyle(AnimStyle::Additive)
 	{
 		assert(timerStart >= 0.f);
 	}
 
-	Animator(T const & start, T const & end, float timerStart, float timerEnd) :
-		m_start(start),
-		m_end(end),
-		m_value(T()),
-		m_computedValue(T()),
-		m_timerStart(timerStart),
-		m_timerEnd(timerEnd),
-		m_duration(timerEnd - timerStart),
-		m_needToCompute(false),
-		m_useLerp(true)
+	Animator(Animator<A> const & animator)
 	{
-		assert(timerEnd >= 0.f);
-		assert(timerStart >= 0.f);
-		assert(timerEnd >= timerStart);
-	}
-
-	Animator(Animator<A> const & aAnimator)
-	{
-		*this = aAnimator;
+		*this = animator;
 	}
 
 	virtual ~Animator(void) = default;
 
-	Animator & operator=(Animator<A> const & aAnimator)
+	Animator & operator=(Animator<A> const & animator)
 	{
-		m_start = aAnimator.m_start;
-		m_end = aAnimator.m_end;
-		m_value = aAnimator.m_value;
-		m_timerStart = aAnimator.m_timerStart;
-		m_timerEnd = aAnimator.m_timerEnd;
-		m_duration = aAnimator.m_duration;
-		m_needToCompute = aAnimator.m_needToCompute;
+		m_value = animator.m_value;
+		m_computedValue = animator.m_computedValue;
+		m_timerStart = animator.m_timerStart;
+		m_timerEnd = animator.m_timerEnd;
+		m_duration = animator.m_duration;
+		m_needToCompute = animator.m_needToCompute;
+		m_computeOnce = animator.m_computeOnce;
+		m_animStyle = animator.m_animStyle;
 		return (*this);
 	}
 
 	void update(float animationTimer, float frameTime)
 	{
-		// check si on garde la position final, si on recommence, ou si on remet à zéro
-		if (m_computeOnce)
+		m_needToCompute = false;
+		switch (m_animStyle)
 		{
-			m_computedValue = m_value;
-			m_needToCompute = true;
-			m_computeOnce = false;
+			case AnimStyle::ComputeOnce:
+				if (m_computeOnce)
+				{
+					m_computedValue = m_value;
+					m_needToCompute = true;
+					m_computeOnce = false;
+				}
+				break;
+			case AnimStyle::Additive:
+				if (animationTimer > m_timerStart && animationTimer <= m_timerEnd)
+				{
+					m_computedValue = m_value * frameTime;
+					m_needToCompute = true;
+				}
+				break;
+			default:
+				break;
 		}
-		else if (animationTimer > m_timerStart && animationTimer <= m_timerEnd)
-		{
-			if (m_useLerp)
-			{
-				float t = (animationTimer - m_timerStart) / m_duration;
-				m_computedValue = lerp(m_start, m_end, (t > 1.f ? 1.f : t));
-			}
-			else
-			{
-				m_computedValue = m_value * frameTime;
-			}
-			m_needToCompute = true;
-		}
-		else
-			m_needToCompute = false;
 	}
 
 	float getTimerStart(void) const
@@ -118,77 +125,101 @@ public:
 		return (m_duration);
 	}
 
-	virtual Matrix const & getMatrix(void)
-	{
-		return m_matrix;
-	}
-
 	virtual IAnimatorBase * clone(void) const
 	{
 		return new Animator(*this);
 	}
 
+	virtual void animate(Transformable & transformable)
+	{
+		(void)transformable;
+	}
+
 private:
-	T		m_start;
-	T		m_end;
-	T		m_value;
-	T		m_computedValue;
-	float	m_timerStart;
-	float	m_timerEnd;
-	float	m_duration;
-	bool	m_needToCompute;
-	bool	m_useLerp;
-	bool	m_computeOnce;
-	Matrix	m_matrix;
+	T			m_value;
+	T			m_computedValue;
+	float		m_timerStart;
+	float		m_timerEnd;
+	float		m_duration;
+	bool		m_needToCompute;
+	bool		m_computeOnce;
+	AnimStyle	m_animStyle;
 
 };
 
 template<>
-Matrix const & Animator<Anim::Translate>::getMatrix(void)
+void Animator<Anim::Origin>::animate(Transformable & transformable)
 {
 	if (m_needToCompute)
-		m_matrix.translate(m_computedValue);
-	return m_matrix;
+		transformable.setOrigin(m_computedValue);
 }
 
 template<>
-Matrix const & Animator<Anim::Scale>::getMatrix(void)
+void Animator<Anim::Translate>::animate(Transformable & transformable)
 {
 	if (m_needToCompute)
-		m_matrix.scale(m_computedValue);
-	return m_matrix;
+		transformable.translate(m_computedValue);
 }
 
 template<>
-Matrix const & Animator<Anim::Rotate>::getMatrix(void)
+void Animator<Anim::Rotate>::animate(Transformable & transformable)
 {
 	if (m_needToCompute)
-		m_matrix.rotate(m_computedValue);
-	return m_matrix;
+		transformable.rotate(m_computedValue);
 }
 
 template<>
-Matrix const & Animator<Anim::RotateX>::getMatrix(void)
+void Animator<Anim::RotateX>::animate(Transformable & transformable)
 {
 	if (m_needToCompute)
-		m_matrix.rotateX(m_computedValue);
-	return m_matrix;
+		transformable.rotateX(m_computedValue);
 }
 
 template<>
-Matrix const & Animator<Anim::RotateY>::getMatrix(void)
+void Animator<Anim::RotateY>::animate(Transformable & transformable)
 {
 	if (m_needToCompute)
-		m_matrix.rotateY(m_computedValue);
-	return m_matrix;
+		transformable.rotateY(m_computedValue);
 }
 
 template<>
-Matrix const & Animator<Anim::RotateZ>::getMatrix(void)
+void Animator<Anim::RotateZ>::animate(Transformable & transformable)
 {
 	if (m_needToCompute)
-		m_matrix.rotateZ(m_computedValue);
-	return m_matrix;
+		transformable.rotateZ(m_computedValue);
 }
+
+template<>
+void Animator<Anim::Scale>::animate(Transformable & transformable)
+{
+	if (m_needToCompute)
+		transformable.scale(m_computedValue);
+}
+
+template<>
+void Animator<Anim::SetScale>::animate(Transformable & transformable)
+{
+	if (m_needToCompute)
+		transformable.setScale(m_computedValue);
+}
+
+template <Anim A>
+class SetAnimator : public Animator<A>
+{
+	typedef typename Animator<A>::T T;
+
+public:
+	SetAnimator(T const & value, float timerStart) :
+		Animator<A>(value, timerStart)
+	{
+		assert(timerStart >= 0.f);
+	}
+
+	~SetAnimator(void) = default;
+	virtual void animate(Transformable & transformable)
+	{
+		(void)transformable;
+	}
+};
 
 #endif
