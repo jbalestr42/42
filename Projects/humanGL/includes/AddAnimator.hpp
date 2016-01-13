@@ -2,7 +2,6 @@
 # define ADDANIMATOR_HPP
 
 # include "AAnimator.hpp"
-# include <cassert>
 
 template<Anim A>
 class AddAnimator : public AAnimator<A>
@@ -13,15 +12,9 @@ public:
 	AddAnimator(void) = delete;
 
 	AddAnimator(T const & value, float timerStart, float duration) :
-		AAnimator<A>(value),
-		m_computedValue(T()),
-		m_timerStart(timerStart),
-		m_timerEnd(timerStart + duration),
-		m_duration(duration),
-		m_animate(false)
-	{
-		assert(timerStart >= 0.f);
-	}
+		AAnimator<A>(value, timerStart, duration),
+		m_startValue(value)
+	{}
 
 	AddAnimator(AddAnimator const & addAnimator) :
 		AAnimator<A>(addAnimator)
@@ -40,32 +33,23 @@ public:
 	AddAnimator & operator=(AddAnimator const & addAnimator)
 	{
 		AAnimator<A>::operator=(addAnimator);
-		m_computedValue = addAnimator.m_computedValue;
-		m_timerStart = addAnimator.m_timerStart;
-		m_timerEnd = addAnimator.m_timerEnd;
-		m_duration = addAnimator.m_duration;
-		m_animate = addAnimator.m_animate;
+		m_startValue = addAnimator.m_startValue;
 		return (*this);
 	}
 
 	AddAnimator & operator=(AddAnimator && addAnimator)
 	{
 		AAnimator<A>::operator=(std::move(addAnimator));
-		m_computedValue = std::move(addAnimator.m_computedValue);
-		m_timerStart = std::move(addAnimator.m_timerStart);
-		m_timerEnd = std::move(addAnimator.m_timerEnd);
-		m_duration = std::move(addAnimator.m_duration);
-		m_animate = std::move(addAnimator.m_animate);
+		m_startValue = std::move(addAnimator.m_startValue);
 		return (*this);
 	}
 
-	virtual void update(float animationTimer, float frameTime)
+	virtual void update(float animationTimer, float frameTime, Transformable & transformable)
 	{
-		m_animate = false;
-		if (animationTimer > m_timerStart && animationTimer <= m_timerEnd)
+		if (animationTimer > AAnimator<A>::getTimerStart() && animationTimer <= AAnimator<A>::getTimerEnd())
 		{
-			m_computedValue = AAnimator<A>::getValue() * frameTime;
-			m_animate = true;
+			AAnimator<A>::setValue(m_startValue * frameTime);
+			animate(transformable);
 		}
 	}
 
@@ -76,77 +60,51 @@ public:
 
 	virtual void animate(Transformable & transformable);
 
-	virtual float getTimerEnd(void) const
-	{
-		return (m_timerEnd);
-	}
-
-	float getTimerStart(void) const
-	{
-		return (m_timerStart);
-	}
-
-	float getDuration(void) const
-	{
-		return (m_duration);
-	}
-
 private:
-	T		m_computedValue;
-	float	m_timerStart;
-	float	m_timerEnd;
-	float	m_duration;
-	bool	m_animate;
+	T	m_startValue;
 
 };
 
 template<>
 void AddAnimator<Anim::Origin>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.setOrigin(transformable.getOrigin() + m_computedValue);
+	transformable.setOrigin(transformable.getOrigin() + getValue());
 }
 
 template<>
 void AddAnimator<Anim::Translate>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.translate(m_computedValue);
+	transformable.translate(getValue());
 }
 
 template<>
 void AddAnimator<Anim::Rotate>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.rotate(m_computedValue);
+	transformable.rotate(getValue());
 }
 
 template<>
 void AddAnimator<Anim::RotateX>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.rotateX(m_computedValue);
+	transformable.rotateX(getValue());
 }
 
 template<>
 void AddAnimator<Anim::RotateY>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.rotateY(m_computedValue);
+	transformable.rotateY(getValue());
 }
 
 template<>
 void AddAnimator<Anim::RotateZ>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.rotateZ(m_computedValue);
+	transformable.rotateZ(getValue());
 }
 
 template<>
 void AddAnimator<Anim::Scale>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.scale(m_computedValue);
+	transformable.scale(getValue());
 }
 
 

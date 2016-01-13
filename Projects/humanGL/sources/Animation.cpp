@@ -79,9 +79,8 @@ void Animation::update(float frameTime)
 		}
 		for (auto & it : m_animators)
 		{
-			it->update(m_timer, frameTime);
 			if (m_transformable)
-				it->animate(*m_transformable);
+				it->update(m_timer, frameTime, *m_transformable);
 		}
 	}
 }

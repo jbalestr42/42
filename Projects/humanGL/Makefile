@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/01/12 20:02:20 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/01/13 12:02:34 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,8 @@ INC =	Matrix.hpp \
 		AAnimator.hpp \
 		AddAnimator.hpp \
 		SetAnimator.hpp \
+		LerpAnimator.hpp \
+		CerpAnimator.hpp \
 		Node.hpp \
 		Color.hpp
 OBJ =	$(SRC:.cpp=.o)

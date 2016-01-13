@@ -7,6 +7,8 @@
 #include "Animation.hpp"
 #include "AddAnimator.hpp"
 #include "SetAnimator.hpp"
+#include "LerpAnimator.hpp"
+#include "CerpAnimator.hpp"
 #include "Node.hpp"
 #include <iostream>
 
@@ -41,6 +43,20 @@ int main(void)
 	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.5f, 0.0f), 0.f)));
 	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(45.0f, 0.0f, 0.0f), 0.f)));
 
+	std::unique_ptr<Animation>	legLeftAnim(new Animation());
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.3f, -0.5f, 0.0f), 0.f)));
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.35f, 0.5f, 0.7f), 0.f)));
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new LerpAnimator<Anim::Rotate>(Vector3(145.0f, 0.0f, 0.0f), Vector3(215.f, 0.f, 0.f), 0.f, 1.f)));
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(215.0f, 0.0f, 0.0f), Vector3(145.f, 0.f, 0.f), 1.f, 1.f)));
+
+	std::unique_ptr<Animation>	subLegLeftAnim(new Animation());
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), Vector3(-25.f, 0.f, 0.f), 0.f, 0.5f)));
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(-25.0f, 0.0f, 0.0f), Vector3(0.f, 0.f, 0.f), 0.5f, 0.5f)));
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), 1.f, 1.f)));
+
 	Node::NodePtr trunk(new Node());
 	trunk->setAnimation(std::move(trunkAnim));
 
@@ -53,10 +69,18 @@ int main(void)
 	Node::NodePtr armRight(new Node());
 	armRight->setAnimation(std::move(armRightAnim));
 
+	Node::NodePtr legLeft(new Node());
+	legLeft->setAnimation(std::move(legLeftAnim));
+
+	Node::NodePtr subLegLeft(new Node());
+	subLegLeft->setAnimation(std::move(subLegLeftAnim));
+
 	armRight->addChild(subArmLeft);
 	armLeft->addChild(std::move(subArmLeft));
+	legLeft->addChild(std::move(subLegLeft));
 	trunk->addChild(std::move(armLeft));
 	trunk->addChild(std::move(armRight));
+	trunk->addChild(std::move(legLeft));
 
 	Shader shader("resources/default.frag" ,"resources/default.vert");
 

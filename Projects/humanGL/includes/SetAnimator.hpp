@@ -2,7 +2,6 @@
 # define SETANIMATOR_HPP
 
 # include "AAnimator.hpp"
-# include <cassert>
 
 template <Anim A>
 class SetAnimator : public AAnimator<A>
@@ -12,14 +11,10 @@ class SetAnimator : public AAnimator<A>
 public:
 	SetAnimator(void) = delete;
 
-	SetAnimator(T const & value, float timerStart) :
-		AAnimator<A>(value),
-		m_timerStart(timerStart),
-		m_animate(false),
+	SetAnimator(T const & value, float timerStart, float duration = 0.f) :
+		AAnimator<A>(value, timerStart, duration),
 		m_recompute(true)
-	{
-		assert(timerStart >= 0.f);
-	}
+	{}
 
 	SetAnimator(SetAnimator const & setAnimator) :
 		AAnimator<A>(setAnimator)
@@ -38,8 +33,6 @@ public:
 	SetAnimator & operator=(SetAnimator const & setAnimator)
 	{
 		AAnimator<A>::operator=(setAnimator);
-		m_timerStart = setAnimator.m_timerStart;
-		m_animate = setAnimator.m_animate;
 		m_recompute = setAnimator.m_recompute;
 		return (*this);
 	}
@@ -47,19 +40,16 @@ public:
 	SetAnimator & operator=(SetAnimator && setAnimator)
 	{
 		AAnimator<A>::operator=(std::move(setAnimator));
-		m_timerStart = std::move(setAnimator.m_timerStart);
-		m_animate = std::move(setAnimator.m_animate);
 		m_recompute = std::move(setAnimator.m_recompute);
 		return (*this);
 	}
 
-	virtual void update(float animationTimer, float)
+	virtual void update(float animationTimer, float, Transformable & transformable)
 	{
-		m_animate = false;
-		if (animationTimer > m_timerStart && m_recompute)
+		if (animationTimer > AAnimator<A>::getTimerStart() && m_recompute)
 		{
 			m_recompute = false;
-			m_animate = true;
+			animate(transformable);
 		}
 	}
 
@@ -70,19 +60,12 @@ public:
 
 	virtual void animate(Transformable & transformable);
 
-	virtual float getTimerEnd(void) const
-	{
-		return (m_timerStart);
-	}
-
 	virtual void restart(void)
 	{
 		m_recompute = true;
 	}
 
 private:
-	float	m_timerStart;
-	bool	m_animate;
 	bool	m_recompute;
 
 };
@@ -90,50 +73,43 @@ private:
 template<>
 void SetAnimator<Anim::Origin>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.setOrigin(getValue());
+	transformable.setOrigin(getValue());
 }
 
 template<>
 void SetAnimator<Anim::Translate>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.setPosition(getValue());
+	transformable.setPosition(getValue());
 }
 
 template<>
 void SetAnimator<Anim::Rotate>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.setRotation(getValue());
+	transformable.setRotation(getValue());
 }
 
 template<>
 void SetAnimator<Anim::RotateX>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.setRotation(Vector3(getValue(), 0.f, 0.f));
+	transformable.setRotation(Vector3(getValue(), 0.f, 0.f));
 }
 
 template<>
 void SetAnimator<Anim::RotateY>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.setRotation(Vector3(0.f, getValue(), 0.f));
+	transformable.setRotation(Vector3(0.f, getValue(), 0.f));
 }
 
 template<>
 void SetAnimator<Anim::RotateZ>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.setRotation(Vector3(0.f, 0.f, getValue()));
+	transformable.setRotation(Vector3(0.f, 0.f, getValue()));
 }
 
 template<>
 void SetAnimator<Anim::Scale>::animate(Transformable & transformable)
 {
-	if (m_animate)
-		transformable.setScale(getValue());
+	transformable.setScale(getValue());
 }
 
 #endif

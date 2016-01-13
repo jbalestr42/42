@@ -10,8 +10,7 @@ public:
 	virtual float getTimerEnd(void) const = 0;
 
 	virtual void restart(void) = 0;
-	virtual void update(float animationTimer, float frameTime) = 0;
-	virtual void animate(Transformable & transformable) = 0;
+	virtual void update(float animationTimer, float frameTime, Transformable & transformable) = 0;
 
 };
 

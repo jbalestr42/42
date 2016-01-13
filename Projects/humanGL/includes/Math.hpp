@@ -20,8 +20,7 @@ T lerp(T v1, T v2, float t)
 template<class T>
 T cerp(T v1, T v2, float t)
 {
-	float ct = std::cos(t);
-	return (lerp(v1, v2, ct));
+	return (lerp(v1, v2, 0.5f - (std::cos(t * Pi) / 2.f)));
 }
 
 #endif

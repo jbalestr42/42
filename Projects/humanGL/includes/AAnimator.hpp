@@ -6,6 +6,7 @@
 # include <memory>
 # include <type_traits>
 # include <functional>
+# include <cassert>
 
 enum class Anim : std::int8_t
 {
@@ -27,9 +28,15 @@ protected:
 public:
 	AAnimator(void) = delete;
 
-	AAnimator(T const & value) :
-		m_value(value)
-	{}
+	AAnimator(T const & value, float timerStart, float duration) :
+		m_value(value),
+		m_timerStart(timerStart),
+		m_timerEnd(timerStart + duration),
+		m_duration(duration)
+	{
+		assert(timerStart >= 0.f);
+		assert(duration >= 0.f);
+	}
 
 	AAnimator(AAnimator const & animator)
 	{
@@ -46,13 +53,34 @@ public:
 	AAnimator & operator=(AAnimator const & animator)
 	{
 		m_value = animator.m_value;
+		m_timerStart = animator.m_timerStart;
+		m_timerEnd = animator.m_timerEnd;
+		m_duration = animator.m_duration;
 		return (*this);
 	}
 
 	AAnimator & operator=(AAnimator && animator)
 	{
 		m_value = std::move(animator.m_value);
+		m_timerStart = std::move(animator.m_timerStart);
+		m_timerEnd = std::move(animator.m_timerEnd);
+		m_duration = std::move(animator.m_duration);
 		return (*this);
+	}
+
+	virtual float getTimerStart(void) const
+	{
+		return (m_timerStart);
+	}
+
+	virtual float getTimerEnd(void) const
+	{
+		return (m_timerEnd);
+	}
+
+	virtual float getDuration(void) const
+	{
+		return (m_duration);
 	}
 
 	virtual void restart(void)
@@ -61,7 +89,7 @@ public:
 protected:
 	T const & getValue(void) const
 	{
-		return m_value;
+		return (m_value);
 	}
 
 	void setValue(T const & value)
@@ -70,7 +98,10 @@ protected:
 	}
 
 private:
-	T	m_value;
+	T		m_value;
+	float	m_timerStart;
+	float	m_timerEnd;
+	float	m_duration;
 
 };
 
