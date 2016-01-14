@@ -116,7 +116,7 @@ void Node::update(float frameTime)
 		m_animation->update(frameTime);
 	if (m_parent)
 	{
-		setParentScale(getParentScale());
+		setParentScale(m_parent->getParentScale());
 		m_globalMatrix = getMatrix() * m_parent->getGlobalMatrix();
 	}
 	else
@@ -136,6 +136,6 @@ void Node::draw(Shader & shader)
 Vector3 Node::getParentScale(void) const
 {
 	if (m_parent)
-		return m_parent->getParentScale() * getScale();
+		return getScale() * m_parent->getParentScale();
 	return getScale();
 }

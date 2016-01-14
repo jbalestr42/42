@@ -12,11 +12,103 @@
 #include "Node.hpp"
 #include <iostream>
 
-int main(void)
+Node::NodePtr createMan(void)
 {
-	Windows win(800, 600, "OpenGL");
-	win.setClearColor(Color::White);
+	std::unique_ptr<Animation>	trunkAnim(new Animation());
+	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.f, 0.f, 0.f), 0.f)));
+	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.1f), 0.f)));
+	trunkAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateY>(45.f, 0.f, 4.f)));
 
+	std::unique_ptr<Animation>	armRightAnim(new Animation());
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(-0.5f, 0.5f, 0.0f), 0.f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.5f), 0.f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.f, 0.f, -90.f), 0.f)));
+
+	std::unique_ptr<Animation>	armLeftAnim(new Animation());
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.5f, 0.5f, 0.0f), 0.f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.5f), 0.f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.f, 0.f, 90.f), 0.f)));
+
+	std::unique_ptr<Animation>	subArmLeftAnim(new Animation());
+	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.5f, 0.0f), 0.f)));
+
+	std::unique_ptr<Animation>	legLeftAnim(new Animation());
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.3f, -0.5f, 0.0f), 0.f)));
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.35f, 0.5f, 0.7f), 0.f)));
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new LerpAnimator<Anim::Rotate>(Vector3(145.0f, 0.0f, 0.0f), Vector3(215.f, 0.f, 0.f), 0.f, 1.f)));
+	legLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(215.0f, 0.0f, 0.0f), Vector3(145.f, 0.f, 0.f), 1.f, 1.f)));
+
+	std::unique_ptr<Animation>	subLegLeftAnim(new Animation());
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), Vector3(-25.f, 0.f, 0.f), 0.f, 0.5f)));
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(-25.0f, 0.0f, 0.0f), Vector3(0.f, 0.f, 0.f), 0.5f, 0.5f)));
+	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), 1.f, 1.f)));
+
+	std::unique_ptr<Animation>	legRightAnim(new Animation());
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(-0.3f, -0.5f, 0.0f), 0.f)));
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.35f, 0.5f, 0.7f), 0.f)));
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(215.0f, 0.0f, 0.0f), Vector3(145.f, 0.f, 0.f), 0.f, 1.f)));
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new LerpAnimator<Anim::Rotate>(Vector3(145.0f, 0.0f, 0.0f), Vector3(215.f, 0.f, 0.f), 1.f, 1.f)));
+
+	std::unique_ptr<Animation>	subLegRightAnim(new Animation());
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), 0.f, 0.5f)));
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), Vector3(-25.f, 0.f, 0.f), 0.5f, 1.f)));
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(-25.0f, 0.0f, 0.0f), Vector3(0.f, 0.f, 0.f), 1.5f, 0.5f)));
+
+	std::unique_ptr<Animation>	headAnim(new Animation());
+	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.5f, 0.25f, 1.2f), 0.f)));
+	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.63f, 0.f), 0.f)));
+
+	Node::NodePtr trunk(new Node());
+	trunk->setAnimation(std::move(trunkAnim));
+
+	Node::NodePtr armLeft(new Node());
+	armLeft->setAnimation(std::move(armLeftAnim));
+
+	Node::NodePtr subArmLeft(new Node());
+	subArmLeft->setAnimation(std::move(subArmLeftAnim));
+
+	Node::NodePtr armRight(new Node());
+	armRight->setAnimation(std::move(armRightAnim));
+
+	Node::NodePtr legLeft(new Node());
+	legLeft->setAnimation(std::move(legLeftAnim));
+
+	Node::NodePtr subLegLeft(new Node());
+	subLegLeft->setAnimation(std::move(subLegLeftAnim));
+
+	Node::NodePtr legRight(new Node());
+	legRight->setAnimation(std::move(legRightAnim));
+
+	Node::NodePtr subLegRight(new Node());
+	subLegRight->setAnimation(std::move(subLegRightAnim));
+
+	Node::NodePtr head(new Node());
+	head->setAnimation(std::move(headAnim));
+
+	armRight->addChild(subArmLeft);
+	armLeft->addChild(std::move(subArmLeft));
+	legRight->addChild(std::move(subLegRight));
+	legLeft->addChild(std::move(subLegLeft));
+	trunk->addChild(std::move(armLeft));
+	trunk->addChild(std::move(armRight));
+	trunk->addChild(std::move(legLeft));
+	trunk->addChild(std::move(legRight));
+	trunk->addChild(std::move(head));
+
+	return (trunk);
+}
+
+Node::NodePtr createManWalk(void)
+{
 	std::unique_ptr<Animation>	trunkAnim(new Animation());
 	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.f, 0.f, 0.f), 0.f)));
 	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.1f), 0.f)));
@@ -27,16 +119,16 @@ int main(void)
 	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(-0.62f, 0.5f, 0.0f), 0.f)));
 	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.5f), 0.f)));
 	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(-Vector3(135.f, 0.f, 0.f), 0.f)));
-	armRightAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateX>(-135.f, 0.f, 0.6f)));
-	armRightAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateX>(135.f, 0.6f, 0.6f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(145.0f, 0.0f, 0.0f), Vector3(215.f, 0.f, 0.f), 0.f, 1.f)));
+	armRightAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(215.0f, 0.0f, 0.0f), Vector3(145.f, 0.f, 0.f), 1.f, 1.f)));
 
 	std::unique_ptr<Animation>	armLeftAnim(new Animation());
 	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
 	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.62f, 0.5f, 0.0f), 0.f)));
 	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.5f), 0.f)));
 	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(135.f, 0.f, 0.f), 0.f)));
-	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateX>(135.f, 0.f, 0.6f)));
-	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateX>(-135.f, 0.6f, 0.6f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(215.0f, 0.0f, 0.0f), Vector3(145.f, 0.f, 0.f), 0.f, 1.f)));
+	armLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(145.0f, 0.0f, 0.0f), Vector3(215.f, 0.f, 0.f), 1.f, 1.f)));
 
 	std::unique_ptr<Animation>	subArmLeftAnim(new Animation());
 	subArmLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
@@ -57,6 +149,24 @@ int main(void)
 	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(-25.0f, 0.0f, 0.0f), Vector3(0.f, 0.f, 0.f), 0.5f, 0.5f)));
 	subLegLeftAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), 1.f, 1.f)));
 
+	std::unique_ptr<Animation>	legRightAnim(new Animation());
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(-0.3f, -0.5f, 0.0f), 0.f)));
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.35f, 0.5f, 0.7f), 0.f)));
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(215.0f, 0.0f, 0.0f), Vector3(145.f, 0.f, 0.f), 0.f, 1.f)));
+	legRightAnim->pushAnimator(Animation::AnimatorPtr(new LerpAnimator<Anim::Rotate>(Vector3(145.0f, 0.0f, 0.0f), Vector3(215.f, 0.f, 0.f), 1.f, 1.f)));
+
+	std::unique_ptr<Animation>	subLegRightAnim(new Animation());
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), 0.f, 0.5f)));
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(0.0f, 0.0f, 0.0f), Vector3(-25.f, 0.f, 0.f), 0.5f, 1.f)));
+	subLegRightAnim->pushAnimator(Animation::AnimatorPtr(new CerpAnimator<Anim::Rotate>(Vector3(-25.0f, 0.0f, 0.0f), Vector3(0.f, 0.f, 0.f), 1.5f, 0.5f)));
+
+	std::unique_ptr<Animation>	headAnim(new Animation());
+	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.5f, 0.25f, 1.2f), 0.f)));
+	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.63f, 0.f), 0.f)));
+
 	Node::NodePtr trunk(new Node());
 	trunk->setAnimation(std::move(trunkAnim));
 
@@ -75,12 +185,71 @@ int main(void)
 	Node::NodePtr subLegLeft(new Node());
 	subLegLeft->setAnimation(std::move(subLegLeftAnim));
 
+	Node::NodePtr legRight(new Node());
+	legRight->setAnimation(std::move(legRightAnim));
+
+	Node::NodePtr subLegRight(new Node());
+	subLegRight->setAnimation(std::move(subLegRightAnim));
+
+	Node::NodePtr head(new Node());
+	head->setAnimation(std::move(headAnim));
+
 	armRight->addChild(subArmLeft);
 	armLeft->addChild(std::move(subArmLeft));
+	legRight->addChild(std::move(subLegRight));
 	legLeft->addChild(std::move(subLegLeft));
 	trunk->addChild(std::move(armLeft));
 	trunk->addChild(std::move(armRight));
 	trunk->addChild(std::move(legLeft));
+	trunk->addChild(std::move(legRight));
+	trunk->addChild(std::move(head));
+
+	return (trunk);
+}
+
+Node::NodePtr createMonkeyWalk(void)
+{
+	Node::NodePtr trunk = createManWalk();
+
+	std::unique_ptr<Animation>	tailAnim(new Animation());
+	tailAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	tailAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.25f, 0.25f), 0.f)));
+	tailAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, -0.5f, -0.5f), 0.f)));
+	tailAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(25.f, 0.f, 0.f), 0.f)));
+
+	std::unique_ptr<Animation>	tailPieceAnim(new Animation());
+	tailPieceAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
+	tailPieceAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.5f, 0.0f), 0.f)));
+	tailPieceAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(35.f, 0.f, 0.f), 0.f)));
+	tailPieceAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::Rotate>(Vector3(5.f, 0.f, 0.f), 0.f, 2.f)));
+	tailPieceAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::Rotate>(Vector3(-5.f, 0.f, 0.f), 2.f, 2.f)));
+
+	Node::NodePtr tail(new Node());
+	tail->setAnimation(std::move(tailAnim));
+
+	Node::NodePtr tailPiece(new Node());
+	tailPiece->setAnimation(std::move(tailPieceAnim));
+
+	tailPiece->addChild(tailPiece);
+	tailPiece->addChild(tailPiece);
+	tailPiece->addChild(tailPiece);
+	tailPiece->addChild(tailPiece);
+	tail->addChild(tailPiece);
+	trunk->addChild(std::move(tail));
+
+	return (trunk);
+}
+
+int main(void)
+{
+	Windows win(800, 600, "OpenGL");
+	win.setClearColor(Color::White);
+
+	std::vector<Node::NodePtr> animations;
+	std::size_t index = 0;
+	animations.push_back(createMan());
+	//animations.push_back(createManWalk());
+	//animations.push_back(createMonkeyWalk());
 
 	Shader shader("resources/default.frag" ,"resources/default.vert");
 
@@ -115,21 +284,27 @@ int main(void)
 			win.close();
 
 		if (glfwGetKey(win.getWindow(), GLFW_KEY_R) == GLFW_PRESS)
-			trunk->play();
+			animations[index]->play();
 
 		if (glfwGetKey(win.getWindow(), GLFW_KEY_E) == GLFW_PRESS)
-			trunk->pause();
+			animations[index]->pause();
 
 		if (glfwGetKey(win.getWindow(), GLFW_KEY_T) == GLFW_PRESS)
-			trunk->stop();
+			animations[index]->stop();
+
+		if (glfwGetKey(win.getWindow(), GLFW_KEY_LEFT) == GLFW_RELEASE)
+			index = (index - 1) % animations.size();
+
+		if (glfwGetKey(win.getWindow(), GLFW_KEY_RIGHT) == GLFW_RELEASE)
+			index = (index + 1) % animations.size();
 
 		// Update
-		trunk->update(frameTime);
+		animations[index]->update(frameTime);
 
 		// Draw
 		win.clear();
 
-		trunk->draw(shader);
+		animations[index]->draw(shader);
 
 		win.display();
 		win.pollEvents();
