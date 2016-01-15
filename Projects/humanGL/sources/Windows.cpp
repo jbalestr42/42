@@ -1,4 +1,5 @@
 #include "Windows.hpp"
+#include "Keyboard.hpp"
 #include <iostream>
 
 Windows::Windows(void) :
@@ -56,6 +57,7 @@ void Windows::init(void)
 		exit(EXIT_FAILURE);
 	}
 
+	glfwSetKeyCallback(m_window, Keyboard::callback);
 	glfwSetFramebufferSizeCallback(m_window, resizeCallback);
 
 	glfwMakeContextCurrent(m_window);

@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/01/13 12:02:34 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/01/15 15:18:33 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC =	main.cpp \
 		Vector3.cpp \
 		Animation.cpp \
 		Node.cpp \
+		Keyboard.cpp \
 		Color.cpp
 INC =	Matrix.hpp \
 		Transformable.hpp \
@@ -51,6 +52,7 @@ INC =	Matrix.hpp \
 		SetAnimator.hpp \
 		LerpAnimator.hpp \
 		CerpAnimator.hpp \
+		Keyboard.hpp \
 		Node.hpp \
 		Color.hpp
 OBJ =	$(SRC:.cpp=.o)

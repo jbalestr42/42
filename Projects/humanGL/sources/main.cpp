@@ -10,6 +10,7 @@
 #include "LerpAnimator.hpp"
 #include "CerpAnimator.hpp"
 #include "Node.hpp"
+#include "Keyboard.hpp"
 #include <iostream>
 
 Node::NodePtr createMan(void)
@@ -248,8 +249,8 @@ int main(void)
 	std::vector<Node::NodePtr> animations;
 	std::size_t index = 0;
 	animations.push_back(createMan());
-	//animations.push_back(createManWalk());
-	//animations.push_back(createMonkeyWalk());
+	animations.push_back(createManWalk());
+	animations.push_back(createMonkeyWalk());
 
 	Shader shader("resources/default.frag" ,"resources/default.vert");
 
@@ -280,23 +281,30 @@ int main(void)
 		float frameTime = (currentTime - lastTime);
 		lastTime = currentTime;
 
-		if (glfwGetKey(win.getWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		if (Keyboard::isKeyPressed(GLFW_KEY_ESCAPE))
 			win.close();
 
-		if (glfwGetKey(win.getWindow(), GLFW_KEY_R) == GLFW_PRESS)
+		if (Keyboard::isKeyPressed(GLFW_KEY_A))
 			animations[index]->play();
 
-		if (glfwGetKey(win.getWindow(), GLFW_KEY_E) == GLFW_PRESS)
+		if (Keyboard::isKeyPressed(GLFW_KEY_Z))
 			animations[index]->pause();
 
-		if (glfwGetKey(win.getWindow(), GLFW_KEY_T) == GLFW_PRESS)
+		if (Keyboard::isKeyPressed(GLFW_KEY_E))
 			animations[index]->stop();
 
-		if (glfwGetKey(win.getWindow(), GLFW_KEY_LEFT) == GLFW_RELEASE)
-			index = (index - 1) % animations.size();
+		if (Keyboard::isKeyPressed(GLFW_KEY_LEFT))
+			index = index == 0 ? animations.size() - 1 : index - 1;
 
-		if (glfwGetKey(win.getWindow(), GLFW_KEY_RIGHT) == GLFW_RELEASE)
+		if (Keyboard::isKeyPressed(GLFW_KEY_RIGHT))
 			index = (index + 1) % animations.size();
+
+		if (Keyboard::isKeyPressed(GLFW_KEY_F))
+			std::cout << "pressed" << std::endl;
+		if (Keyboard::isKeyPress(GLFW_KEY_F))
+			std::cout << "press" << std::endl;
+		if (Keyboard::isKeyReleased(GLFW_KEY_F))
+			std::cout << "released" << std::endl;
 
 		// Update
 		animations[index]->update(frameTime);
