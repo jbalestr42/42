@@ -43,9 +43,9 @@ void Windows::init(void)
 	glfwWindowHint(GLFW_SAMPLES, 4); // antialiasing
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-	//glfwWindowHint(GLFW_DEPTH_BITS, 16);
+	glfwWindowHint(GLFW_DEPTH_BITS, 16);
 
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 	// if debug
@@ -70,6 +70,9 @@ void Windows::init(void)
 	glfwSwapInterval(1); // vsync
 	glfwGetFramebufferSize(m_window, &m_width, &m_height);
 	resizeCallback(m_window, m_width, m_height);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 }
 
 bool Windows::isOpen(void) const

@@ -19,25 +19,25 @@ Matrix::Matrix(float f00, float f01, float f02, float f03,
 	m_matrix[12] = f30; m_matrix[13] = f31; m_matrix[14] = f32; m_matrix[15] = f33;
 }
 
-Matrix::Matrix(Matrix && matrix)
-{
-	*this = std::move(matrix);
-}
-
 Matrix::Matrix(Matrix const & matrix)
 {
 	*this = matrix;
 }
 
-Matrix & Matrix::operator=(Matrix && matrix)
+Matrix::Matrix(Matrix && matrix)
 {
-	std::move(std::begin(matrix.m_matrix), std::end(matrix.m_matrix), std::begin(m_matrix));
-	return (*this);
+	*this = std::move(matrix);
 }
 
 Matrix & Matrix::operator=(Matrix const & matrix)
 {
 	std::copy(std::begin(matrix.m_matrix), std::end(matrix.m_matrix), std::begin(m_matrix));
+	return (*this);
+}
+
+Matrix & Matrix::operator=(Matrix && matrix)
+{
+	std::move(std::begin(matrix.m_matrix), std::end(matrix.m_matrix), std::begin(m_matrix));
 	return (*this);
 }
 

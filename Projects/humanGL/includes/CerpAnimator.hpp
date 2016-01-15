@@ -22,6 +22,11 @@ public:
 		}
 	}
 
+	virtual IAnimatorBase * clone(void) const
+	{
+		return new CerpAnimator(*this);
+	}
+
 };
 
 #endif
