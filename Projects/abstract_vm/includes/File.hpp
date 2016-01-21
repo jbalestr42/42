@@ -14,7 +14,7 @@ public:
 private:
 	std::ifstream	m_file;
 
-	File(void);
+	File(void) = default;
 	File(File const & file);
 	File & operator=(const File & file);
 

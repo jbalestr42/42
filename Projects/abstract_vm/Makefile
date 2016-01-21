@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2015/12/10 15:48:47 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/01/21 15:11:55 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@
 NAME =	ft_abstract_vm
 CC =	g++
 FLAGS =	-Wall -Wextra -Werror -std=c++11
-LIB =	
 SDIR =	sources/
 ODIR =	objects/
 IDIR =	includes/
@@ -30,7 +29,7 @@ all: $(NAME)
 
 $(NAME): $(O)
 	@echo "-> Creating $(NAME)..."
-	@$(CC) $(FLAGS) -o $@ $^ -I $(IDIR) $(LIB)
+	@$(CC) $(FLAGS) -o $@ $^ -I $(IDIR)
 	@echo "-> Done !"
 
 $(ODIR)%.o: $(SDIR)%.cpp $(I)

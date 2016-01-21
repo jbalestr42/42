@@ -3,32 +3,45 @@
 
 # include <sstream>
 # include <cmath>
+# include <limits>
 # include "IOperand.hpp"
 # include "Factory.hpp"
+# include "Exceptions.hpp"
 
 template<eOperandType T>
 class Operand : public IOperand
 {
 private:
-enum Operator
-{
-	Add,
-	Sub,
-	Mul,
-	Div,
-	Mod
-};
+	enum Operator
+	{
+		Add,
+		Sub,
+		Mul,
+		Div,
+		Mod
+	};
 
 public:
 	Operand(void) :
 		m_value("")
 	{}
 
+	Operand(Operand const & operand)
+	{
+		*this = operand;
+	}
+
 	Operand(std::string const & value) :
 		m_value(value)
 	{}
 
-	virtual ~Operand(void) {}
+	virtual ~Operand(void) = default;
+
+	Operand & operator=(Operand const & operand)
+	{
+		m_value = operand.m_value;
+		return (*this);
+	}
 
 	virtual int getPrecision(void) const { return (static_cast<int>(T)); }
 
@@ -74,19 +87,19 @@ private:
 		switch (type)
 		{
 			case eOperandType::Int8:
-				return getResult<int8_t>(rhs, op);
+				return getResult(rhs, op);
 				break;
 			case eOperandType::Int16:
-				return getResult<int16_t>(rhs, op);
+				return getResult(rhs, op);
 				break;
 			case eOperandType::Int32:
-				return getResult<int32_t>(rhs, op);
+				return getResult(rhs, op);
 				break;
 			case eOperandType::Float:
-				return getResult<float>(rhs, op);
+				return getResult(rhs, op);
 				break;
 			case eOperandType::Double:
-				return getResult<double>(rhs, op);
+				return getResult(rhs, op);
 				break;
 			default:
 				break;
@@ -94,12 +107,11 @@ private:
 		return "0";
 	}
 
-	template<class U>
 	std::string		getResult(IOperand const & rhs, Operator op) const
 	{
-		U u1 = static_cast<U>(std::stod(toString().c_str()));
-		U u2 = static_cast<U>(std::stod(static_cast<Operand<eOperandType::Int8> const &>(rhs).toString().c_str()));
-		U r;
+		long double u1 = std::stold(toString().c_str());
+		long double u2 = std::stold(rhs.toString().c_str());
+		long double r;
 
 		switch (op)
 		{
@@ -107,19 +119,19 @@ private:
 				r = u1 + u2;
 				break;
 			case Operand::Sub:
-				//TODO manage operation between char and not int8
-				//quand la chain est 7, elle n'est pas converti en 7, mais en la valeur d'un char représentant 7
 				r = u1 - u2;
 				break;
 			case Operand::Mul:
 				r = u1 * u2;
 				break;
 			case Operand::Div:
-				// divide by 0
+				if (u2 < std::numeric_limits<long double>::epsilon())
+					throw ZeroDivisionException();
 				r = u1 / u2;
 				break;
 			case Operand::Mod:
-				// divide by 0
+				if (u2 < std::numeric_limits<long double>::epsilon())
+					throw ZeroDivisionException();
 				r = std::fmod(u1, u2);
 				break;
 			default:

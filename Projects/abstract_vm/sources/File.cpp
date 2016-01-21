@@ -1,10 +1,11 @@
 #include "File.hpp"
-
-File::File(void) {}
+#include "Exceptions.hpp"
 
 File::File(std::string const & filename)
 {
 	m_file.open(filename);
+	if (!m_file.is_open())
+		throw WrongFileException(filename);
 }
 
 File::File(File const & file)
@@ -17,9 +18,8 @@ File::~File(void)
 	m_file.close();
 }
 
-File & File::operator=(File const & file)
+File & File::operator=(File const &)
 {
-	(void)file;
 	return (*this);
 }
 

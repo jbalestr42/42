@@ -26,20 +26,17 @@ private:
 
 	struct Instruction
 	{
-		std::string		m_name;
-		int				m_line;
+		std::string			m_name;
+		int					m_line;
 		InstructionFunction	m_function;
 
-		Instruction(std::string const & name, int line) :
-			m_name(name),
-			m_line(line),
-			m_function(nullptr)
-		{}
+		Instruction(void) = default;
+		Instruction(Instruction const & instruction);
+		Instruction(std::string const & name, int line);
+		~Instruction(void) = default;
+		Instruction & operator=(Instruction const & instruction);
 
-		void setFunction(InstructionFunction * function)
-		{
-			m_function = *function;
-		}
+		void setFunction(InstructionFunction * function);
 	};
 
 	struct InstructionArgs : public Instruction
@@ -47,16 +44,13 @@ private:
 		std::string		m_value;
 		eOperandType	m_type;
 
-		InstructionArgs(std::string const & name, std::string const & value, eOperandType type, int line) :
-			Instruction(name, line),
-			m_value(value),
-			m_type(type)
-		{}
+		InstructionArgs(void);
+		InstructionArgs(InstructionArgs const & instructionArgs);
+		InstructionArgs(std::string const & name, std::string const & value, eOperandType type, int line);
+		~InstructionArgs(void) = default;
+		InstructionArgs & operator=(InstructionArgs const & instructionArgs);
 
-		void setFunction(InstructionArgsFunction * function)
-		{
-			m_function = std::bind(*function, m_value, m_type);
-		}
+		void setFunction(InstructionArgsFunction * function);
 	};
 
 	InstructionStack(InstructionStack const & instructionStack);
@@ -64,7 +58,7 @@ private:
 
 	void split(std::vector<std::string> & tokens, std::string const & line, char delimiter);
 	void splitWhitespace(std::vector<std::string> & tokens, std::string const & line);
-	bool isNumber(std::string const & string); //TODO: ajjouter les const a la fin des fonction
+	bool isNumber(std::string const & string) const;
 
 	eOperandType checkOperandType(std::string const & type);
 	void checkParam(std::vector<std::string> & tokens, std::string const & param, std::string const & line);
@@ -87,6 +81,7 @@ private:
 	std::map<std::string, InstructionArgsFunction>		m_instructionArgsFunctions;
 	std::vector<std::pair<std::string, eOperandType>>	m_validTypes;
 	std::size_t											m_countLine;
+	bool												m_exitProperly;
 	OperandStack										m_stack;
 
 };

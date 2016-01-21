@@ -1,13 +1,13 @@
 #include "Exceptions.hpp"
 #include <sstream>
 
-Exception::Exception(void)
+Exception::Exception(void) :
+	m_funName("")
 {}
 
 Exception::Exception(std::string const & funName) :
 	m_funName(funName)
-{
-}
+{}
 
 Exception::Exception(std::string const & funName, int line) :
 	m_funName("")
@@ -16,8 +16,6 @@ Exception::Exception(std::string const & funName, int line) :
 	oss << "(line " << line << ") " << funName;
 	m_funName = oss.str();
 }
-
-Exception::~Exception(void) { }
 
 Exception::Exception(Exception const & exceptions)
 {
@@ -30,11 +28,30 @@ Exception & Exception::operator=(Exception const & exceptions)
 	return (*this);
 }
 
-
 const char * Exception::what() const throw()
 {
 	return (m_funName.c_str());
 }
+
+NoExitException::NoExitException(void) :
+	Exception("NoExitException: No exit at end of program !")
+{}
+
+ZeroDivisionException::ZeroDivisionException(void) :
+	Exception("ZeroDivisionException: Divide by 0 !")
+{}
+
+UnderflowException::UnderflowException(void) :
+	Exception("UnderflowException: Underflow !")
+{}
+
+OverflowException::OverflowException(void) :
+	Exception("OverflowException: Overflow !")
+{}
+
+WrongFileException::WrongFileException(std::string const & string) :
+	Exception("WrongFileException: The file \"" + string + "\" can't be opened.")
+{}
 
 PrintFailedException::PrintFailedException(std::string const & string) :
 	Exception("PrintFailedException: Print failed ! The value (" + string + ") is not a character.")

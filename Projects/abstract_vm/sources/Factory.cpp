@@ -1,5 +1,6 @@
 #include "Factory.hpp"
 #include "Operand.hpp"
+#include "Exceptions.hpp"
 #include <limits>
 
 std::unique_ptr<Factory> Factory::m_instance = nullptr;
@@ -11,6 +12,14 @@ Factory::Factory(void)
 	m_createOperands[static_cast<int>(eOperandType::Int32)] = std::bind(&Factory::createInt32, this, std::placeholders::_1);
 	m_createOperands[static_cast<int>(eOperandType::Float)] = std::bind(&Factory::createFloat, this, std::placeholders::_1);
 	m_createOperands[static_cast<int>(eOperandType::Double)] = std::bind(&Factory::createDouble, this, std::placeholders::_1);
+}
+
+Factory::Factory(Factory const &)
+{}
+
+Factory & Factory::operator=(Factory const &)
+{
+	return (*this);
 }
 
 Factory & Factory::getInstance()
@@ -61,7 +70,7 @@ void Factory::checkValue(std::string const & value) const
 {
 	long double v = std::stold(value);
 	if (v > static_cast<long double>(std::numeric_limits<T>::max()))
-		throw std::exception();
-	else if (v < static_cast<long double>(std::numeric_limits<T>::min()))
-		throw std::exception();
+		throw OverflowException();
+	else if (v < static_cast<long double>(std::numeric_limits<T>::lowest()))
+		throw UnderflowException();
 }

@@ -9,12 +9,14 @@ class Stack
 public:
 	typedef typename std::vector<T>::iterator Iterator;
 
-	Stack(void) {}
+	Stack(void) = default;
+
 	Stack(Stack const & stack)
 	{
 		*this = stack;
 	}
-	virtual ~Stack(void) {}
+
+	virtual ~Stack(void) = default;
 
 	Stack & operator=(Stack const & stack)
 	{

@@ -10,7 +10,7 @@ public:
 	Exception(std::string const & string);
 	Exception(std::string const & string, int line);
 	Exception(Exception const & exceptions);
-	virtual ~Exception(void);
+	virtual ~Exception(void) = default;
 
 	virtual const char * what() const throw();
 
@@ -19,6 +19,36 @@ private:
 
 	Exception(void);
 	Exception & operator=(Exception const & exceptions);
+};
+
+class NoExitException : public Exception
+{
+public:
+	NoExitException(void);
+};
+
+class ZeroDivisionException : public Exception
+{
+public:
+	ZeroDivisionException(void);
+};
+
+class UnderflowException : public Exception
+{
+public:
+	UnderflowException(void);
+};
+
+class OverflowException : public Exception
+{
+public:
+	OverflowException(void);
+};
+
+class WrongFileException : public Exception
+{
+public:
+	WrongFileException(std::string const & string);
 };
 
 class PrintFailedException : public Exception

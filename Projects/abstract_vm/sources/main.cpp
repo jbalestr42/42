@@ -5,6 +5,16 @@
 #include "Exceptions.hpp"
 #include "InstructionStack.hpp"
 
+bool	checkEndOfRead(std::string const & line)
+{
+	if (line.length() >= 2)
+	{
+		if (line[0] == ';' && line[1] == ';')
+			return (true);
+	}
+	return (false);
+}
+
 void	parse_args(int argc, char ** argv)
 {
 	InstructionStack stack;
@@ -13,6 +23,8 @@ void	parse_args(int argc, char ** argv)
 		std::string line;
 		while (getline(std::cin, line))
 		{
+			if (checkEndOfRead(line))
+				break;
 			stack.processLine(line);
 		}
 	}

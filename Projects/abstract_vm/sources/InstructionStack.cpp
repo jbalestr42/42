@@ -8,7 +8,8 @@
 #include "Factory.hpp"
 
 InstructionStack::InstructionStack(void) :
-	m_countLine(1)
+	m_countLine(1),
+	m_exitProperly(false)
 {
 	m_instructionArgsFunctions["push"] = std::bind(&InstructionStack::push, this, std::ref(m_stack), std::placeholders::_1, std::placeholders::_2);
 	m_instructionArgsFunctions["assert"] = std::bind(&InstructionStack::assert, this, std::ref(m_stack), std::placeholders::_1, std::placeholders::_2);
@@ -53,7 +54,13 @@ InstructionStack & InstructionStack::operator=(InstructionStack const & instruct
 void InstructionStack::process(void)
 {
 	for (auto & instruction : m_instructions)
+	{
 		instruction->m_function();
+		if (m_exitProperly)
+			break;
+	}
+	if (!m_exitProperly)
+		throw NoExitException();
 }
 
 void InstructionStack::processLine(std::string const & line)
@@ -63,7 +70,6 @@ void InstructionStack::processLine(std::string const & line)
 	split(tokens, line, ';');
 	if (tokens.size())
 	{
-		// check if end of program with ;;
 		splitWhitespace(tokens, tokens[0]);
 		if (tokens.size())
 		{
@@ -111,12 +117,7 @@ void InstructionStack::pop(OperandStack & stack)
 void InstructionStack::dump(OperandStack & stack)
 {
 	for (int i = stack.size() - 1; i >= 0; i--)
-	{
-		if (stack[i]->toString().length() == 1)
-			std::cout << (int)stack[i]->toString()[0] << std::endl;
-		else
-			std::cout << stack[i]->toString() << std::endl;
-	}
+		std::cout << stack[i]->toString() << std::endl;
 }
 
 void InstructionStack::add(OperandStack & stack)
@@ -141,7 +142,6 @@ void InstructionStack::sub(OperandStack & stack)
 	IOperand const * op2 = stack.top();
 	stack.pop();
 	stack.push(*op2 - *op1);
-	std::cout << stack.top()->toString() << std::endl;
 	delete op1;
 	delete op2;
 }
@@ -189,7 +189,7 @@ void InstructionStack::print(OperandStack & stack)
 {
 	if (stack.top()->getType() != eOperandType::Int8)
 		throw PrintFailedException(stack.top()->toString());
-	std::cout << static_cast<char>(atoi(stack.top()->toString().c_str())) << std::endl;
+	std::cout << static_cast<char>(std::atoi(stack.top()->toString().c_str())) << std::endl;
 }
 
 void InstructionStack::exit(OperandStack & stack)
@@ -200,7 +200,7 @@ void InstructionStack::exit(OperandStack & stack)
 		stack.pop();
 		delete op;
 	}
-	std::exit(0);
+	m_exitProperly = true;
 }
 
 void InstructionStack::checkFunction(std::string const & functionName, bool hasParam, Instruction * instruction)
@@ -234,7 +234,6 @@ void InstructionStack::checkParam(std::vector<std::string> & tokens, std::string
 		throw SyntacticErrorExceptionException(line, m_countLine);
 	if (!isNumber(tokens[2]))
 		throw InvalidValueException(tokens[2], m_countLine);
-	// check overflow and underflow
 }
 
 eOperandType InstructionStack::checkOperandType(std::string const & type)
@@ -264,7 +263,7 @@ void InstructionStack::splitWhitespace(std::vector<std::string> & tokens, std::s
 	tokens.assign(beg, end);
 }
 
-bool InstructionStack::isNumber(std::string const & string)
+bool InstructionStack::isNumber(std::string const & string) const
 {
 	std::stringstream ss;
 	ss << string;
@@ -276,4 +275,57 @@ bool InstructionStack::isNumber(std::string const & string)
 	else if (num == 0 && string[0] != '0')
 		return (false);
 	return (true);
+}
+
+InstructionStack::Instruction::Instruction(Instruction const & instruction)
+{
+	*this = instruction;
+}
+
+InstructionStack::Instruction::Instruction(std::string const & name, int line) :
+	m_name(name),
+	m_line(line),
+	m_function(nullptr)
+{}
+
+InstructionStack::Instruction & InstructionStack::Instruction::operator=(Instruction const & instruction)
+{
+	m_name = instruction.m_name;
+	m_line = instruction.m_line;
+	m_function = instruction.m_function;
+	return (*this);
+}
+
+void InstructionStack::Instruction::setFunction(InstructionFunction * function)
+{
+	m_function = *function;
+}
+
+InstructionStack::InstructionArgs::InstructionArgs(void) :
+	Instruction()
+{}
+
+InstructionStack::InstructionArgs::InstructionArgs(InstructionArgs const & instructionArgs) :
+	Instruction(instructionArgs)
+{
+	*this = instructionArgs;
+}
+
+InstructionStack::InstructionArgs::InstructionArgs(std::string const & name, std::string const & value, eOperandType type, int line) :
+	Instruction(name, line),
+	m_value(value),
+	m_type(type)
+{}
+
+InstructionStack::InstructionArgs & InstructionStack::InstructionArgs::operator=(InstructionArgs const & instructionArgs)
+{
+	Instruction::operator=(instructionArgs);
+	m_value = instructionArgs.m_value;
+	m_type = instructionArgs.m_type;
+	return (*this);
+}
+
+void InstructionStack::InstructionArgs::setFunction(InstructionArgsFunction * function)
+{
+	m_function = std::bind(*function, m_value, m_type);
 }
