@@ -25,5 +25,5 @@ File & File::operator=(File const &)
 
 bool File::readLine(std::string & line)
 {
-	return getline(m_file,line);
+	return static_cast<bool>(std::getline(m_file, line));
 }
