@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 14:40:21 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 10:45:10 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 14:17:55 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ int			read_rooms(t_graph *graph, t_room **rooms, int fd)
 
 	error_flag = 0;
 	line = NULL;
+	tmp = NULL;
 	while (get_next_line(fd, &line))
 	{
 		if (line)
 		{
+			ft_putendl(line);
 			if (!ft_strlen(line))
 				return (return_free(line, 0, "Empty line"));
 			if (line[0] == '#')
@@ -69,6 +71,7 @@ int			read_rooms(t_graph *graph, t_room **rooms, int fd)
 				{
 					parse_room(rooms, tmp);
 					free_split(tmp);
+					tmp = NULL;
 				}
 				else if (error_flag)
 					return (return_free(line, 0, "Wrong room format after command line"));
@@ -80,6 +83,7 @@ int			read_rooms(t_graph *graph, t_room **rooms, int fd)
 					break;
 				else if (ret == 0)
 					return (0);
+				free_split(tmp);
 			}
 			free(line);
 		}
@@ -88,5 +92,7 @@ int			read_rooms(t_graph *graph, t_room **rooms, int fd)
 	}
 	if (!check_error(graph, rooms))
 		return (0);
+	if (!tmp)
+		return (return_print(0, "No edge found"));
 	return (read_edges(graph, fd, tmp));
 }

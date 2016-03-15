@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/11 13:14:30 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 14:18:40 by jbalestr         ###   ########.fr       */
+/*   Created: 2013/11/20 20:22:27 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/11 10:58:04 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "gnl.h"
 
-int			main(int argc, char **argv)
+static void			*ft_memset(void *b, int c, size_t len)
 {
-	t_graph	*graph;
+	unsigned char	*s;
 
-	if (argc == 2)
-	{
-		if (!(graph = read_map(argv[1])))
-			return (0);
-		dijkstra(graph);
-		destroy_graph(graph);
-	}
-	else
-		printf("Usage: ./lemin map\n");
-	return 0;
+	s = b;
+	while (len-- > 0)
+		*s++ = (unsigned char)c;
+	return (b);
+}
+
+void				ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, '\0', n);
 }

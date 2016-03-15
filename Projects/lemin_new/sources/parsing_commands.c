@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 10:13:51 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 10:16:41 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 13:04:48 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ static char	**check_command_start(t_graph *graph, int fd, char **line, int *erro
 			return (NULL);
 		}
 		free(*line);
+		*line = NULL;
 		get_next_line(fd, line);
+		if (!*line)
+			return (NULL);
+		ft_putendl(*line);
 		tmp = check_room(*line);
 		if (tmp)
 		{
@@ -68,7 +72,11 @@ static char	**check_command_end(t_graph *graph, int fd, char **line, int *error_
 			return (NULL);
 		}
 		free(*line);
+		*line = NULL;
 		get_next_line(fd, line);
+		if (!*line)
+			return (NULL);
+		ft_putendl(*line);
 		tmp = check_room(*line);
 		if (tmp)
 		{

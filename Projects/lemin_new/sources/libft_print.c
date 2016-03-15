@@ -1,29 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   libft_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/11 13:14:30 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 14:18:40 by jbalestr         ###   ########.fr       */
+/*   Created: 2016/03/15 12:57:28 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/15 12:59:16 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+#include <unistd.h>
 
-int			main(int argc, char **argv)
+void	ft_putchar(char c)
 {
-	t_graph	*graph;
+	write(1, &c, 1);
+}
 
-	if (argc == 2)
+void	ft_putnbr(int n)
+{
+	if (n < 0)
 	{
-		if (!(graph = read_map(argv[1])))
-			return (0);
-		dijkstra(graph);
-		destroy_graph(graph);
+		ft_putchar('-');
+		n = -n;
 	}
-	else
-		printf("Usage: ./lemin map\n");
-	return 0;
+	if (n / 10 > 0)
+		ft_putnbr(n / 10);
+	ft_putchar('0' + n % 10);
+}
+
+void	ft_putendl(char const *s)
+{
+	write(1, s, ft_strlen(s));
+	write(1, "\n", 1);
+}
+
+void	ft_putstr(char const *s)
+{
+	write(1, s, ft_strlen(s));
 }

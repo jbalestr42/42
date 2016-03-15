@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/23 11:57:09 by jbalestr          #+#    #+#              #
-#    Updated: 2016/03/11 11:00:41 by jbalestr         ###   ########.fr        #
+#    Updated: 2014/02/22 17:11:25 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FLAGS = -Wall -Werror -Wextra
 SDIR = sources/
 ODIR = objects/
 IDIR = includes/
-SRC = get_next_line.c ft_bzero.c ft_strchr.c
+SRC = get_next_line.c
 OBJ = $(SRC:.c=.o)
 EXT = $(IDIR)gnl.h
 S = $(addprefix $(SDIR), $(SRC))

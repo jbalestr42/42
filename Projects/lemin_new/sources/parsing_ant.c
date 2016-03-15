@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/13 20:09:04 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 15:21:14 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 12:59:50 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			read_num_ant(int fd)
 	{
 		if (line)
 		{
+			ft_putendl(line);
 			if (!ft_strlen(line))
 				return (return_free(line, 0, "Empty line"));
 			ret = read_comment(line);

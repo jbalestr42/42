@@ -9,7 +9,7 @@ ODIR =	objects/
 IDIR =	-I includes/ -I gnl/includes
 SRC =	main.c dijkstra.c graph.c min_heap.c parsing.c parsing_helper.c ft_strsplit.c \
 		ft_splitwhite.c parsing_room.c parsing_edge.c parsing_ant.c libft.c room.c \
-		parsing_commands.c print_result.c
+		parsing_commands.c print_result.c libft_print.c destroy_graph.c
 OBJ =	$(SRC:.c=.o)
 S =		$(addprefix $(SDIR), $(SRC))
 O =		$(addprefix $(ODIR), $(OBJ))

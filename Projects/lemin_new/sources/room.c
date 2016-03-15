@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/13 20:38:23 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 10:02:19 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 13:32:39 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int			create_rooms(t_graph *graph, t_room *rooms)
 
 	graph->V = rooms->num + 1;
 	graph->array = (t_adj_list*)malloc(graph->V * sizeof(t_adj_list));
-	graph->room_name = (char**)malloc(sizeof(char*) * rooms->num + 2);
+	graph->room_name = (char**)malloc(sizeof(char*) * graph->V);
 	if (!graph->room_name)
 		return (0);
 	i = 0;

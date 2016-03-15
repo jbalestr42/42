@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 16:08:01 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 10:12:04 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 13:13:38 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,18 @@ int			read_edges(t_graph *graph, int fd, char **tmp)
 	{
 		if (line)
 		{
+			ft_putendl(line);
 			if (!ft_strlen(line))
-				return (return_free(line, 0, "Empty line"));
+				return (return_free(line, 1, "Empty line"));
 			if (line[0] == '#')
 			{
 				if (!ft_strcmp(line, "##start") || !ft_strcmp(line, "##end"))
-					return (return_free(line, 0, "Command at the wrong place"));
+					return (return_free(line, 1, "Command at the wrong place"));
 			}
 			else
 			{
 				if (!parse_edge(graph, line))
-					return return_free(line, 0, NULL);
+					return return_free(line, 1, NULL);
 			}
 			free(line);
 		}

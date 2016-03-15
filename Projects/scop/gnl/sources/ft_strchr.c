@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/11 13:14:30 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 14:18:40 by jbalestr         ###   ########.fr       */
+/*   Created: 2013/11/20 20:33:35 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/11 10:56:43 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "gnl.h"
 
-int			main(int argc, char **argv)
+char	*ft_strchr(const char *s, int c)
 {
-	t_graph	*graph;
-
-	if (argc == 2)
-	{
-		if (!(graph = read_map(argv[1])))
-			return (0);
-		dijkstra(graph);
-		destroy_graph(graph);
-	}
-	else
-		printf("Usage: ./lemin map\n");
-	return 0;
+	if (*s == (char)c)
+		return ((char *)s);
+	if (!*s)
+		return (NULL);
+	return (ft_strchr(++s, c));
 }

@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:15:15 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 17:02:16 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 13:55:31 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 t_graph			*create_graph(void);
 void			destroy_graph(t_graph *graph);
+void			destroy_min_heap(t_min_heap *heap);
+void			destroy_result(t_ant **ants, int ant_size, int *path);
 void			add_edge(t_graph* graph, int src, int dest, int weight);
 void			dijkstra(t_graph* graph);
 
@@ -56,5 +58,9 @@ char			**check_commands(t_graph *graph, int fd, char **line, int *error_flag);
 int				find_name(t_graph *graph, char *name);
 
 void			ant_stuff(t_graph *graph, int *parents, int src, int dest);
+void			ft_putchar(char c);
+void			ft_putnbr(int n);
+void			ft_putendl(char const *s);
+void			ft_putstr(char const *s);
 
 #endif

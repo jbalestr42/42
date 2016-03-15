@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:22:54 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/13 21:04:41 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 13:24:00 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,6 @@ t_graph				*create_graph(void)
 	graph->room_name = NULL;
 	graph->array = NULL;
 	return (graph);
-}
-
-void				destroy_graph(t_graph *graph)
-{
-	int				i;
-
-	i = 0;
-	if (graph)
-	{
-		if (graph->array)
-		{
-		}
-		if (graph->room_name)
-		{
-			while (i < graph->room_count)
-			{
-				free(graph->room_name[i]);
-				i++;
-			}
-			free(graph->room_name);
-		}
-		free(graph);
-	}
 }
 
 // Adds an edge to an undirected graph

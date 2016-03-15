@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 17:01:09 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 17:15:37 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 13:58:15 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,27 @@ static int	*get_path(int *parents, int *size, int src, int dest)
 	return (path);
 }
 
+static int	is_valid_path(int *parents, int src, int dest)
+{
+	int		u;
+	int		valid;
+
+	u = dest;
+	valid = 0;
+	while (u != -1)
+	{
+		if (u == src)
+		{
+			valid = 1;
+			break;
+		}
+		u = parents[u];
+	}
+	if (valid)
+		return (1);
+	return (0);
+}
+
 void		ant_stuff(t_graph *graph, int *parents, int src, int dest)
 {
 	t_ant	**ants;
@@ -56,6 +77,11 @@ void		ant_stuff(t_graph *graph, int *parents, int src, int dest)
 	int		*path;
 	int		room_valid[graph->room_count];
 
+	if (!is_valid_path(parents, src, dest))
+	{
+		ft_putendl("ERROR");
+		return ;
+	}
 	path = get_path(parents, &graph->room_count, src, dest);
 	count = graph->room_count;
 	ants = get_ants(graph, count);
@@ -86,4 +112,5 @@ void		ant_stuff(t_graph *graph, int *parents, int src, int dest)
 			i++;
 		}
 	}
+	destroy_result(ants, graph->ant_count, path);
 }

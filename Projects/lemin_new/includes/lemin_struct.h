@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 10:54:28 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 17:00:42 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 14:07:28 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct				s_min_heap
 	int						capacity;
 	int						*pos;
 	t_min_heap_node			**array;
+	t_min_heap_node			**array_tmp;
 }							t_min_heap;
 
 #endif

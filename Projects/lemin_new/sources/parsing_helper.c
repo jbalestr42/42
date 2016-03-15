@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 20:07:59 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/14 10:03:23 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 13:02:52 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int			return_free(char *line, int ret, char *message)
 	{
 		printf("%s.\n", message);
 	}
-	free(line);
+	if (line)
+		free(line);
 	return (ret);
 }
 

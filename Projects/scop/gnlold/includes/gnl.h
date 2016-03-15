@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   gnl.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/11 13:14:30 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 14:18:40 by jbalestr         ###   ########.fr       */
+/*   Created: 2014/01/15 16:02:26 by jbalestr          #+#    #+#             */
+/*   Updated: 2014/03/27 13:27:29 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#ifndef GNL_H
+# define GNL_H
 
-int			main(int argc, char **argv)
+# define BUFF_SIZE	4096
+
+typedef struct		s_read
 {
-	t_graph	*graph;
+	int				size;
+	int				index;
+	int				fd;
+	char			*read;
+	struct s_read	*next;
+}					t_read;
 
-	if (argc == 2)
-	{
-		if (!(graph = read_map(argv[1])))
-			return (0);
-		dijkstra(graph);
-		destroy_graph(graph);
-	}
-	else
-		printf("Usage: ./lemin map\n");
-	return 0;
-}
+int					get_next_line(int const fd, char **line);
+
+#endif
