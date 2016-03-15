@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 14:40:21 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 14:17:55 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:38:02 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static int	check_error(t_graph *graph, t_room **rooms)
 		return (return_print(0, "Not enough memory to allocate the rooms"));
 	if (!(graph)->start || !(graph)->end)
 		return (return_print(0, "No start/end room"));
+	graph->start_idx = find_name(graph, graph->start);
+	graph->end_idx = find_name(graph, graph->end);
 	return (1);
 }
 
@@ -73,7 +75,7 @@ int			read_rooms(t_graph *graph, t_room **rooms, int fd)
 					free_split(tmp);
 					tmp = NULL;
 				}
-				else if (error_flag)
+				if (error_flag)
 					return (return_free(line, 0, "Wrong room format after command line"));
 			}
 			else

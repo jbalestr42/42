@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 20:07:59 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 13:02:52 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:12:53 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 int			return_print(int ret, char *message)
 {
-	printf("%s\n", message);
+	ft_putstr(message);
+	ft_putendl(".");
 	return (ret);
 }
 
 int			return_free_tab(char *line, char **tab, int ret, char *message)
 {
 	if (!ret && message)
-		printf("%s\n", message);
+	{
+		ft_putstr(message);
+		ft_putendl(".");
+	}
 	if (line)
 		free(line);
 	if (tab)
@@ -33,7 +37,8 @@ int			return_free(char *line, int ret, char *message)
 {
 	if (!ret && message)
 	{
-		printf("%s.\n", message);
+		ft_putstr(message);
+		ft_putendl(".");
 	}
 	if (line)
 		free(line);

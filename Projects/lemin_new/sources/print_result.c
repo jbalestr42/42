@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 17:01:09 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 13:58:15 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:09:08 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static t_ant	**get_ants(t_graph *graph, int count)
 {
-	t_ant	**ants;
-	int		i;
+	t_ant		**ants;
+	int			i;
 
 	ants = (t_ant**)malloc(sizeof(t_ant*) * graph->ant_count);
 	i = 0;
@@ -29,11 +29,11 @@ static t_ant	**get_ants(t_graph *graph, int count)
 	return (ants);
 }
 
-static int	*get_path(int *parents, int *size, int src, int dest)
+static int		*get_path(int *parents, int *size, int src, int dest)
 {
-	int		*path;
-	int		count;
-	int		u;
+	int			*path;
+	int			count;
+	int			u;
 
 	u = dest;
 	path = (int*)malloc(sizeof(int) * *size);
@@ -48,10 +48,10 @@ static int	*get_path(int *parents, int *size, int src, int dest)
 	return (path);
 }
 
-static int	is_valid_path(int *parents, int src, int dest)
+static int		is_valid_path(int *parents, int src, int dest)
 {
-	int		u;
-	int		valid;
+	int			u;
+	int			valid;
 
 	u = dest;
 	valid = 0;
@@ -69,13 +69,14 @@ static int	is_valid_path(int *parents, int src, int dest)
 	return (0);
 }
 
-void		ant_stuff(t_graph *graph, int *parents, int src, int dest)
+void			ant_stuff(t_graph *graph, int *parents, int src, int dest)
 {
-	t_ant	**ants;
-	int		i;
-	int		count;
-	int		*path;
-	int		room_valid[graph->room_count];
+	t_ant		**ants;
+	int			i;
+	int			count;
+	int			*path;
+	int			room_valid[graph->room_count];
+	int			ant_at_end;
 
 	if (!is_valid_path(parents, src, dest))
 	{
@@ -90,7 +91,7 @@ void		ant_stuff(t_graph *graph, int *parents, int src, int dest)
 		room_valid[i++] = 0;
 	room_valid[count - 1] = 1;
 
-	int ant_at_end = 0;
+	ant_at_end = 0;
 	while (ant_at_end != graph->ant_count)
 	{
 		i = ant_at_end;

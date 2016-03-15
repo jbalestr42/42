@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 15:28:58 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 14:18:15 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:10:46 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_graph		*read_map(char const *filename)
 	graph = NULL;
 	if ((fd = open(filename, O_RDONLY)) == -1)
 	{
-		printf("The file can't be opened.\n");
+		ft_putendl("The file can't be opened.");
 		return (NULL);
 	}
 	if (!(ant_count = read_num_ant(fd)))

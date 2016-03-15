@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 16:08:01 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 13:13:38 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:04:54 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int			parse_edge(t_graph *graph, char *line)
 	return (1);
 }
 
-//TODO return 1 and try to do it anw
 int			read_edges(t_graph *graph, int fd, char **tmp)
 {
 	char	*line;

@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 20:13:42 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/11 22:42:27 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:05:57 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void			free_split(char **s)
 	free(s);
 }
 
-static size_t			ft_words(char const *s)
+static size_t	ft_words(char const *s)
 {
 	int			i;
 	size_t		size;

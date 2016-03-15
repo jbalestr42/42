@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:15:15 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 13:55:31 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 14:58:32 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-# include <limits.h> //TODO remove
 # include "lemin_struct.h"
+
+# define INT_MAX 2147483647
 
 t_graph			*create_graph(void);
 void			destroy_graph(t_graph *graph);
@@ -27,7 +28,7 @@ void			dijkstra(t_graph* graph);
 
 t_adj_list_node	*new_adj_list_node(int dest, int weight);
 t_min_heap_node	*new_min_heap_node(int v, int dist);
-t_min_heap		*create_min_heap(int capacity);
+t_min_heap		*create_min_heap(int capacity, int *parent, int *dist, int src);
 void			swap_min_heap_node(t_min_heap_node **a, t_min_heap_node **b);
 void			min_heapify(t_min_heap *minHeap, int idx);
 int				is_in_min_heap(t_min_heap *minHeap, int v);

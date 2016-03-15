@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/13 20:09:04 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 12:59:50 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:06:57 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ int			read_num_ant(int fd)
 				return (0);
 			else if (ret == -1)
 			{
-				ret = read_ant_count(line);
-				if (ret != -1)
+				if ((ret = read_ant_count(line)) != -1)
 					return (ret);
 			}
 			free(line);

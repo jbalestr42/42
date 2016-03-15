@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 10:54:28 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 14:07:28 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 16:51:44 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,6 @@ typedef struct				s_adj_list
 	struct s_adj_list_node	*head;
 }							t_adj_list;
 
-typedef struct				s_graph
-{
-	char					*start;
-	char					*end;
-	int						ant_count;
-	int						room_count;
-	int						V;
-	t_adj_list				*array;
-	char					**room_name;
-}							t_graph;
-
 typedef struct				s_room
 {
 	int						num;
@@ -63,5 +52,19 @@ typedef struct				s_min_heap
 	t_min_heap_node			**array;
 	t_min_heap_node			**array_tmp;
 }							t_min_heap;
+
+typedef struct				s_graph
+{
+	int						start_idx;
+	int						end_idx;
+	char					*start;
+	char					*end;
+	int						ant_count;
+	int						room_count;
+	int						V;
+	t_adj_list				*array;
+	char					**room_name;
+	t_min_heap				*heap;
+}							t_graph;
 
 #endif

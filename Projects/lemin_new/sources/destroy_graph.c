@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 13:23:50 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/15 14:08:24 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:00:45 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,30 @@ static void			free_list(t_adj_list_node *list)
 	}
 }
 
+static void			free_array(t_adj_list *array, int size)
+{
+	int				i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (array[i].head)
+			free_list(array[i].head);
+		i++;
+	}
+	free(array);
+}
+
 void				destroy_graph(t_graph *graph)
 {
 	int				i;
 
 	if (graph)
 	{
+		if(graph->heap)
+			destroy_min_heap(graph->heap);
 		if (graph->array)
-		{
-			i = 0;
-			while (i < graph->V)
-			{
-				if (graph->array[i].head)
-					free_list(graph->array[i].head);
-				i++;
-			}
-			free(graph->array);
-		}
+			free_array(graph->array, graph->V);
 		if (graph->room_name)
 		{
 			i = 0;
