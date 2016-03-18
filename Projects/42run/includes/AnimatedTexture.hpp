@@ -12,6 +12,7 @@ public:
 
 	void update(float frametime);
 	void bind(Shader & shader);
+	void bind(GLenum textureUnit, GLenum textureTarget);
 
 	void setCurrentFrame(std::size_t frame);
 

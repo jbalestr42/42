@@ -13,8 +13,9 @@ public:
 	enum Attribute : std::size_t
 	{
 		Position = 0,
-		Color = 1,
-		TexCoord = 2
+		TexCoord = 1,
+		Normal = 2,
+		Color = 3
 	};
 
 	Shader(std::string const & fragShader, std::string const & vertShader);
@@ -33,7 +34,7 @@ public:
 
 private:
 	typedef std::map<std::string, int>	ParamMap;
-	static const std::size_t AttributeCount = 3;
+	static const std::size_t AttributeCount = 4;
 
 	GLint		m_program;
 	GLint		m_shaders[2];

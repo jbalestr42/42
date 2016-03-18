@@ -2,7 +2,6 @@
 #include "Mesh.hpp"
 #include "Shader.hpp"
 #include "Keyboard.hpp"
-#include "Model.hpp"
 #include "Texture.hpp"
 #include "RoomManager.hpp"
 #include "Player.hpp"
@@ -11,7 +10,7 @@
 
 int main(void)
 {
-	Windows win(800, 600, "OpenGL");
+	Windows win(800, 600, "42run");
 	win.setClearColor(Color::White);
 
 	Shader shader("resources/default.frag" ,"resources/default.vert");
@@ -28,8 +27,6 @@ int main(void)
 	HUD hud;
 	Player player;
 	RoomManager rooms;
-	Model model("resources/corridor.obj", "resources/cat.bmp");
-	model.rotate({0.f, 90.f, 0.f});
 
 	glfwSetTime(0.f);
 	float lastTime = 0.f;

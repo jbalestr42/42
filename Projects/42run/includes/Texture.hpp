@@ -17,6 +17,8 @@ public:
 	std::size_t getWidth(void) const;
 
 	void bind(Shader & shader);
+	void bind(GLenum textureUnit, GLenum textureTarget);
+	bool load(void);
 
 protected:
 	Texture(Texture const & texture);

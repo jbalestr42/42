@@ -2,10 +2,11 @@
 
 Vertex::Vertex(void) { }
 
-Vertex::Vertex(Vector3 const & pos, Vector2 const & u, Color const & col)
+Vertex::Vertex(Vector3 const & pos, Vector2 const & u, Vector3 const & n, Color const & col)
 {
 	position = pos;
 	uv = u;
+	normal = n;
 	color = col;
 }
 
@@ -18,6 +19,7 @@ Vertex & Vertex::operator=(Vertex const & vertex)
 {
 	position = vertex.position;
 	uv = vertex.uv;
+	normal = vertex.normal;
 	color = vertex.color;
 	return (*this);
 }

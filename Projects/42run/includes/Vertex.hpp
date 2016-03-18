@@ -11,7 +11,7 @@ class Vertex
 {
 public:
 	Vertex(void);
-	Vertex(Vector3 const & position, Vector2 const & uv, Color const & color);
+	Vertex(Vector3 const & position, Vector2 const & uv, Vector3 const & n, Color const & color);
 	Vertex(Vertex const & vertex);
 	~Vertex(void) = default;
 
@@ -19,6 +19,7 @@ public:
 
 	Vector3		position;
 	Vector2		uv;
+	Vector3		normal;
 	Color		color;
 
 };

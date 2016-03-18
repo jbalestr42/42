@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/03/09 19:46:10 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/03/18 10:48:59 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC =	main.cpp \
 		Quaternion.cpp \
 		Windows.cpp \
 		Mesh.cpp \
+		ResourceManager.cpp \
 		Vertex.cpp \
 		Shader.cpp \
 		Vector2.cpp \
@@ -32,7 +33,6 @@ SRC =	main.cpp \
 		Keyboard.cpp \
 		Texture.cpp \
 		AnimatedTexture.cpp \
-		Model.cpp \
 		Room.cpp \
 		RoomStraight.cpp \
 		RoomStraightLeft.cpp \
@@ -47,6 +47,7 @@ INC =	Matrix.hpp \
 		Quaternion.hpp \
 		Windows.hpp \
 		Mesh.hpp \
+		ResourceManager.hpp \
 		Vertex.hpp \
 		Shader.hpp \
 		Vector2.hpp \
@@ -55,7 +56,6 @@ INC =	Matrix.hpp \
 		Keyboard.hpp \
 		Texture.hpp \
 		AnimatedTexture.hpp \
-		Model.hpp \
 		Room.hpp \
 		RoomStraight.hpp \
 		RoomStraightLeft.hpp \

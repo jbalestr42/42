@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 
 RoomStraight::RoomStraight(void) :
-	Room("resources/corridor.obj", "resources/cat.bmp")
+	Room("resources/corridor.obj")
 { }
 
 void RoomStraight::checkPlayer(Player const & player, float frametime)

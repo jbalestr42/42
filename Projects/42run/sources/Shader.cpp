@@ -20,8 +20,8 @@ Shader::~Shader(void)
 {
 	glDetachShader(m_program, m_shaders[0]);
 	glDetachShader(m_program, m_shaders[1]);
+	glDeleteShader(m_shaders[0]);
 	glDeleteShader(m_shaders[1]);
-	glDeleteShader(m_shaders[2]);
 	glDeleteProgram(m_program);
 }
 
@@ -116,8 +116,9 @@ void Shader::init(std::string const & fragShader, std::string const & vertShader
 	m_uniforms[2] = glGetUniformLocation(m_program, "ProjectionMatrix");
 	m_uniforms[3] = glGetUniformLocation(m_program, "tex");
 	m_attributes[Attribute::Position] = glGetAttribLocation(m_program, "in_Position");
-	m_attributes[Attribute::Color] = glGetAttribLocation(m_program, "in_Color");
 	m_attributes[Attribute::TexCoord] = glGetAttribLocation(m_program, "in_TexCoord");
+	m_attributes[Attribute::Normal] = glGetAttribLocation(m_program, "in_Normal");
+	m_attributes[Attribute::Color] = glGetAttribLocation(m_program, "in_Color");
 	// use these params in the mesh.init
 }
 

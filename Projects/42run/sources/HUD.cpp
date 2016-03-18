@@ -41,7 +41,7 @@ void HUD::draw(Shader & shader)
 {
 	int scoreTmp = m_score;
 	int count = 0;
-	std::cout << m_score << std::endl;
+	//std::cout << m_score << std::endl;
 	while (scoreTmp > 0)
 	{
 		int frame = scoreTmp % 10;

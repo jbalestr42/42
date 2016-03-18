@@ -1,7 +1,7 @@
 #ifndef ROOM_HPP
 # define ROOM_HPP
 
-# include "Model.hpp"
+# include "Mesh.hpp"
 # include "Vector3.hpp"
 # include "Player.hpp"
 
@@ -15,10 +15,10 @@ enum class RoomType : std::uint8_t
 	TurnRight
 };
 
-class Room : public Model
+class Room : public Transformable
 {
 public:
-	Room(std::string const & meshName, std::string const & textureName);
+	Room(std::string const & meshName);
 	Room(Room const & room);
 	virtual ~Room(void);
 
@@ -27,6 +27,7 @@ public:
 	bool isValidated(void) const;
 	bool isFailed(void) const;
 	void update(float frametime);
+	void draw(Shader & shader);
 
 	virtual void checkPlayer(Player const & player, float frametime);
 
@@ -37,9 +38,10 @@ protected:
 	void setIsFailed(bool failed);
 
 private:
-	float		m_timer;
-	bool		m_isValidated;
-	bool		m_isFailed;
+	std::shared_ptr<Mesh>	m_mesh;
+	float					m_timer;
+	bool					m_isValidated;
+	bool					m_isFailed;
 
 };
 

@@ -39,7 +39,18 @@ void Texture::bind(Shader & shader)
 {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_textureID);
-	shader.setParameter("tex", 0); //TODO inside texture
+	shader.setParameter("tex", 0);
+}
+
+void Texture::bind(GLenum textureUnit, GLenum textureTarget)
+{
+	glActiveTexture(textureUnit);
+	glBindTexture(textureTarget, m_textureID);
+}
+
+bool Texture::load(void)
+{
+	return (true);
 }
 
 unsigned char * Texture::loadBmp(std::string const & filename)

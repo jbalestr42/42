@@ -1,9 +1,12 @@
 #include "Room.hpp"
 #include "Mesh.hpp"
 #include "Texture.hpp"
+#include "Shader.hpp"
+#include "ResourceManager.hpp"
 
-Room::Room(std::string const & meshName, std::string const & textureName) :
-	Model(meshName, textureName),
+Room::Room(std::string const & meshName) :
+	Transformable(),
+	m_mesh(ResourceManager::getInstance().getMesh(meshName)),
 	m_timer(0.f),
 	m_isValidated(false),
 	m_isFailed(false)
@@ -12,7 +15,7 @@ Room::Room(std::string const & meshName, std::string const & textureName) :
 }
 
 Room::Room(Room const & room) :
-	Model(room)
+	Transformable(room)
 {
 	*this = room;
 }
@@ -29,6 +32,12 @@ Room & Room::operator=(Room const & room)
 void Room::update(float frametime)
 {
 	translate({0.f, 0.f, 1.f * frametime});
+}
+
+void Room::draw(Shader & shader)
+{
+	shader.setParameter("ModelMatrix", getMatrix());
+	m_mesh->draw();
 }
 
 void Room::addTimer(float frametime)

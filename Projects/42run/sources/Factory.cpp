@@ -17,7 +17,7 @@ Factory & Factory::operator=(Factory const &)
 	return (*this);
 }
 
-Factory & Factory::getInstance()
+Factory & Factory::getInstance(void)
 {
 	if (m_instance == nullptr)
 		m_instance.reset(new Factory());
