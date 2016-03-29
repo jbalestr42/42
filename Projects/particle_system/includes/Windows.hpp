@@ -3,6 +3,7 @@
 
 # include <GL/glew.h>
 # include <GLFW/glfw3.h>
+# include <string>
 # include "Color.hpp"
 
 class Windows
@@ -20,6 +21,7 @@ public:
 	void close(void);
 	GLFWwindow * getWindow(void) const;
 	void setClearColor(Color const & color);
+	void setTitle(std::string const & title);
 
 private:
     GLFWwindow		*m_window;

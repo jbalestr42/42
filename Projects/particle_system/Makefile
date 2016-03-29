@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/03/18 17:40:49 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/03/29 14:01:16 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME =	particle_system
 CC =	g++
 FLAGS =	-g -Wall -Wextra -Werror -std=c++11
-LIB =	-lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lXcursor -lXinerama -lX11 -lXxf86vm -lpthread -ldl
+LIB =	-lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lXcursor -lXinerama -lX11 -lXxf86vm -lpthread -ldl -lOpenCL
 SDIR =	sources/
 ODIR =	objects/
 IDIR =	includes/
@@ -29,6 +29,7 @@ SRC =	main.cpp \
 		Vector2.cpp \
 		Vector3.cpp \
 		Keyboard.cpp \
+		Mouse.cpp \
 		OpenCL.cpp \
 		Color.cpp
 
@@ -42,6 +43,7 @@ INC =	Matrix.hpp \
 		Vector3.hpp \
 		Math.hpp \
 		Keyboard.hpp \
+		Mouse.hpp \
 		OpenCL.hpp \
 		Color.hpp
 
@@ -54,12 +56,12 @@ all: $(NAME)
 
 $(NAME): $(O)
 	@echo "-> Creating $(NAME)..."
-	@$(CC) $(FLAGS) -o $@ $^ -I $(IDIR) $(LIB)
+	@$(CC) $(FLAGS) -o $@ $^ -I $(IDIR) -I /usr/local/cuda/include $(LIB)
 	@echo "-> Done !"
 
 $(ODIR)%.o: $(SDIR)%.cpp $(I)
 	@echo "-> Compiling $<..."
-	@$(CC) $(FLAGS) -c $< -o $@ -I $(IDIR)
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(IDIR) -I /usr/local/cuda/include
 
 $(O): | ./objects
 ./objects:

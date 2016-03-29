@@ -90,6 +90,11 @@ int Shader::getAttribute(Attribute attribute) const
 	return (m_attributes[attribute]);
 }
 
+GLint Shader::getProgram(void) const
+{
+	return (m_program);
+}
+
 int Shader::getParamIndex(std::string const & name)
 {
 	ParamMap::iterator it = m_params.find(name);
@@ -116,9 +121,8 @@ void Shader::init(std::string const & fragShader, std::string const & vertShader
 	m_uniforms[2] = glGetUniformLocation(m_program, "ProjectionMatrix");
 	m_uniforms[3] = glGetUniformLocation(m_program, "tex");
 	m_attributes[Attribute::Position] = glGetAttribLocation(m_program, "in_Position");
-	m_attributes[Attribute::TexCoord] = glGetAttribLocation(m_program, "in_TexCoord");
-	m_attributes[Attribute::Normal] = glGetAttribLocation(m_program, "in_Normal");
 	m_attributes[Attribute::Color] = glGetAttribLocation(m_program, "in_Color");
+	m_attributes[Attribute::Normal] = glGetAttribLocation(m_program, "in_Velocity");
 	// use these params in the mesh.init
 }
 

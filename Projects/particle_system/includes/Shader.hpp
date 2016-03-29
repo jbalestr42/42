@@ -31,6 +31,7 @@ public:
 	void setParameter(std::string const & name, int value);
 	void setParameter(std::string const & name, float value);
 	int getAttribute(Attribute attribute) const;
+	GLint getProgram(void) const;
 
 private:
 	typedef std::map<std::string, int>	ParamMap;

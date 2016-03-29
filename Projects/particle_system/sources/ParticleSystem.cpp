@@ -1,7 +1,7 @@
 #include "ParticleSystem.hpp"
 
 ParticleSystem::ParticleSystem(void) :
-	m_particleCount(0u)
+	m_particleCount(10u)
 { }
 
 ParticleSystem::ParticleSystem(ParticleSystem const & particleSystem)
@@ -19,8 +19,7 @@ ParticleSystem & ParticleSystem::operator=(ParticleSystem const & particleSystem
 
 void ParticleSystem::init(void)
 {
-	GLuint id = 0;  // 0 is reserved, glGenBuffersARB() will return non-zero id if success
-
+	std::cout << "Initialize Particle System" << std::endl;
 	glGenVertexArrays(1, &m_vertexArrayObject);
 	glBindVertexArray(m_vertexArrayObject);
 	glGenBuffers(2, m_vertexBufferObject);                        // create a vbo
@@ -35,14 +34,10 @@ void ParticleSystem::init(void)
 	// check data size in VBO is same as input array, if not return 0 and delete VBO
 	int bufferSize = 0;
 	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
-	if (dataSize != bufferSize)
-	{
-		glDeleteBuffers(1, &id);
-		id = 0;
-		std::cout << "[createVBO()] Data size is mismatch with input array" << std::endl;
-	}
 	//this was important for working inside blender!
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-	return id;
+	GLuint err = glGetError();
+	if (err) // TODO remove
+		std::cout << "ERROR (Particle System) : " << err << std::endl;
 }

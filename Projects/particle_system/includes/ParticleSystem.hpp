@@ -1,6 +1,11 @@
 #ifndef PARTICLESYSTEM_HPP
 # define PARTICLESYSTEM_HPP
 
+# include "Vector3.hpp"
+# include "Color.hpp"
+# include <GL/glew.h>
+# include <GLFW/glfw3.h>
+
 class ParticleSystem
 {
 public:
@@ -21,6 +26,8 @@ public:
 	ParticleSystem(void);
 	ParticleSystem(ParticleSystem const & particleSystem);
 	virtual ~ParticleSystem(void);
+
+	void init(void);
 
 	ParticleSystem & operator=(ParticleSystem const & particleSystem);
 

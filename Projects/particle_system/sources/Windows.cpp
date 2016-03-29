@@ -1,5 +1,6 @@
 #include "Windows.hpp"
 #include "Keyboard.hpp"
+#include "Mouse.hpp"
 #include <iostream>
 
 Windows::Windows(void) :
@@ -58,6 +59,8 @@ void Windows::init(void)
 	}
 
 	glfwSetKeyCallback(m_window, Keyboard::callback);
+	glfwSetMouseButtonCallback(m_window, Mouse::callbackButton);
+	glfwSetCursorPosCallback(m_window, Mouse::callbackPosition);
 	glfwSetFramebufferSizeCallback(m_window, resizeCallback);
 
 	glfwMakeContextCurrent(m_window);
@@ -110,6 +113,11 @@ GLFWwindow * Windows::getWindow(void) const
 void Windows::setClearColor(Color const & color)
 {
 	glClearColor(color.r, color.g, color.b, color.a);
+}
+
+void Windows::setTitle(std::string const & title)
+{
+	glfwSetWindowTitle(m_window, title.c_str());
 }
 
 void Windows::errorCallback(int error, char const * description)
