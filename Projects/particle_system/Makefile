@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/03/29 14:01:16 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/03/29 15:00:34 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME =	particle_system
 CC =	g++
-FLAGS =	-g -Wall -Wextra -Werror -std=c++11
+FLAGS =	-O3 -Wall -Wextra -Werror -std=c++11
 LIB =	-lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lXcursor -lXinerama -lX11 -lXxf86vm -lpthread -ldl -lOpenCL
 SDIR =	sources/
 ODIR =	objects/

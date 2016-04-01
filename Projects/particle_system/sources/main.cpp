@@ -17,21 +17,33 @@ typedef struct		s_particle
 	float			velocity[3];
 	}				t_particle;
 
-	__kernel void part2(__global t_particle* particles, float dt, float2 mouse_pos)
-	{
-	//get our index in the array
-	unsigned int i = get_global_id(0);
+	__constant float MIN_DIST = 8.5f;
+	__constant float PARTICLE_MASS = 100.f;
+	__constant float GRAVITY = 250.f * 100.f;
 
-	particles[i].position[0] += (mouse_pos.x - particles[i].position[0]) * dt * 5.f;
-	particles[i].color[3] -= dt;
-	if (particles[i].color[3] < 0.0)
-		particles[i].color[3] = 1.0;
+	__kernel void animate(__global t_particle * particles, float dt, float posx, float posy)
+	{
+		unsigned int i = get_global_id(0);
+
+		float4 res = (float4)(posx - particles[i].position[0], posy - particles[i].position[1], -particles[i].position[2], 0.f);
+		float dist = fast_length(res);
+		particles[i].color[0] = dist / 3.f;
+		if (dist < MIN_DIST)
+			dist = MIN_DIST;
+		float4 force = GRAVITY * normalize(res) / (dist * dist);
+
+		particles[i].velocity[0] += (force.x / PARTICLE_MASS) * dt;
+		particles[i].velocity[1] += (force.y / PARTICLE_MASS) * dt;
+		particles[i].velocity[2] += (force.z / PARTICLE_MASS) * dt;
+		particles[i].position[0] += particles[i].velocity[0] * dt;
+		particles[i].position[1] += particles[i].velocity[1] * dt;
+		particles[i].position[2] += particles[i].velocity[2] * dt;
 	}
 );
 
 int main(void)
 {
-	Windows win(800, 600, "Particle System");
+	Windows win(1902, 1080, "Particle System");
 	win.setClearColor(Color::White);
 
 	Shader shader("resources/default.frag" ,"resources/default.vert");
@@ -47,7 +59,6 @@ int main(void)
 
 	OpenCL cl;
 	cl.loadProgram(kernel_source);
-	cl.loadData();
 	while (win.isOpen())
 	{
 		// Compute frametime
@@ -103,5 +114,7 @@ int main(void)
 		win.display();
 		win.pollEvents();
 	}
+	std::cout << "Realse opencl and opengl buffer" << std::endl;
+	std::cout << "Activer et desactiver la velocité" << std::endl;
 	return (0);
 }

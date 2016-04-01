@@ -70,6 +70,7 @@ void Windows::init(void)
 		std::cerr << "Failed to initialize GLEW" << std::endl;
 		exit(EXIT_FAILURE);
 	}
+	glGetError();
 	glfwSwapInterval(1); // vsync
 	glfwGetFramebufferSize(m_window, &m_width, &m_height);
 	resizeCallback(m_window, m_width, m_height);
