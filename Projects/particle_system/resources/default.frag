@@ -1,9 +1,10 @@
 #version 400
 
-in vec4 ex_Color;
+in float ex_Color;
 out vec4 out_Color;
 
 void main(void)
 {
-	out_Color = ex_Color;
+	vec3 col = mix(vec3(1.0, 0.0, 0.0), vec3(0.8, 0.2, 0.0), clamp(ex_Color / 3.f, 0.0, 1.0));
+	out_Color = vec4(col, 1.0);
 }

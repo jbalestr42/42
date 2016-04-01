@@ -217,7 +217,7 @@ void OpenCL::loadProgram(std::string const & kernel_source)
 
 void OpenCL::initSquare(bool firsttime)
 {
-	std::cout << "-> Initialize particles as a circle." << std::endl;
+	std::cout << "-> Initialize particles as a square." << std::endl;
 	cl_int err = 0;
 	std::random_device rd;
 	std::mt19937 eng(rd());
@@ -229,10 +229,7 @@ void OpenCL::initSquare(bool firsttime)
 	Particle *p = static_cast<Particle*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	for (std::size_t i = 0; i < num; i++)
 	{
-		float life_r = dist_life(eng);
 		p[i].position = Vector3(dist(eng), dist(eng), dist(eng));
-		p[i].color = Color(1.f, 0.f, 0.f, life_r);
-		p[i].velocity = Vector3(0.f, 0.f, 0.f);
 	}
 	if (firsttime)
 	{
@@ -242,6 +239,22 @@ void OpenCL::initSquare(bool firsttime)
 		cl_particles = cl::Buffer(context, CL_MEM_READ_WRITE, num * sizeof(Particle), NULL, &err);
 	}
 	err = queue.enqueueWriteBuffer(cl_particles, CL_TRUE, 0, num * sizeof(Particle), p);
+	if (err)
+		std::cout << "ERROR -> " << oclErrorString(err) << std::endl;
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_vel);
+	Vector3 *v = static_cast<Vector3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+	for (std::size_t i = 0; i < num; i++)
+		v[i] = Vector3(0.f, 0.f, 0.f);
+	if (firsttime)
+	{
+		cl_vbo_vel = cl::BufferGL(context, CL_MEM_READ_WRITE, vbo_vel, &err);
+		if (err)
+			std::cout << "ERROR (" << oclErrorString(err) << "): kernel loading failed." << std::endl;
+		cl_particles_vel = cl::Buffer(context, CL_MEM_READ_WRITE, num * sizeof(Vector3), NULL, &err);
+	}
+	err = queue.enqueueWriteBuffer(cl_particles_vel, CL_TRUE, 0, num * sizeof(Vector3), v);
 	if (err)
 		std::cout << "ERROR -> " << oclErrorString(err) << std::endl;
 	glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -263,15 +276,12 @@ void OpenCL::initCircle(bool firsttime)
 	Particle *p = static_cast<Particle*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	for (std::size_t i = 0; i < num; i++)
 	{
-		float life_r = dist_life(eng);
 		float theta = dist_polar(eng);
 		float phi = dist_half_polar(eng);
 		float radius = dist(eng);
 		p[i].position = Vector3(radius * std::cos(theta) * std::cos(phi),
 								radius * std::sin(phi),
 								radius * std::sin(theta) * std::cos(phi));
-		p[i].color = Color(1.f, 0.f, 0.f, life_r);
-		p[i].velocity = Vector3(0.f, 0.f, 0.f);
 	}
 	if (firsttime)
 	{
@@ -281,6 +291,22 @@ void OpenCL::initCircle(bool firsttime)
 		cl_particles = cl::Buffer(context, CL_MEM_READ_WRITE, num * sizeof(Particle), NULL, &err);
 	}
 	err = queue.enqueueWriteBuffer(cl_particles, CL_TRUE, 0, num * sizeof(Particle), p);
+	if (err)
+		std::cout << "ERROR -> " << oclErrorString(err) << std::endl;
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_vel);
+	Vector3 *v = static_cast<Vector3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+	for (std::size_t i = 0; i < num; i++)
+		v[i] = Vector3(0.f, 0.f, 0.f);
+	if (firsttime)
+	{
+		cl_vbo_vel = cl::BufferGL(context, CL_MEM_READ_WRITE, vbo_vel, &err);
+		if (err)
+			std::cout << "ERROR (" << oclErrorString(err) << "): kernel loading failed." << std::endl;
+		cl_particles_vel = cl::Buffer(context, CL_MEM_READ_WRITE, num * sizeof(Vector3), NULL, &err);
+	}
+	err = queue.enqueueWriteBuffer(cl_particles_vel, CL_TRUE, 0, num * sizeof(Vector3), v);
 	if (err)
 		std::cout << "ERROR -> " << oclErrorString(err) << std::endl;
 	glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -299,21 +325,26 @@ void OpenCL::loadData(void)
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, num * sizeof(Particle), NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, num * sizeof(Particle), NULL, GL_STATIC_DRAW); // check static
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(Vector3)));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(Vector3) + sizeof(Color)));
+	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(Vector3)));
 
 	initCircle(true);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
+	glGenBuffers(1, &vbo_vel);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_vel);
+	glBufferData(GL_ARRAY_BUFFER, num * sizeof(Vector3), NULL, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 	if ((err = kernel.setArg(0, cl_particles)))
+		std::cout << "ERROR (" << err << ") " << oclErrorString(err) << std::endl;
+	if ((err = kernel.setArg(1, cl_particles_vel)))
 		std::cout << "ERROR (" << err << ") " << oclErrorString(err) << std::endl;
 
 	Matrix model;
@@ -326,7 +357,8 @@ void OpenCL::loadData(void)
 	if ((err = glGetError()))
 		std::cout << "ERROR (" << err << ") " << oclErrorString(err) << std::endl;
 
-	glPointSize(.5);
+    glEnable(GL_POINT_SMOOTH);
+	glPointSize(0.5f);
 }
 
 void OpenCL::runKernel(float frametime)
@@ -352,17 +384,17 @@ void OpenCL::runKernel(float frametime)
 
 	if (Mouse::isButtonPress(GLFW_MOUSE_BUTTON_LEFT))
 	{
-		err = kernel.setArg(2, (Mouse::getPosition().x - 0.5f) * 8.f);
-		err = kernel.setArg(3, 1.f - (Mouse::getPosition().y - 0.5f ) * 8.f);
+		err = kernel.setArg(3, (Mouse::getPosition().x - 0.5f) * 8.f);
+		err = kernel.setArg(4, 1.f - (Mouse::getPosition().y - 0.5f ) * 8.f);
 		if (err != CL_SUCCESS)
 			std::cout << "ERROR kernel args" << std::endl;
 	}
 	else
 	{
-		err = kernel.setArg(2, 0.f);
 		err = kernel.setArg(3, 0.f);
+		err = kernel.setArg(4, 0.f);
 	}
-	err = kernel.setArg(1, frametime);
+	err = kernel.setArg(2, frametime);
 	if (err != CL_SUCCESS)
 		std::cout << "ERROR kernel args" << std::endl;
 

@@ -11,16 +11,14 @@
 struct Particle
 {
 	Particle(void) = default;
-	Particle(Vector3 const & p, Color const & c, Vector3 const & v) :
+	Particle(Vector3 const & p, float const & c) :
 		position(p),
-		color(c),
-		velocity(v)
+		color_lerp(c)
 	{}
 	~Particle(void) = default;
 
 	Vector3		position;
-	Color		color;
-	Vector3		velocity;
+	float		color_lerp;
 };
 
 class OpenCL
@@ -42,10 +40,13 @@ private:
 	cl::CommandQueue queue;
 	cl::Program program;
 	cl::BufferGL cl_vbo;
+	cl::BufferGL cl_vbo_vel;
 	cl::Buffer cl_particles;
+	cl::Buffer cl_particles_vel;
 
 	GLuint vao;
 	GLuint vbo;
+	GLuint vbo_vel;
 	std::size_t num;    //the number of particles
 	size_t array_size; //the size of our arrays num * sizeof(Vec4)
 

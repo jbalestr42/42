@@ -13,38 +13,37 @@ std::string kernel_source = STRINGIFY(
 typedef struct		s_particle
 {
 	float			position[3];
-	float			color[4];
-	float			velocity[3];
+	float			color;
 	}				t_particle;
 
 	__constant float MIN_DIST = 8.5f;
 	__constant float PARTICLE_MASS = 100.f;
 	__constant float GRAVITY = 250.f * 100.f;
 
-	__kernel void animate(__global t_particle * particles, float dt, float posx, float posy)
+	__kernel void animate(__global t_particle * particles, __global float *velocities, float dt, float posx, float posy)
 	{
 		unsigned int i = get_global_id(0);
 
 		float4 res = (float4)(posx - particles[i].position[0], posy - particles[i].position[1], -particles[i].position[2], 0.f);
 		float dist = fast_length(res);
-		particles[i].color[0] = dist / 3.f;
+		particles[i].color = dist;
 		if (dist < MIN_DIST)
 			dist = MIN_DIST;
 		float4 force = GRAVITY * normalize(res) / (dist * dist);
 
-		particles[i].velocity[0] += (force.x / PARTICLE_MASS) * dt;
-		particles[i].velocity[1] += (force.y / PARTICLE_MASS) * dt;
-		particles[i].velocity[2] += (force.z / PARTICLE_MASS) * dt;
-		particles[i].position[0] += particles[i].velocity[0] * dt;
-		particles[i].position[1] += particles[i].velocity[1] * dt;
-		particles[i].position[2] += particles[i].velocity[2] * dt;
+		velocities[i * 3 + 0] += (force.x / PARTICLE_MASS) * dt;
+		velocities[i * 3 + 1] += (force.y / PARTICLE_MASS) * dt;
+		velocities[i * 3 + 2] += (force.z / PARTICLE_MASS) * dt;
+		particles[i].position[0] += velocities[i * 3 + 0] * dt;
+		particles[i].position[1] += velocities[i * 3 + 1] * dt;
+		particles[i].position[2] += velocities[i * 3 + 2] * dt;
 	}
 );
 
 int main(void)
 {
 	Windows win(1902, 1080, "Particle System");
-	win.setClearColor(Color::White);
+	win.setClearColor(Color::Black);
 
 	Shader shader("resources/default.frag" ,"resources/default.vert");
 	Matrix m_view;
