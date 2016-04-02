@@ -5,6 +5,8 @@ static int	parse_args(int argc, char **argv)
 	if (argc >= 2)
 	{
 		init_env(&env);
+		while (1)
+			;
 		init_openGL(argc, argv);
 		env.mesh = create_mesh(argv[1]);
 		if (!env.mesh)
