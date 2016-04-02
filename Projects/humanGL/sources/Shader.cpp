@@ -20,8 +20,8 @@ Shader::~Shader(void)
 {
 	glDetachShader(m_program, m_shaders[0]);
 	glDetachShader(m_program, m_shaders[1]);
+	glDeleteShader(m_shaders[0]);
 	glDeleteShader(m_shaders[1]);
-	glDeleteShader(m_shaders[2]);
 	glDeleteProgram(m_program);
 }
 

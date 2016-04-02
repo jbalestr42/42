@@ -7,7 +7,9 @@
 # include <math.h>
 # include <time.h>
 # include <GL/glew.h>
-# include <GL/freeglut.h>
+# include <GLUT/glut.h>
+//# include <OpenGL/gl.h>
+# include <GLUT/freeglut.h>
 
 # define WINDOW_TITLE_PREFIX "Scop"
 # define NUM_BUFFER 4
