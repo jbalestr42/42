@@ -9,6 +9,7 @@ class Mesh
 {
 public:
 	Mesh(void);
+	Mesh(Color const & color);
 	Mesh(Mesh const & mesh);
 	Mesh(Mesh && mesh);
 	virtual ~Mesh(void);

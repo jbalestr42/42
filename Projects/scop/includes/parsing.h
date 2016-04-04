@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/07 17:23:47 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/10 18:25:12 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
@@ -28,17 +40,32 @@ typedef struct				s_face_list
 	struct s_face_list		*next;
 }							t_face_list;
 
-t_vertex_list	*push_vertex(t_vertex_list **begin, float *values);
-t_uv_list		*push_uv(t_uv_list **begin, float *values);
-t_face_list		*push_face(t_face_list **begin, int *indice_vertex, int *indice_texture, int *indice_normal);
+typedef struct				s_index
+{
+	int						index;
+	int						i;
+	int						j;
+	int						count;
+	t_face_list				*tmp;
+}							t_index;
 
-void			setup_mesh_vertex(t_obj_data *obj_data, t_vertex_list *vertex_list);
-void			setup_mesh_uv(t_obj_data *obj_data, t_uv_list *uv_list);
-void			setup_mesh_faces(t_obj_data *obj_data, t_face_list *face_list);
-void			setup_mesh_origin(t_obj_data *obj_data);
+t_vertex_list				*push_vertex(t_vertex_list **begin, float *values);
+t_uv_list					*push_uv(t_uv_list **begin, float *values);
+t_face_list					*push_face(t_face_list **begin, int *indice_vertex,
+		int *indice_texture, int *indice_normal);
 
-char			**ft_strsplit(char const *s, char c);
-void			free_split(char **s);
-int				ft_strlen_tab(char **tab);
+void						setup_mesh_vertex(t_obj_data *obj_data,
+		t_vertex_list *vertex_list);
+void						setup_mesh_uv(t_obj_data *obj_data,
+		t_uv_list *uv_list);
+void						setup_mesh_faces(t_obj_data *obj_data,
+		t_face_list *face_list);
+void						setup_mesh_origin(t_obj_data *obj_data);
+
+char						**ft_strsplit(char const *s, char c);
+void						free_split(char **s);
+int							ft_strlen_tab(char **tab);
+void						read_float(char const *s, float *values,
+		int nb_values);
 
 #endif

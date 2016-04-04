@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   gnl.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/11 10:55:29 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/11 10:56:06 by jbalestr         ###   ########.fr       */
+/*   Created: 2016/04/02 17:00:44 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/04/02 17:00:56 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GNL_H
+# define GNL_H
 
 # define BUFF_SIZE		10
 

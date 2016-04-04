@@ -98,7 +98,7 @@ void Animation::setLoopMode(bool loopMode)
 void Animation::pushAnimator(AnimatorPtr const & animator)
 {
 	computeDuration(animator);
-	pushAnimator(std::move(AnimatorPtr(animator->clone())));
+	pushAnimator(AnimatorPtr(animator->clone()));
 }
 
 void Animation::pushAnimator(AnimatorPtr && animator)

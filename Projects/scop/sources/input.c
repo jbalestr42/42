@@ -1,51 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/10 15:00:37 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/10 15:00:50 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
-void		keyboard_input_press(unsigned char key, int x, int y)
+void		keyboard_input_press(GLFWwindow *window, int key, int scancode,
+		int action, int mods)
 {
+	t_env	*env;
 	int		i;
 
-	(void)x;
-	(void)y;
+	(void)scancode;
+	(void)mods;
+	env = glfwGetWindowUserPointer(window);
 	i = 0;
 	while (i < KEY_COUNT)
 	{
-		if (env.keys[i].code == key)
-			env.keys[i].is_active = 1;
+		if (env->keys[i].code == key)
+		{
+			if (action == GLFW_PRESS)
+				env->keys[i].is_active = 1;
+			else if (action == GLFW_RELEASE)
+				env->keys[i].is_active = 0;
+		}
 		i++;
 	}
 }
 
-void		keyboard_input_release(unsigned char key, int x, int y)
+void		mouse_move_input(GLFWwindow *window, double x, double y)
 {
-	int		i;
+	t_env	*env;
 
-	(void)x;
-	(void)y;
-	i = 0;
-	while (i < KEY_COUNT)
-	{
-		if (env.keys[i].code == key)
-			env.keys[i].is_active = 0;
-		i++;
-	}
-}
-
-void		mouse_move_input(int x, int y)
-{
-	env.mouse_x = x;
-	env.mouse_y = y;
-}
-
-void		idle_function(void)
-{
-	clock_t		current_time;
-	float		frametime;
-
-	current_time = clock();
-	frametime = (float)(current_time - env.last_time) / CLOCKS_PER_SEC;
-	env.last_time = current_time;
-	update_mesh(env.mesh, frametime);
-	update_camera_rotation(frametime);
-	update_camera_translation(frametime);
-	glutPostRedisplay();
+	env = glfwGetWindowUserPointer(window);
+	env->mouse_x = x;
+	env->mouse_y = y;
 }

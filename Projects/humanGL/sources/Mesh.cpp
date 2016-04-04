@@ -3,6 +3,10 @@
 #include <cassert>
 
 Mesh::Mesh(void) :
+	Mesh(Color::Black)
+{}
+
+Mesh::Mesh(Color const & color) :
 	m_vertexArrayObject(-1),
 	m_indiceCount(0)
 {
@@ -12,14 +16,14 @@ Mesh::Mesh(void) :
 	// Create Cube
 	std::vector<Vertex> vertices =
 	{
-		{ { -0.5f, -0.5f,  0.5f }, { 0.f, 0.f}, { 0, 0, 1, 1 } },
-		{ { -0.5f,  0.5f,  0.5f }, { 0.f, 0.f}, { 1, 0, 0, 1 } },
-		{ {  0.5f,  0.5f,  0.5f }, { 0.f, 0.f}, { 0, 1, 0, 1 } },
-		{ {  0.5f, -0.5f,  0.5f }, { 0.f, 0.f}, { 1, 1, 0, 1 } },
-		{ { -0.5f, -0.5f, -0.5f }, { 0.f, 0.f}, { 1, 1, 1, 1 } },
-		{ { -0.5f,  0.5f, -0.5f }, { 0.f, 0.f}, { 1, 0, 0, 1 } },
-		{ {  0.5f,  0.5f, -0.5f }, { 0.f, 0.f}, { 1, 0, 1, 1 } },
-		{ {  0.5f, -0.5f, -0.5f }, { 0.f, 0.f}, { 0, 0, 1, 1 } }
+		{ { -0.5f, -0.5f,  0.5f }, { 0.f, 0.f}, color },
+		{ { -0.5f,  0.5f,  0.5f }, { 0.f, 0.f}, color },
+		{ {  0.5f,  0.5f,  0.5f }, { 0.f, 0.f}, color },
+		{ {  0.5f, -0.5f,  0.5f }, { 0.f, 0.f}, color },
+		{ { -0.5f, -0.5f, -0.5f }, { 0.f, 0.f}, color },
+		{ { -0.5f,  0.5f, -0.5f }, { 0.f, 0.f}, color },
+		{ {  0.5f,  0.5f, -0.5f }, { 0.f, 0.f}, color },
+		{ {  0.5f, -0.5f, -0.5f }, { 0.f, 0.f}, color }
 	};
 
 	std::vector<GLuint> indices =
