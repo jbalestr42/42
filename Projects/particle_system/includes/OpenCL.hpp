@@ -31,32 +31,33 @@ public:
 	OpenCL & operator=(OpenCL const & openCL);
 
 	void loadProgram(std::string const & kernel_source);
-	void runKernel(float frametime);
+	void update(float frametime);
 
 private:
-	cl::Context context;
-	std::size_t deviceUsed;
-	cl::Device			m_device;
-	cl::CommandQueue queue;
-	cl::Program program;
-	cl::BufferGL cl_vbo;
-	cl::BufferGL cl_vbo_vel;
-	cl::Buffer cl_particles;
-	cl::Buffer cl_particles_vel;
+	static const std::size_t	IndexCount = 2u;
+	enum Index
+	{
+		Position,
+		Velocity
+	};
 
-	GLuint vao;
-	GLuint vbo;
-	GLuint vbo_vel;
-	std::size_t num;    //the number of particles
-	size_t array_size; //the size of our arrays num * sizeof(Vec4)
-
-cl::Kernel kernel;
-	std::unique_ptr<Shader>		m_shader;
-	Matrix m_view;
-	Matrix m_projection;
+	cl::Context				m_context;
+	cl::Device				m_device;
+	cl::CommandQueue		m_queue;
+	cl::Program				m_program;
+	cl::BufferGL			m_glBuffer[IndexCount];
+	cl::Buffer				m_clBuffer[IndexCount];
+	cl::Kernel				m_kernel;
+	std::unique_ptr<Shader>	m_shader;
+	GLuint					m_vao;
+	GLuint					m_vbo[IndexCount];
+	std::size_t				m_particleCount;
+	Matrix					m_view;
+	Matrix					m_projection;
 
 	void initCircle(bool firsttime = false);
 	void initSquare(bool firsttime = false);
+	void initVelocity(bool firsttime = false);
 	void loadData(void);
 
 };

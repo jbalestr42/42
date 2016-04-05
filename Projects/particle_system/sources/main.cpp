@@ -77,10 +77,9 @@ int main(void)
 		win.clear();
 
 		// Update
-		// cl.runKernel()
 
     //this updates the particle system by calling the kernel
-	cl.runKernel(frametime);
+	cl.update(frametime);
 
     //render the particles from VBOs
     //glEnable(GL_BLEND);
