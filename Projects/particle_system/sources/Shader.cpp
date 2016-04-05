@@ -119,7 +119,6 @@ void Shader::init(std::string const & fragShader, std::string const & vertShader
 	m_uniforms[0] = glGetUniformLocation(m_program, "ModelMatrix");
 	m_uniforms[1] = glGetUniformLocation(m_program, "ViewMatrix");
 	m_uniforms[2] = glGetUniformLocation(m_program, "ProjectionMatrix");
-	m_uniforms[3] = glGetUniformLocation(m_program, "tex");
 	m_attributes[Attribute::Position] = glGetAttribLocation(m_program, "in_Position");
 	m_attributes[Attribute::Color] = glGetAttribLocation(m_program, "in_Color");
 	m_attributes[Attribute::Normal] = glGetAttribLocation(m_program, "in_Velocity");

@@ -35,3 +35,9 @@ Vector2 operator/(float value, Vector2 const & vector2)
 {
 	return Vector2(value / vector2.x, value / vector2.y);
 }
+
+std::ostream & operator<<(std::ostream & out, Vector2 const & vector)
+{
+	out << "Vector2(" << vector.x  << ", " << vector.y << ")";
+	return out;
+}
