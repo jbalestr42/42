@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/10 15:00:21 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/10 15:00:23 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 
 int				ft_strlen_tab(char **tab)
@@ -17,6 +29,7 @@ void			free_split(char **s)
 	i = -1;
 	while (s[++i])
 		free(s[i]);
+	free(s);
 }
 
 static size_t	ft_words(char const *s, char c)
@@ -87,6 +100,6 @@ char			**ft_strsplit(char const *s, char c)
 			tab[size++] = ft_strsub(s, start, i - start);
 		}
 	}
-	tab[size] = '\0';
+	tab[size] = NULL;
 	return (tab);
 }

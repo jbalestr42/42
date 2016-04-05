@@ -15,6 +15,7 @@ public:
 	typedef std::vector<NodePtr>		Childs;
 
 	Node(void);
+	Node(Color const & color);
 	Node(Node const & node);
 	Node(Node && node);
 	virtual ~Node(void) = default;
@@ -38,11 +39,11 @@ public:
 	void draw(Shader & shader);
 
 private:
-	Node const *	m_parent;
-	Childs			m_childs;
-	AnimationPtr	m_animation;
-	Matrix			m_globalMatrix;
-	Mesh			m_mesh;
+	Node const *			m_parent;
+	Childs					m_childs;
+	AnimationPtr			m_animation;
+	Matrix					m_globalMatrix;
+	std::unique_ptr<Mesh>	m_mesh;
 
 	Vector3 getParentScale(void) const;
 

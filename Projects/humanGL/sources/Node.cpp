@@ -4,10 +4,17 @@
 #include <iostream>
 
 Node::Node(void) :
+	Node(Color::Black)
+{ }
+
+Node::Node(Color const & color) :
 	Transformable(),
 	m_parent(nullptr),
-	m_animation(nullptr)
-{ }
+	m_animation(nullptr),
+	m_mesh(nullptr)
+{
+	m_mesh.reset(new Mesh(color));
+}
 
 Node::Node(Node const & node) :
 	Transformable(node)
@@ -30,7 +37,7 @@ Node & Node::operator=(Node const & node)
 		addChild(it);
 	setAnimation(node.m_animation);
 	m_globalMatrix = node.m_globalMatrix;
-	m_mesh = node.m_mesh;
+	m_mesh.reset(new Mesh(*node.m_mesh));
 	return (*this);
 }
 
@@ -80,7 +87,7 @@ Matrix const & Node::getGlobalMatrix(void) const
 
 void Node::setAnimation(AnimationPtr const & animation)
 {
-	setAnimation(std::move(AnimationPtr(new Animation(*animation))));
+	setAnimation(AnimationPtr(new Animation(*animation)));
 }
 
 void Node::setAnimation(AnimationPtr && animation)
@@ -96,7 +103,7 @@ Node::AnimationPtr const & Node::getAnimation(void) const
 
 void Node::addChild(NodePtr const & node)
 {
-	addChild(std::move(NodePtr(new Node(*node))));
+	addChild(NodePtr(new Node(*node)));
 }
 
 void Node::addChild(NodePtr && node)
@@ -128,7 +135,7 @@ void Node::update(float frameTime)
 void Node::draw(Shader & shader)
 {
 	shader.setParameter("ModelMatrix", m_globalMatrix);
-	m_mesh.draw();
+	m_mesh->draw();
 	for (auto & it : m_childs)
 		it->draw(shader);
 }

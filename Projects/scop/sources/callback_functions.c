@@ -1,32 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   callback_functions.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/10 11:12:47 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/10 18:43:46 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
-void	resize_function(int width, int height)
+void		resize_function(GLFWwindow *window, int width, int height)
 {
-	env.wnd_width = width;
-	env.wnd_height = height;
-	glViewport(0, 0, env.wnd_width, env.wnd_height);
-	env.projection = create_projection_matrix(env.camera.fov, (float)env.wnd_width / env.wnd_height, env.camera.near_plane, env.camera.far_plane);
-	glUseProgram(env.shader->program);
-	glUniformMatrix4fv(env.shader->uniforms[2], 1, GL_FALSE, env.projection.m);
+	t_env	*env;
+
+	env = glfwGetWindowUserPointer(window);
+	env->wnd_width = width;
+	env->wnd_height = height;
+	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
+	env->projection = create_projection_matrix(env->camera.fov,
+			(float)env->wnd_width / env->wnd_height,
+			env->camera.near_plane, env->camera.far_plane);
+	glUseProgram(env->shader->program);
+	glUniformMatrix4fv(env->shader->uniforms[2], 1, GL_FALSE,
+			env->projection.m);
 	glUseProgram(0);
 }
 
-void	render_function(void)
+void		error_callback(int error, char const *description)
 {
-	++env.frame_count;
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	draw();
-	glutSwapBuffers();
+	ft_putstr("ERROR [");
+	ft_putnbr(error);
+	ft_putstr("] : ");
+	ft_putendl(description);
 }
 
-void	timer_function(int value)
+void		exit_on_glerror(const char *error_message)
 {
-	if (0 != value)
+	GLenum	error;
+
+	error = glGetError();
+	if (error != GL_NO_ERROR)
 	{
-		char tmp[512 + strlen(WINDOW_TITLE_PREFIX)];
-		sprintf(tmp, "%s: %d Frames Per Second @ %d x %d", WINDOW_TITLE_PREFIX, env.frame_count * 4, env.wnd_width, env.wnd_height);
-		glutSetWindowTitle(tmp);
+		ft_putstr(error_message);
+		ft_putstr(": [code=");
+		ft_putnbr(error);
+		ft_putendl("]");
+		exit(EXIT_FAILURE);
 	}
-	env.frame_count = 0;
-	glutTimerFunc(250, timer_function, 1);
 }

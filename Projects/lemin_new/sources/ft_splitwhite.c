@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 22:39:36 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/11 22:42:02 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/04/02 17:20:01 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ char			**ft_strsplit(char const *s, char c)
 			tab[size++] = ft_strsub(s, start, i - start);
 		}
 	}
-	tab[size] = '\0';
+	tab[size] = 0;
 	return (tab);
 }

@@ -19,7 +19,6 @@ public:
 	static const Color Yellow;
 	static const Color Magenta;
 	static const Color Cyan;
-	static const Color Transparent;
 
 	float	r;
 	float	g;

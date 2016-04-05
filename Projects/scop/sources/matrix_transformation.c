@@ -1,76 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix_transformation.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/10 15:18:04 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/10 15:25:31 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
-void			scale_matrix(t_matrix* m, float x, float y, float z)
+void			scale_matrix(t_matrix *m, float x, float y, float z)
 {
 	t_matrix	scale;
+	t_matrix	tmp;
 
-	scale = IDENTITY_MATRIX;
+	identity(&scale);
 	scale.m[0] = x;
 	scale.m[5] = y;
 	scale.m[10] = z;
-	t_matrix tmp = multiply_matrices(m, &scale);
+	tmp = multiply_matrices(m, &scale);
 	memcpy(m->m, tmp.m, sizeof(m->m));
 }
 
-void			translate_matrix(t_matrix* m, t_vector *v)
+void			translate_matrix(t_matrix *m, t_vector *v)
 {
 	t_matrix	translation;
+	t_matrix	tmp;
 
-	translation = IDENTITY_MATRIX;
+	identity(&translation);
 	translation.m[12] = v->v[0];
 	translation.m[13] = v->v[1];
 	translation.m[14] = v->v[2];
-	t_matrix tmp = multiply_matrices(m, &translation);
+	tmp = multiply_matrices(m, &translation);
 	memcpy(m->m, tmp.m, sizeof(m->m));
 }
 
-void			rotate_about_x(t_matrix* m, float angle)
+void			rotate_about_x(t_matrix *m, float angle)
 {
 	t_matrix	rotation;
+	t_matrix	tmp;
 	float		sine;
 	float		cosine;
 
-	rotation = IDENTITY_MATRIX;
+	identity(&rotation);
 	sine = (float)sin(angle);
 	cosine = (float)cos(angle);
 	rotation.m[5] = cosine;
 	rotation.m[6] = -sine;
 	rotation.m[9] = sine;
 	rotation.m[10] = cosine;
-	t_matrix tmp = multiply_matrices(m, &rotation);
+	tmp = multiply_matrices(m, &rotation);
 	memcpy(m->m, tmp.m, sizeof(m->m));
 }
 
-void			rotate_about_y(t_matrix* m, float angle)
+void			rotate_about_y(t_matrix *m, float angle)
 {
 	t_matrix	rotation;
+	t_matrix	tmp;
 	float		sine;
 	float		cosine;
 
-	rotation = IDENTITY_MATRIX;
+	identity(&rotation);
 	sine = (float)sin(angle);
 	cosine = (float)cos(angle);
 	rotation.m[0] = cosine;
 	rotation.m[8] = sine;
 	rotation.m[2] = -sine;
 	rotation.m[10] = cosine;
-	t_matrix tmp = multiply_matrices(m, &rotation);
+	tmp = multiply_matrices(m, &rotation);
 	memcpy(m->m, tmp.m, sizeof(m->m));
 }
 
-void			rotate_about_z(t_matrix* m, float angle)
+void			rotate_about_z(t_matrix *m, float angle)
 {
 	t_matrix	rotation;
+	t_matrix	tmp;
 	float		sine;
 	float		cosine;
 
-	rotation = IDENTITY_MATRIX;
+	identity(&rotation);
 	sine = (float)sin(angle);
 	cosine = (float)cos(angle);
 	rotation.m[0] = cosine;
 	rotation.m[1] = -sine;
 	rotation.m[4] = sine;
 	rotation.m[5] = cosine;
-	t_matrix tmp = multiply_matrices(m, &rotation);
+	tmp = multiply_matrices(m, &rotation);
 	memcpy(m->m, tmp.m, sizeof(m->m));
 }

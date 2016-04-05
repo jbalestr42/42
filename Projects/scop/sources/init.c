@@ -1,34 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/10 18:38:20 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/10 18:40:57 by jbalestr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 
 void		init_key(t_env *env)
 {
-	env->keys[KEY_FORWARD].code = 'z';
+	env->keys[KEY_ESC].code = 256;
+	env->keys[KEY_ESC].is_active = 0;
+	env->keys[KEY_FORWARD].code = 87;
 	env->keys[KEY_FORWARD].is_active = 0;
-	env->keys[KEY_BACKWARD].code = 's';
+	env->keys[KEY_BACKWARD].code = 83;
 	env->keys[KEY_BACKWARD].is_active = 0;
-	env->keys[KEY_LEFT].code = 'q';
+	env->keys[KEY_LEFT].code = 65;
 	env->keys[KEY_LEFT].is_active = 0;
-	env->keys[KEY_RIGHT].code = 'd';
+	env->keys[KEY_RIGHT].code = 68;
 	env->keys[KEY_RIGHT].is_active = 0;
 	env->keys[KEY_UP].code = 'e';
 	env->keys[KEY_UP].is_active = 0;
 	env->keys[KEY_DOWN].code = 'a';
 	env->keys[KEY_DOWN].is_active = 0;
-	env->keys[KEY_P].code = 'p';
+	env->keys[KEY_P].code = 80;
 	env->keys[KEY_P].is_active = 0;
-	env->keys[KEY_M].code = 'm';
+	env->keys[KEY_M].code = 77;
 	env->keys[KEY_M].is_active = 0;
-	env->keys[KEY_L].code = 'l';
+	env->keys[KEY_L].code = 76;
 	env->keys[KEY_L].is_active = 0;
 }
 
-void		init_env(t_env * env)
+void		init_env(t_env *env)
 {
 	env->frame_count = 0;
 	env->wnd_width = 800;
 	env->wnd_height = 600;
 	env->wnd_handle = 0;
-	env->projection = IDENTITY_MATRIX;
+	identity(&env->projection);
+	env->window = NULL;
 	env->mesh = NULL;
 	env->shader = NULL;
 	env->texture = NULL;
@@ -38,71 +53,78 @@ void		init_env(t_env * env)
 	env->camera.far_plane = 100.f;
 	env->camera.rotation[0] = 0.f;
 	env->camera.rotation[1] = 0.f;
-	env->camera.translation = IDENTITY_MATRIX;
+	identity(&env->camera.translation);
 	env->camera.translation.m[14] = -6;
 }
 
-void		init_openGL(int argc, char* argv[])
+void		init_opengl(t_env *env)
 {
-	GLenum	GlewInitResult;
+	GLenum	result;
 
-	init_window(argc, argv);
-	glewExperimental = GL_TRUE;
-	GlewInitResult = glewInit();
-	if (GLEW_OK != GlewInitResult)
+	init_window(env);
+	glfwMakeContextCurrent(env->window);
+	glewExperimental = 1;
+	result = glewInit();
+	glGetError();
+	if (result)
 	{
-		fprintf(stderr, "ERROR: %s\n", glewGetErrorString(GlewInitResult));
+		ft_putstr("ERROR: ");
+		ft_putendl((char const *)glewGetErrorString(result));
 		exit(EXIT_FAILURE);
 	}
-	fprintf(stdout, "INFO: OpenGL Version: %s\n", glGetString(GL_VERSION));
-	glGetError();
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glfwSwapInterval(1);
+	glfwGetFramebufferSize(env->window, &env->wnd_width, &env->wnd_height);
+	ft_putstr("INFO: OpenGL Version: ");
+	ft_putendl((const char *)glGetString(GL_VERSION));
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	exit_on_GLerror("ERROR: Could not set OpenGL depth testing options");
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	exit_on_glerror("ERROR: Could not set OpenGL depth testing options");
 	glFrontFace(GL_CCW);
-	exit_on_GLerror("ERROR: Could not set OpenGL culling options");
+	exit_on_glerror("ERROR: Could not set OpenGL culling options");
 }
 
-void		init_window(int argc, char* argv[])
+void		init_window(t_env *env)
 {
-	glutInit(&argc, argv);
-	glutInitContextVersion(4, 0);
-	glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
-	glutInitContextProfile(GLUT_CORE_PROFILE);
-	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
-	glutInitWindowSize(env.wnd_width, env.wnd_height);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	env.wnd_handle = glutCreateWindow(WINDOW_TITLE_PREFIX);
-	if (env.wnd_handle < 1)
+	glfwSetErrorCallback(error_callback);
+	if (!glfwInit())
+		exit(EXIT_FAILURE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_DEPTH_BITS, 16);
+	glfwWindowHint(GLFW_RESIZABLE, 1);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
+	env->window = glfwCreateWindow(env->wnd_width, env->wnd_height,
+			WINDOW_TITLE_PREFIX, NULL, NULL);
+	if (!env->window)
 	{
-		fprintf(stderr, "ERROR: Could not create a new rendering window.\n");
+		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
-	glutReshapeFunc(resize_function);
-	glutDisplayFunc(render_function);
-	glutIdleFunc(idle_function);
-	glutTimerFunc(0, timer_function, 0);
-	glutKeyboardFunc(keyboard_input_press);
-	glutKeyboardUpFunc(keyboard_input_release);
-	glutMotionFunc(mouse_move_input);
-	glutPassiveMotionFunc(mouse_move_input);
-	glutSetCursor(GLUT_CURSOR_NONE);
-	//glutSpecialFunc(handleSpecialKeypress);
-	//glutSpecialUpFunc(handleSpecialKeyReleased);
-	glutCloseFunc(clear);
+	glfwSetFramebufferSizeCallback(env->window, resize_function);
+	glfwSetKeyCallback(env->window, keyboard_input_press);
+	glfwSetCursorPosCallback(env->window, mouse_move_input);
+	glfwSetInputMode(env->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetWindowUserPointer(env->window, env);
 }
 
-void		exit_on_GLerror(const char *error_message)
+t_mesh		*init_mesh(t_obj_data *obj_data, char const *filename)
 {
-	GLenum	error;
+	t_mesh	*mesh;
 
-	error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		fprintf(stderr, "%s: %s\n", error_message, gluErrorString(error));
-		exit(EXIT_FAILURE);
-	}
+	if (!load_mesh(obj_data, filename))
+		return (NULL);
+	mesh = (t_mesh*)malloc(sizeof(t_mesh));
+	if (!mesh)
+		return (NULL);
+	mesh->indice_count = obj_data->indice_count;
+	mesh->origin = obj_data->origin;
+	identity(&mesh->transform);
+	mesh->rotation = 0.f;
+	mesh->scale = 1.f;
+	mesh->transparency = 0.f;
+	mesh->transition = 1;
+	return (mesh);
 }

@@ -57,28 +57,28 @@ Node::NodePtr createMan(void)
 	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.5f, 0.25f, 1.2f), 0.f)));
 	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.63f, 0.f), 0.f)));
 
-	Node::NodePtr trunk(new Node());
+	Node::NodePtr trunk(new Node(Color::Green));
 	trunk->setAnimation(std::move(trunkAnim));
 
-	Node::NodePtr armLeft(new Node());
+	Node::NodePtr armLeft(new Node(Color::Blue));
 	armLeft->setAnimation(std::move(armLeftAnim));
 
-	Node::NodePtr subArmLeft(new Node());
+	Node::NodePtr subArmLeft(new Node(Color::Magenta));
 	subArmLeft->setAnimation(std::move(subArmLeftAnim));
 
-	Node::NodePtr armRight(new Node());
+	Node::NodePtr armRight(new Node(Color::Blue));
 	armRight->setAnimation(std::move(armRightAnim));
 
-	Node::NodePtr legLeft(new Node());
+	Node::NodePtr legLeft(new Node(Color::Blue));
 	legLeft->setAnimation(std::move(legLeftAnim));
 
-	Node::NodePtr subLegLeft(new Node());
+	Node::NodePtr subLegLeft(new Node(Color::Magenta));
 	subLegLeft->setAnimation(std::move(subLegLeftAnim));
 
-	Node::NodePtr legRight(new Node());
+	Node::NodePtr legRight(new Node(Color::Blue));
 	legRight->setAnimation(std::move(legRightAnim));
 
-	Node::NodePtr head(new Node());
+	Node::NodePtr head(new Node(Color::Red));
 	head->setAnimation(std::move(headAnim));
 
 	armRight->addChild(subArmLeft);
@@ -100,6 +100,8 @@ Node::NodePtr createManWalk(void)
 	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Rotate>(Vector3(0.f, 0.f, 0.f), 0.f)));
 	trunkAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.1f), 0.f)));
 	trunkAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::RotateY>(45.f, 0.f, 4.f)));
+	trunkAnim->pushAnimator(Animation::AnimatorPtr(new LerpAnimator<Anim::Scale>(Vector3(0.25f, 0.5f, 0.1f), Vector3(0.5f, 0.2f, 0.5f), 0.f, 2.f)));
+	trunkAnim->pushAnimator(Animation::AnimatorPtr(new LerpAnimator<Anim::Scale>(Vector3(0.5f, 0.2f, 0.5f), Vector3(0.25f, 0.5f, 0.1f), 2.f, 2.f)));
 
 	std::unique_ptr<Animation>	armRightAnim(new Animation());
 	armRightAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Origin>(Vector3(0.0f, 0.5f, 0.0f), 0.f)));
@@ -154,31 +156,31 @@ Node::NodePtr createManWalk(void)
 	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.5f, 0.25f, 1.2f), 0.f)));
 	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.63f, 0.f), 0.f)));
 
-	Node::NodePtr trunk(new Node());
+	Node::NodePtr trunk(new Node(Color::Green));
 	trunk->setAnimation(std::move(trunkAnim));
 
-	Node::NodePtr armLeft(new Node());
+	Node::NodePtr armLeft(new Node(Color::Blue));
 	armLeft->setAnimation(std::move(armLeftAnim));
 
-	Node::NodePtr subArmLeft(new Node());
+	Node::NodePtr subArmLeft(new Node(Color::Magenta));
 	subArmLeft->setAnimation(std::move(subArmLeftAnim));
 
-	Node::NodePtr armRight(new Node());
+	Node::NodePtr armRight(new Node(Color::Blue));
 	armRight->setAnimation(std::move(armRightAnim));
 
-	Node::NodePtr legLeft(new Node());
+	Node::NodePtr legLeft(new Node(Color::Blue));
 	legLeft->setAnimation(std::move(legLeftAnim));
 
-	Node::NodePtr subLegLeft(new Node());
+	Node::NodePtr subLegLeft(new Node(Color::Magenta));
 	subLegLeft->setAnimation(std::move(subLegLeftAnim));
 
-	Node::NodePtr legRight(new Node());
+	Node::NodePtr legRight(new Node(Color::Blue));
 	legRight->setAnimation(std::move(legRightAnim));
 
-	Node::NodePtr subLegRight(new Node());
+	Node::NodePtr subLegRight(new Node(Color::Magenta));
 	subLegRight->setAnimation(std::move(subLegRightAnim));
 
-	Node::NodePtr head(new Node());
+	Node::NodePtr head(new Node(Color::Red));
 	head->setAnimation(std::move(headAnim));
 
 	armRight->addChild(subArmLeft);
@@ -211,10 +213,10 @@ Node::NodePtr createMonkeyWalk(void)
 	tailPieceAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::Rotate>(Vector3(5.f, 0.f, 0.f), 0.f, 2.f)));
 	tailPieceAnim->pushAnimator(Animation::AnimatorPtr(new AddAnimator<Anim::Rotate>(Vector3(-5.f, 0.f, 0.f), 2.f, 2.f)));
 
-	Node::NodePtr tail(new Node());
+	Node::NodePtr tail(new Node(Color::Cyan));
 	tail->setAnimation(std::move(tailAnim));
 
-	Node::NodePtr tailPiece(new Node());
+	Node::NodePtr tailPiece(new Node(Color::Cyan));
 	tailPiece->setAnimation(std::move(tailPieceAnim));
 
 	tailPiece->addChild(tailPiece);
@@ -289,28 +291,28 @@ Node::NodePtr createManJump(void)
 	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Scale>(Vector3(0.5f, 0.25f, 1.2f), 0.f)));
 	headAnim->pushAnimator(Animation::AnimatorPtr(new SetAnimator<Anim::Translate>(Vector3(0.f, 0.63f, 0.f), 0.f)));
 
-	Node::NodePtr trunk(new Node());
+	Node::NodePtr trunk(new Node(Color::Green));
 	trunk->setAnimation(std::move(trunkAnim));
 
-	Node::NodePtr armLeft(new Node());
+	Node::NodePtr armLeft(new Node(Color::Blue));
 	armLeft->setAnimation(std::move(armLeftAnim));
 
-	Node::NodePtr subArmLeft(new Node());
+	Node::NodePtr subArmLeft(new Node(Color::Magenta));
 	subArmLeft->setAnimation(std::move(subArmLeftAnim));
 
-	Node::NodePtr armRight(new Node());
+	Node::NodePtr armRight(new Node(Color::Blue));
 	armRight->setAnimation(std::move(armRightAnim));
 
-	Node::NodePtr legLeft(new Node());
+	Node::NodePtr legLeft(new Node(Color::Blue));
 	legLeft->setAnimation(std::move(legLeftAnim));
 
-	Node::NodePtr legRight(new Node());
+	Node::NodePtr legRight(new Node(Color::Blue));
 	legRight->setAnimation(std::move(legRightAnim));
 
-	Node::NodePtr subLegRight(new Node());
+	Node::NodePtr subLegRight(new Node(Color::Magenta));
 	subLegRight->setAnimation(std::move(subLegRightAnim));
 
-	Node::NodePtr head(new Node());
+	Node::NodePtr head(new Node(Color::Red));
 	head->setAnimation(std::move(headAnim));
 
 	armRight->addChild(subArmLeft);

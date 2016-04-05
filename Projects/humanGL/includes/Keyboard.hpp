@@ -2,8 +2,9 @@
 # define KEYBOARD_HPP
 
 # include <map>
+# include <GLFW/glfw3.h>
 
-class GLFWwindow;
+//class GLFWwindow;
 
 class Keyboard
 {
