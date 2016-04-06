@@ -128,6 +128,42 @@ void GravitySystem::initVelocity(bool firsttime)
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 }
 
+void GravitySystem::initCustom(bool firsttime)
+{
+	std::cout << "-> Initialize particles as a circle." << std::endl;
+	cl_int err = 0;
+	std::random_device rd;
+	std::mt19937 eng(rd());
+	std::uniform_real_distribution<float> dist(0.f, 0.5f);
+	std::uniform_real_distribution<float> dist_life(0.2f, 1.f);
+	std::uniform_real_distribution<float> dist_vel(0.f, 1.f);
+	std::uniform_real_distribution<float> dist_polar(0.f, Pi2);
+	std::uniform_real_distribution<float> dist_half_polar(-PiDiv2, PiDiv2);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vbo[Index::Particles]);
+	Particle *p = static_cast<Particle*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+	for (std::size_t i = 0; i < m_particleCount; i++)
+	{
+		float theta = dist_polar(eng);
+		float phi = dist_half_polar(eng);
+		p[i].position = Vector3(std::cos(theta) * std::cos(phi),
+				std::sin(phi) * std::cos(theta),
+				std::sin(theta) * std::cos(phi));
+	}
+	if (firsttime)
+	{
+		m_glBuffer[Index::Particles] = cl::BufferGL(getContext(), CL_MEM_READ_WRITE, m_vbo[Index::Particles], &err);
+		if (err)
+			std::cout << "ERROR (" << getError(err) << "): kernel loading failed." << std::endl;
+		m_clBuffer[Index::Particles] = cl::Buffer(getContext(), CL_MEM_READ_WRITE, m_particleCount * sizeof(Particle), NULL, &err);
+	}
+	err = getQueue().enqueueWriteBuffer(m_clBuffer[Index::Particles], CL_TRUE, 0, m_particleCount * sizeof(Particle), p);
+	if (err)
+		std::cout << "ERROR -> " << getError(err) << std::endl;
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+	initVelocity(firsttime);
+}
+
 void GravitySystem::loadData(void)
 {
 	cl_int err = 0;
@@ -187,6 +223,8 @@ void GravitySystem::update(Camera & camera, float frametime)
 		initCircle();
 	if (Keyboard::isKeyPressed(GLFW_KEY_G))
 		initSquare();
+	if (Keyboard::isKeyPressed(GLFW_KEY_D))
+		initCustom();
 	if (Keyboard::isKeyPressed(GLFW_KEY_H))
 		m_disableVelocity = !m_disableVelocity;
 
@@ -237,6 +275,6 @@ void GravitySystem::update(Camera & camera, float frametime)
 void GravitySystem::draw(void)
 {
 	glBindVertexArray(m_vao);
-	glDrawArrays(GL_POINTS,0,m_particleCount);
+	glDrawArrays(GL_POINTS, 0, m_particleCount);
 	glBindVertexArray(0);
 }

@@ -43,6 +43,7 @@ private:
 	bool			m_disableVelocity;
 
 	void initCircle(bool firsttime = false);
+	void initCustom(bool firsttime = false);
 	void initSquare(bool firsttime = false);
 	void initVelocity(bool firsttime = false);
 	void loadData(void);

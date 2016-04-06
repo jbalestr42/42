@@ -48,15 +48,20 @@ int main(int argc, char **argv)
 	glfwSetTime(0.f);
 	float lastTime = 0.f;
 
-	//GravitySystem cl(1000000);
+	float dt = 0.f;
+	float frameLimit = 1.f / 300.f;
 	while (win.isOpen())
 	{
 		// Compute frametime
 		float currentTime = glfwGetTime();
 		float frametime = (currentTime - lastTime);
 		lastTime = currentTime;
+
+		dt += frametime;
+		if (dt < frameLimit)
+			continue ;
 		std::ostringstream ss;
-		ss << (1.f / frametime);
+		ss << (1.f / dt);
 		std::string s(ss.str());
 		win.setTitle(s);
 
@@ -65,8 +70,10 @@ int main(int argc, char **argv)
 			win.close();
 
 		// Update
-		system->update(camera, frametime);
+		system->update(camera, dt);
 		camera.update(frametime);
+		while (dt > frameLimit)
+			dt -= frameLimit;
 
 		// Draw
 		win.clear();
