@@ -14,6 +14,7 @@ public:
 	Matrix const & getProjection(void) const;
 	Matrix const & getView(void) const;
 	Matrix const & getModel(void);
+	Shader & getShader(void) const;
 	Vector3 unProject(Vector2 const & inPosition, float depth);
 
 	void update(float frametime);

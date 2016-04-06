@@ -4,12 +4,16 @@
 # include <CL/cl.hpp>
 # include "Vector3.hpp"
 # include "Color.hpp"
+# include "Camera.hpp"
 
 class ParticleSystem
 {
 public:
 	ParticleSystem(std::string const & filename);
 	virtual ~ParticleSystem(void);
+
+	virtual void update(Camera & camera, float frametime) = 0;
+	virtual void draw(void) = 0;
 
 protected:
 	ParticleSystem(void) = delete;

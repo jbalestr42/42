@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/04/05 16:26:32 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/04/06 13:32:09 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC =	main.cpp \
 		Keyboard.cpp \
 		Mouse.cpp \
 		GravitySystem.cpp \
+		EmitterSystem.cpp \
 		ParticleSystem.cpp \
 		Camera.cpp \
 		Color.cpp
@@ -49,6 +50,7 @@ INC =	Matrix.hpp \
 		Keyboard.hpp \
 		Mouse.hpp \
 		GravitySystem.hpp \
+		EmitterSystem.hpp \
 		ParticleSystem.hpp \
 		Camera.hpp \
 		Color.hpp

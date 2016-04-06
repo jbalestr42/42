@@ -1,10 +1,10 @@
-#ifndef GRAVITYSYSTEM_HPP
-# define GRAVITYSYSTEM_HPP
+#ifndef EMITTERSYSTEM_HPP
+# define EMITTERSYSTEM_HPP
 
 # include <memory>
 # include "ParticleSystem.hpp"
 
-class GravitySystem : public ParticleSystem
+class EmitterSystem : public ParticleSystem
 {
 	struct Particle
 	{
@@ -20,19 +20,20 @@ class GravitySystem : public ParticleSystem
 	};
 
 public:
-	GravitySystem(void);
-	GravitySystem(std::size_t particleCount);
-	virtual ~GravitySystem(void);
+	EmitterSystem(void);
+	EmitterSystem(std::size_t particleCount);
+	virtual ~EmitterSystem(void);
 
 	void update(Camera & camera, float frametime);
 	void draw(void);
 
 private:
-	static const std::size_t	IndexCount = 2u;
+	static const std::size_t	IndexCount = 3u;
 	enum Index
 	{
 		Particles,
-		Velocity
+		Velocity,
+		Life
 	};
 
 	cl::BufferGL	m_glBuffer[IndexCount];
@@ -42,13 +43,11 @@ private:
 	std::size_t		m_particleCount;
 	bool			m_disableVelocity;
 
-	void initCircle(bool firsttime = false);
-	void initSquare(bool firsttime = false);
-	void initVelocity(bool firsttime = false);
+	void init(bool firsttime = false);
 	void loadData(void);
 
-	GravitySystem(GravitySystem const & openCL);
-	GravitySystem & operator=(GravitySystem const & openCL);
+	EmitterSystem(EmitterSystem const & openCL);
+	EmitterSystem & operator=(EmitterSystem const & openCL);
 
 };
 

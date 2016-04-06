@@ -3,19 +3,52 @@
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
 #include "GravitySystem.hpp"
+#include "EmitterSystem.hpp"
 #include "Camera.hpp"
 #include <sstream>
 
-int main(void)
+ParticleSystem * parseArgs(int argc, char **argv)
+{
+	if (argc == 1)
+	{
+		std::cout << "Usage : ./particle_system particle_count system_type" << std::endl;
+		std::cout << "Type : " << std::endl;
+		std::cout << "  - gravity_system : 1" << std::endl;
+		std::cout << "  - emitter_system : 2" << std::endl;
+		return (nullptr);
+	}
+	int particleCount;
+	if (argc >= 2)
+	{
+		particleCount = std::atoi(argv[1]);
+		if (particleCount > 5000000)
+			return (nullptr);
+	}
+	if (argc >= 3)
+	{
+		if (!std::strcmp(argv[2], "1"))
+			return (new GravitySystem(particleCount));
+		if (!std::strcmp(argv[2], "2"))
+			return (new EmitterSystem(particleCount));
+	}
+	return (nullptr);
+}
+
+int main(int argc, char **argv)
 {
 	Windows win(1902, 1080, "Particle System");
 	win.setClearColor(Color::Black);
 	Camera camera;
 
+	std::unique_ptr<ParticleSystem> system;
+	system.reset(parseArgs(argc, argv));
+	if (!system)
+		return (1);
+
 	glfwSetTime(0.f);
 	float lastTime = 0.f;
 
-	GravitySystem cl(1000000);
+	//GravitySystem cl(1000000);
 	while (win.isOpen())
 	{
 		// Compute frametime
@@ -32,12 +65,12 @@ int main(void)
 			win.close();
 
 		// Update
-		cl.update(camera, frametime);
+		system->update(camera, frametime);
 		camera.update(frametime);
 
 		// Draw
 		win.clear();
-		cl.draw();
+		system->draw();
 
 		win.display();
 		win.pollEvents();

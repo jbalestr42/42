@@ -51,6 +51,11 @@ Matrix const & Camera::getModel(void)
 	return (getMatrix());
 }
 
+Shader & Camera::getShader(void) const
+{
+	return (*m_shader);
+}
+
 Vector3 Camera::unProject(Vector2 const & inPosition, float depth)
 {
 	Vector4 inVector;
