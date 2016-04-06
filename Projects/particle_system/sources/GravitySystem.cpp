@@ -178,7 +178,6 @@ void GravitySystem::update(Camera & camera, float frametime)
 	dir.x *= lerp(1.f, 4.f, std::abs(Mouse::getPosition().x - 0.5f) / 0.5f);
 	dir.y *= lerp(1.f, 4.f, std::abs(Mouse::getPosition().y - 0.5f) / 0.5f);
 
-	std::cout << dir << std::endl;
 	cl::Event event;
 	cl_int err = 0;
 	glFinish();

@@ -26,6 +26,16 @@ Vector2 Vector2::operator*(float factor) const
 	return (Vector2(x * factor, y * factor));
 }
 
+Vector2 Vector2::operator-(Vector2 const & vector2) const
+{
+	return (Vector2(x - vector2.x, y - vector2.y));
+}
+
+Vector2 Vector2::operator+(Vector2 const & vector2) const
+{
+	return (Vector2(x + vector2.x, y + vector2.y));
+}
+
 Vector2 Vector2::operator/(Vector2 const & vector2) const
 {
 	return (Vector2(x / vector2.x, y / vector2.y));

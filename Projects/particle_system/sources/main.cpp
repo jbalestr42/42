@@ -33,6 +33,7 @@ int main(void)
 
 		// Update
 		cl.update(camera, frametime);
+		camera.update(frametime);
 
 		// Draw
 		win.clear();

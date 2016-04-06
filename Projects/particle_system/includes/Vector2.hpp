@@ -14,6 +14,8 @@ public:
 	Vector2 & operator=(Vector2 const & vector2);
 	Vector2 operator*(float factor) const;
 	Vector2 operator/(Vector2 const & vector2) const;
+	Vector2 operator-(Vector2 const & vector2) const;
+	Vector2 operator+(Vector2 const & vector2) const;
 
 	float	x;
 	float	y;
