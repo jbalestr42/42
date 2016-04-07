@@ -34,7 +34,12 @@ void Vector3::normalize(void)
 	z /= len;
 }
 
-	Vector3 inverse(void);
+Vector3 Vector3::cross(Vector3 const & vector)
+{
+	return (Vector3(y * vector.z - z * vector.y,
+					z * vector.x - x * vector.z,
+					x * vector.y - y * vector.x));
+}
 
 Vector3 & Vector3::operator=(Vector3 const & vector)
 {

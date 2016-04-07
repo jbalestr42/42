@@ -15,6 +15,7 @@ public:
 	float length(void);
 	void normalize(void);
 	Vector3 inverse(void);
+	Vector3 cross(Vector3 const & vector);
 
 	Vector3 & operator=(Vector3 const & vector3);
 	Vector3 & operator=(Vector3 && vector3);

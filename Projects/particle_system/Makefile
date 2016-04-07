@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/04/04 15:51:26 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/04/07 10:18:32 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,13 @@ SRC =	main.cpp \
 		Shader.cpp \
 		Vector2.cpp \
 		Vector3.cpp \
+		Vector4.cpp \
 		Keyboard.cpp \
 		Mouse.cpp \
-		OpenCL.cpp \
+		GravitySystem.cpp \
+		EmitterSystem.cpp \
+		ParticleSystem.cpp \
+		Camera.cpp \
 		Color.cpp
 
 INC =	Matrix.hpp \
@@ -42,10 +46,14 @@ INC =	Matrix.hpp \
 		Shader.hpp \
 		Vector2.hpp \
 		Vector3.hpp \
+		Vector4.hpp \
 		Math.hpp \
 		Keyboard.hpp \
 		Mouse.hpp \
-		OpenCL.hpp \
+		GravitySystem.hpp \
+		EmitterSystem.hpp \
+		ParticleSystem.hpp \
+		Camera.hpp \
 		Color.hpp
 
 OBJ =	$(SRC:.cpp=.o)

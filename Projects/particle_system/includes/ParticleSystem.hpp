@@ -1,40 +1,40 @@
 #ifndef PARTICLESYSTEM_HPP
 # define PARTICLESYSTEM_HPP
 
+# include <CL/cl.hpp>
 # include "Vector3.hpp"
 # include "Color.hpp"
-# include <GL/glew.h>
-# include <GLFW/glfw3.h>
+# include "Camera.hpp"
 
 class ParticleSystem
 {
 public:
-	class Particle
-	{
-	public:
-		Particle(void);
-		virtual ~Particle(void);
-
-		Particle(Particle const & particle);
-
-		Particle & operator=(Particle const & particle);
-
-		Vector3		m_position;
-		Color		m_color;
-	};
-
-	ParticleSystem(void);
-	ParticleSystem(ParticleSystem const & particleSystem);
+	ParticleSystem(std::string const & filename);
 	virtual ~ParticleSystem(void);
 
-	void init(void);
+	virtual void update(Camera & camera, float frametime) = 0;
+	virtual void draw(void) = 0;
 
+protected:
+	ParticleSystem(void) = delete;
+	ParticleSystem(ParticleSystem const & particleSystem);
 	ParticleSystem & operator=(ParticleSystem const & particleSystem);
 
+	cl::Kernel & getKernel(void);
+	cl::Program & getProgram(void);
+	cl::Context & getContext(void);
+	cl::Device & getDevice(void);
+	cl::CommandQueue & getQueue(void);
+	const char * getError(cl_int error);
+
 private:
-	GLuint			m_vertexArrayObject;
-	GLuint			m_vertexBufferObject[2];
-	std::size_t		m_particleCount;
+	cl::Kernel				m_kernel;
+	cl::Program				m_program;
+	cl::Context				m_context;
+	cl::Device				m_device;
+	cl::CommandQueue		m_queue;
+
+	void loadProgram(std::string const & kernelSource);
 
 };
 
