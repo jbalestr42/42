@@ -42,13 +42,18 @@ void Windows::init(void)
 		exit(EXIT_FAILURE);
 
 	glfwWindowHint(GLFW_SAMPLES, 4); // antialiasing
+#if defined(__APPLE__) || defined(MACOSX)
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
+#else
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+#endif
 	glfwWindowHint(GLFW_DEPTH_BITS, 16);
 
 	glfwWindowHint(GLFW_RESIZABLE, true);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
 	// if debug
 	// glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 	m_window = glfwCreateWindow(m_width, m_height, m_title, NULL, NULL);

@@ -56,14 +56,14 @@ int main(int argc, char **argv)
 		float currentTime = glfwGetTime();
 		float frametime = (currentTime - lastTime);
 		lastTime = currentTime;
+		std::ostringstream ss;
+		ss << (1.f / frametime);
+		std::string s(ss.str());
+		win.setTitle(s);
 
 		dt += frametime;
 		if (dt < frameLimit)
 			continue ;
-		std::ostringstream ss;
-		ss << (1.f / dt);
-		std::string s(ss.str());
-		win.setTitle(s);
 
 		// Inputs
 		if (Keyboard::isKeyPressed(GLFW_KEY_ESCAPE))
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 
 		// Update
 		system->update(camera, dt);
-		camera.update(frametime);
+		camera.update(dt);
 		while (dt > frameLimit)
 			dt -= frameLimit;
 

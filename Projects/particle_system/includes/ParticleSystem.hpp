@@ -1,7 +1,27 @@
 #ifndef PARTICLESYSTEM_HPP
 # define PARTICLESYSTEM_HPP
 
-# include <CL/cl.hpp>
+# if defined(__APPLE__) || defined(MACOSX)
+#  define GL_GLEXT_PROTOTYPES
+#  define EGL_EGLEXT_PROTOTYPES
+#  include <GL/glew.h>
+#  include <GLFW/glfw3.h>
+#  include <OpenGL/OpenGL.h> // <---- That line was missing
+#  include <OpenCL/opencl.h>
+#  include <OpenCL/cl_gl.h>
+#  include "cl.hpp"
+# else // Linux
+#  include <CL/cl.hpp>
+#  include <memory>
+#  include <GL/glew.h>
+#  define GLFW_EXPOSE_NATIVE_X11
+#  define GLFW_EXPOSE_NATIVE_GLX
+#  define __CL_ENABLE_EXCEPTIONS
+#  include <GLFW/glfw3.h>
+#  include <GLFW/glfw3native.h>
+# endif
+
+
 # include "Vector3.hpp"
 # include "Color.hpp"
 # include "Camera.hpp"

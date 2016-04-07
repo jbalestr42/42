@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/04/07 10:18:32 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/04/07 10:51:31 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,11 @@
 NAME =	particle_system
 CC =	g++
 FLAGS =	-O3 -Wall -Wextra -Werror -std=c++11
-#LIB =	-lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lXcursor -lXinerama -lX11 -lXxf86vm -lpthread -ldl -lOpenCL
-LIB =	-L $(GLFW)/lib -L $(GLEW)/lib -lglfw3 -lGLEW -lm -lpthread -ldl -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+ifeq ($(shell uname), linux)
+	LIB =	-lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lXcursor -lXinerama -lX11 -lXxf86vm -lpthread -ldl -lOpenCL
+else
+	LIB =	-L $(GLFW)/lib -L $(GLEW)/lib -lglfw3 -lGLEW -lm -lpthread -ldl -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -framework OpenCL
+endif
 SDIR =	sources/
 ODIR =	objects/
 IDIR =	includes/

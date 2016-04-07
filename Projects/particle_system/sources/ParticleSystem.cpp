@@ -1,10 +1,4 @@
 #include "ParticleSystem.hpp"
-#include <GL/glew.h>
-#define GLFW_EXPOSE_NATIVE_X11
-#define GLFW_EXPOSE_NATIVE_GLX
-#define __CL_ENABLE_EXCEPTIONS
-#include <GLFW/glfw3.h>
-#include <GLFW/glfw3native.h>
 #include <fstream>
 #include <streambuf>
 
@@ -50,9 +44,9 @@ ParticleSystem::ParticleSystem(std::string const & filename)
 	};
 	try
 	{
-		m_context = cl::Context(props);   //had to edit line 1448 of cl.hpp to add this constructor
+		m_context = clCreateContext(props, 0, 0, NULL, NULL, &err);   //had to edit line 1448 of cl.hpp to add this constructor
 	}
-	catch (cl::Error er)
+	catch (std::exception e)
 	{
 		std::cout << "ERROR : " << e.what() << std::endl;
 	}
