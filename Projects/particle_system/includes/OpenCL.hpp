@@ -1,12 +1,29 @@
 #ifndef OPENCL_HPP
 # define OPENCL_HPP
 
-# include <CL/cl.hpp>
+#define __CL_ENABLE_EXCEPTIONS
+
+//apple
+# define GL_GLEXT_PROTOTYPES
+# define EGL_EGLEXT_PROTOTYPES
+# include <GL/glew.h>
+# include <GLFW/glfw3.h>
+# include <OpenGL/OpenGL.h> // <---- That line was missing
+# include <OpenCL/opencl.h>
+# include <OpenCL/cl_gl.h>
+# include "cl.hpp"
+
+//linux
+//# include <CL/cl.hpp>
+//#define GLFW_EXPOSE_NATIVE_X11
+//#define GLFW_EXPOSE_NATIVE_GLX
+
 # include <memory>
 # include "Shader.hpp"
 # include "Vector3.hpp"
 # include "Color.hpp"
 # include "Matrix.hpp"
+//#include <GLFW/glfw3native.h> //TODO is linux or apple
 
 struct Particle
 {
@@ -48,7 +65,6 @@ private:
 	GLuint vbo;
 	GLuint vbo_vel;
 	std::size_t num;    //the number of particles
-	size_t array_size; //the size of our arrays num * sizeof(Vec4)
 
 cl::Kernel kernel;
 	std::unique_ptr<Shader>		m_shader;

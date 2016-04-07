@@ -1,9 +1,12 @@
 #ifndef TEXTURE_HPP
 # define TEXTURE_HPP
 
+#define ILUT_USE_OPENGL
+
 # include <GL/glew.h>
 # include <cstddef>
 # include <string>
+# include <IL/il.h>
 
 class Shader;
 
@@ -28,10 +31,9 @@ private:
 	GLuint			m_textureID;
 	std::size_t		m_width;
 	std::size_t		m_height;
+	ILuint			m_id;
 
 	Texture(void) = delete;
-
-	unsigned char * loadBmp(std::string const & filename);
 
 };
 

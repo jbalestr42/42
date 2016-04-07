@@ -46,11 +46,11 @@ void Windows::init(void)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 	glfwWindowHint(GLFW_DEPTH_BITS, 16);
 
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+	glfwWindowHint(GLFW_RESIZABLE, true);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
 	// if debug
-	// glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+	// glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 	m_window = glfwCreateWindow(m_width, m_height, m_title, NULL, NULL);
 	if (!m_window)
 	{
@@ -103,7 +103,7 @@ void Windows::pollEvents(void) const
 
 void Windows::close(void)
 {
-	glfwSetWindowShouldClose(m_window, GLFW_TRUE);
+	glfwSetWindowShouldClose(m_window, true);
 }
 
 GLFWwindow * Windows::getWindow(void) const

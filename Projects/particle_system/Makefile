@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/03/29 15:00:34 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/04/04 15:51:26 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@
 NAME =	particle_system
 CC =	g++
 FLAGS =	-O3 -Wall -Wextra -Werror -std=c++11
-LIB =	-lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lXcursor -lXinerama -lX11 -lXxf86vm -lpthread -ldl -lOpenCL
+#LIB =	-lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lXcursor -lXinerama -lX11 -lXxf86vm -lpthread -ldl -lOpenCL
+LIB =	-L $(GLFW)/lib -L $(GLEW)/lib -lglfw3 -lGLEW -lm -lpthread -ldl -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
 SDIR =	sources/
 ODIR =	objects/
 IDIR =	includes/
@@ -56,12 +57,11 @@ all: $(NAME)
 
 $(NAME): $(O)
 	@echo "-> Creating $(NAME)..."
-	@$(CC) $(FLAGS) -o $@ $^ -I $(IDIR) -I /usr/local/cuda/include $(LIB)
-	@echo "-> Done !"
+	@$(CC) $(FLAGS) -o $@ $^ -I $(GLFW)/include/ -I $(GLEW)/include -I $(IDIR) $(LIB)
 
 $(ODIR)%.o: $(SDIR)%.cpp $(I)
 	@echo "-> Compiling $<..."
-	@$(CC) $(FLAGS) -c $< -o $@ -I $(IDIR) -I /usr/local/cuda/include
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(IDIR) -I $(GLFW)/include/ -I $(GLEW)/include
 
 $(O): | ./objects
 ./objects:

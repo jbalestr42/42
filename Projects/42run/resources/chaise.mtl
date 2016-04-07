@@ -11,7 +11,7 @@ newmtl _4
 Ka 0.000000 0.000000 0.000000
 Kd 0.945098 0.815686 0.752941
 Ks 0.330000 0.330000 0.330000
-map_Kd cat.bmp
+map_Kd nyan.png
 
 newmtl FrontColor
 Ka 0.000000 0.000000 0.000000

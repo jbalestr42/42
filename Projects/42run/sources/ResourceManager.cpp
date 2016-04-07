@@ -2,7 +2,10 @@
 
 std::unique_ptr<ResourceManager> ResourceManager::m_instance = nullptr;
 
-ResourceManager::ResourceManager(void) { }
+ResourceManager::ResourceManager(void)
+{
+	ilInit();
+}
 
 ResourceManager::ResourceManager(ResourceManager const & meshManager)
 {

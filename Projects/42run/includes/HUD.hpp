@@ -21,7 +21,7 @@ public:
 private:
 	std::unique_ptr<Mesh>				m_mesh;
 	std::size_t							m_score;
-	std::vector<std::unique_ptr<AnimatedTexture>>	m_texture;
+	std::vector<std::shared_ptr<AnimatedTexture>>	m_texture;
 
 	HUD(HUD const & hUD);
 	HUD & operator=(HUD const & hUD);

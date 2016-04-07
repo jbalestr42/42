@@ -2,10 +2,8 @@
 # define MOUSE_HPP
 
 # include <map>
-# include <GLFW/glfw3.h>
 # include "Vector2.hpp"
-
-class GLFWwindow;
+# include "Windows.hpp"
 
 class Mouse
 {

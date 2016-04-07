@@ -9,7 +9,7 @@ HUD::HUD(void) :
 	m_mesh.reset(new Mesh("resources/player.obj"));
 	m_texture.resize(10);
 	for (int i = 0; i < 10; i++)
-		m_texture[i].reset(new AnimatedTexture("resources/numbers.bmp", Vector2(21, 32), 0.25f, 10));
+		m_texture[i].reset(new AnimatedTexture("resources/nyan.png", Vector2(21, 32), 0.25f, 10));
 	setScale({0.005f, 0.0075f, 0.25f});
 }
 

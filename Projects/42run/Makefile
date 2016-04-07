@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/11 12:08:17 by jbalestr          #+#    #+#              #
-#    Updated: 2016/04/04 12:13:22 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/04/04 17:41:30 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME =	42run
 CC =	g++
 FLAGS =	-g -Wall -Wextra -Werror -std=c++11
 #LIB =	-lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lXcursor -lXinerama -lX11 -lXxf86vm -lpthread -ldl lib/libassimp.so
-LIB =	-L $(GLFW)/lib -L/$(GLEW)lib -lglfw3 -lGLEW -lm -lpthread -ldl -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+LIB =	-L $(DEVIL)/lib -L $(GLFW)/lib -L $(GLEW)/lib -L $(ASSIMP)/lib -lIL -lglfw3 -lGLEW -lassimp -lm -lpthread -ldl -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
 SDIR =	sources/
 ODIR =	objects/
 IDIR =	includes/
@@ -75,12 +75,12 @@ all: $(NAME)
 
 $(NAME): $(O)
 	@echo "-> Creating $(NAME)..."
-	@$(CC) $(FLAGS) -o $@ $^ -I $(GLFW)/include/ -I $(GLEW)/include -I $(IDIR) -I include/assimp $(LIB)
+	@$(CC) $(FLAGS) -o $@ $^ -I $(DEVIL)/include/ -I $(GLFW)/include/ -I $(GLEW)/include/ -I $(ASSIMP)/include/assimp -I $(IDIR) $(LIB)
 	@echo "-> Done !"
 
 $(ODIR)%.o: $(SDIR)%.cpp $(I)
 	@echo "-> Compiling $<..."
-	@$(CC) $(FLAGS) -c $< -o $@ -I $(IDIR) -I $(GLFW)/include/ -I $(GLEW)/include -I include/assimp
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(IDIR) -I $(DEVIL)/include/ -I $(GLFW)/include/ -I $(GLEW)/include/ -I $(ASSIMP)/include/assimp
 
 $(O): | ./objects
 ./objects:

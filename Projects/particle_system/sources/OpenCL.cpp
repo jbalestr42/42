@@ -2,12 +2,6 @@
 #include "Mouse.hpp"
 #include "Keyboard.hpp"
 #include "Math.hpp"
-#include <GL/glew.h>
-#define GLFW_EXPOSE_NATIVE_X11
-#define GLFW_EXPOSE_NATIVE_GLX
-#define __CL_ENABLE_EXCEPTIONS
-#include <GLFW/glfw3.h>
-#include <GLFW/glfw3native.h>
 #include <iostream>
 #include <random>
 
@@ -130,16 +124,16 @@ OpenCL::OpenCL(void) :
 	};
 	//Apple's implementation is weird, and the default values assumed by cl.hpp don't work
 	//this works
-	//cl_context cxGPUContext = clCreateContext(props, 0, 0, NULL, NULL, &err);
 	//these dont
 	//cl_context cxGPUContext = clCreateContext(props, 1,(cl_device_id*)&devices.front(), NULL, NULL, &err);
 	//cl_context cxGPUContext = clCreateContextFromType(props, CL_DEVICE_TYPE_GPU, NULL, NULL, &err);
 	//printf("error? %s\n", oclErrorString(err));
 	try
 	{
-		context = cl::Context(props);   //had to edit line 1448 of cl.hpp to add this constructor
+		//context = cl::Context(props);   //had to edit line 1448 of cl.hpp to add this constructor
+		context = clCreateContext(props, 0, 0, NULL, NULL, &err);
 	}
-	catch (cl::Error er)
+	catch (cl::Error e)
 	{
 		std::cout << "ERROR : " << e.what() << std::endl;
 	}

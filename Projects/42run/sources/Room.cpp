@@ -24,7 +24,7 @@ Room::~Room(void) { }
 
 Room & Room::operator=(Room const & room)
 {
-	Room::operator=(room);
+	Transformable::operator=(room);
 	(void)room;
 	return (*this);
 }
