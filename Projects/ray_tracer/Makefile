@@ -6,7 +6,7 @@
 #    By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/02/22 15:58:47 by jbalestr          #+#    #+#              #
-#    Updated: 2014/03/27 12:08:47 by jbalestr         ###   ########.fr        #
+#    Updated: 2016/04/15 10:56:25 by jbalestr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME =	Ray_Tracer
 CC =	gcc
-LIB =	-L gnl/ -L /usr/X11/lib/ -lmlx -lXext -lX11 -lm -lftgnl
+LIB =	-L gnl/ -lmlx -lm -lftgnl -framework OpenGL -framework AppKit
 FLAGS =	-g -Wall -Wextra -Werror
 SDIR =	sources/
 ODIR =	objects/

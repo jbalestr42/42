@@ -6,7 +6,7 @@
 /*   By: glasset <glasset@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/25 14:14:45 by glasset           #+#    #+#             */
-/*   Updated: 2014/03/27 19:47:15 by glasset          ###   ########.fr       */
+/*   Updated: 2016/04/15 10:54:45 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ t_l				*ft_inl(void)
 
 int				comment_l(t_env *e, char *str, int c)
 {
-	e = e;
-	c = c;
-	str = str;
+	(void)e;
+	(void)c;
+	(void)str;
 	return (0);
 }
 

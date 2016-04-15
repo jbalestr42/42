@@ -6,7 +6,7 @@
 /*   By: glasset <glasset@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 15:30:30 by glasset           #+#    #+#             */
-/*   Updated: 2014/03/27 19:50:50 by glasset          ###   ########.fr       */
+/*   Updated: 2016/04/15 10:55:21 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 int			comment(t_env *e, int c_l, int fd, char *str)
 {
-	e = e;
-	str = str;
-	c_l = c_l;
-	fd = fd;
+	(void)e;
+	(void)str;
+	(void)c_l;
+	(void)fd;
 	return (0);
 }
 
