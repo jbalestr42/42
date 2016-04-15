@@ -5,133 +5,117 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/15 16:02:08 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/02/13 13:41:53 by jbalestr         ###   ########.fr       */
+/*   Created: 2016/03/11 10:55:36 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/03/11 10:57:05 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gnl.h"
-#include <unistd.h>
-#include <stdlib.h>
 
-static t_read		*ft_freeread(t_read *red, t_read *prev, t_read **start)
+static int	has_line(t_buf *buf, int *count)
 {
-	if (!prev)
-		*start = red->next;
-	else
-		prev->next = red->next;
-	free(red->read);
-	free(red);
-	if (!prev)
-		return (*start);
-	else
-		return (prev->next);
+	*count = 0;
+	while (buf && buf->c != '\n' && buf->c != '\0')
+	{
+		(*count)++;
+		buf = buf->next;
+	}
+	return (buf ? 1 : 0);
 }
 
-static t_read		*ft_newread(int fd)
+static int	save_chars(t_buf **first, char *tmp)
 {
-	t_read			*red;
-	void			*tmp;
-	int				ret;
+	t_buf	*buf;
 
-	if (!(red = (t_read *)malloc(sizeof(t_read))))
-		return (NULL);
-	if (!(tmp = malloc(sizeof(char) * BUFF_SIZE)))
+	if (*tmp && *first == NULL)
 	{
-		free(red);
-		return (NULL);
+		if ((*first = (t_buf *)malloc(sizeof(t_buf))) == NULL)
+			return (-1);
+		(*first)->c = *tmp;
+		(*first)->next = NULL;
+		tmp++;
 	}
-	if ((ret = read(fd, tmp, BUFF_SIZE)) < 0)
+	buf = *first;
+	while (buf->next)
+		buf = buf->next;
+	while (*tmp)
 	{
-		free(red);
-		free(tmp);
-		return (NULL);
+		if ((buf->next = (t_buf *)malloc(sizeof(t_buf))) == NULL)
+			return (-1);
+		buf = buf->next;
+		buf->c = *tmp;
+		buf->next = NULL;
+		tmp++;
 	}
-	red->read = (char *)tmp;
-	red->fd = fd;
-	red->size = ret;
-	red->next = NULL;
-	red->index = 0;
-	return (red);
+	return (0);
 }
 
-static int			ft_print(int n, t_read **tab, t_read **s, char** l)
+static int	read_line(t_buf **buf, int fd)
 {
-	char			*tmpstr;
-	int				index;
+	char	tmp[BUFF_SIZE + 1];
+	char	*nl;
+	int		status;
 
-	if (!tab[0])
-		return (-1);
-	index = (tab[0])->index;
-	if (n == -1 || !(tmpstr = (char *)malloc(sizeof(char) * (n + 1))))
-		return (-1);
-	*l = tmpstr;
-	while (n--)
+	nl = NULL;
+	status = BUFF_SIZE;
+	while (!nl && status == BUFF_SIZE)
 	{
-		*tmpstr++ = (tab[0])->read[index++];
-		if (index == (tab[0])->size)
-		{
-			tab[0] = ft_freeread(tab[0], tab[1], s);
-			index = 0;
-		}
+		ft_bzero(tmp, BUFF_SIZE + 1);
+		status = read(fd, tmp, BUFF_SIZE);
+		if (status > 0 && save_chars(buf, tmp) == -1)
+			return (-1);
+		nl = ft_strchr(tmp, '\n');
 	}
-	*tmpstr = 0;
-	if (!tab[0] || (index == tab[0]->size && tab[0]->size < BUFF_SIZE))
-		return (0);
-	tab[0]->index = index + 1;
-	if (tab[0]->index == tab[0]->size)
-		tab[0] = ft_freeread(tab[0], tab[1], s);
+	return (status);
+}
+
+static int	write_line(t_buf **first, char **line, int count)
+{
+	t_buf	*prev;
+	t_buf	*buf;
+	int		i;
+
+	if ((*line = (char *)malloc((sizeof(char) * count) + 1)) == NULL)
+		return (-1);
+	(*line)[count] = '\0';
+	i = 0;
+	buf = (*first);
+	while (buf && i != count)
+	{
+		(*line)[i] = buf->c;
+		prev = buf;
+		buf = buf->next;
+		free(prev);
+		i++;
+	}
+	if (buf)
+	{
+		*first = buf->next;
+		free(buf);
+	}
+	else
+		*first = NULL;
 	return (1);
 }
 
-static int			ft_findendl(int fd, t_read *red)
+int			get_next_line(int const fd, char **line)
 {
-	int				index;
-	int				size;
-	t_read			*tmplst;
+	static t_buf	*data[256] = {NULL};
+	t_buf			**buf;
+	int				count;
+	int				status;
 
-	size = 0;
-	index = red->index;
-	while (red->read[index] != '\n' && index < red->size)
-	{
-		index++;
-		size++;
-		if (index == red->size && red->size == BUFF_SIZE)
-		{
-			if (!(tmplst = ft_newread(fd)))
-				return (-1);
-			tmplst->next = red->next;
-			red->next = tmplst;
-			red = tmplst;
-			index = 0;
-		}
-	}
-	return (size);
-}
-
-int					get_next_line(int fd, char **line)
-{
-	static t_read	*start = NULL;
-	t_read			*red;
-	t_read			*prevtmp;
-	t_read			*tab[2];
-
-	if (fd < 0)
+	if (fd < 0 || fd >= 256 || BUFF_SIZE < 1 || BUFF_SIZE >= 65635 || !line)
 		return (-1);
-	prevtmp = NULL;
-	if (!start)
-		start = ft_newread(fd);
-	red = start;
-	while (red->fd != fd)
+	buf = &(data[fd]);
+	if (!has_line(*buf, &count))
 	{
-		if (!(red->next))
-			red->next = ft_newread(fd);
-		prevtmp = red;
-		red = red->next;
+		status = read_line(buf, fd);
+		if (status < 0)
+			return (-1);
+		if (status == 0 && *buf == NULL)
+			return (0);
 	}
-	if (!red || !start)
-		return (-1);
-	tab[0] = red;
-	tab[1] = prevtmp;
-	return (ft_print(ft_findendl(fd, red), tab, &start, line));
+	has_line(*buf, &count);
+	return (write_line(buf, line, count));
 }

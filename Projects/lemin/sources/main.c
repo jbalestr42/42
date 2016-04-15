@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/02/18 10:20:01 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/02/21 15:52:28 by jbalestr         ###   ########.fr       */
+/*   Created: 2016/03/11 13:14:30 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/04/04 10:40:51 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int			main(void)
 {
-	t_env	*e;
+	t_graph	*graph;
 
-	if (!(e = init_env()))
+	if (!(graph = read_map()))
 		return (0);
-	find_path(e);
+	dijkstra(graph);
+	destroy_graph(graph);
 	return (0);
 }

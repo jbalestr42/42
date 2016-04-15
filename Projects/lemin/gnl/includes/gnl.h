@@ -5,25 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/15 16:02:26 by jbalestr          #+#    #+#             */
-/*   Updated: 2014/01/15 16:03:25 by jbalestr         ###   ########.fr       */
+/*   Created: 2016/04/02 18:59:26 by jbalestr          #+#    #+#             */
+/*   Updated: 2016/04/02 18:59:40 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GNL_H
 # define GNL_H
 
-# define BUFF_SIZE	4096
+# define BUFF_SIZE		10
 
-typedef struct		s_read
+# include <unistd.h>
+# include <stdlib.h>
+
+typedef struct			s_buf
 {
-	int				size;
-	int				index;
-	int				fd;
-	char			*read;
-	struct s_read	*next;
-}					t_read;
+	char				c;
+	struct s_buf		*next;
+}						t_buf;
 
-int		get_next_line(int const fd, char **line);
+int						get_next_line(int const fd, char **line);
+void					ft_bzero(void *s, size_t n);
+char					*ft_strchr(const char *s, int c);
 
-#endif /* !GNL_H */
+#endif

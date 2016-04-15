@@ -1,34 +1,23 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tcharlat <tcharlat@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2014/01/23 02:20:27 by tcharlat          #+#    #+#              #
-#    Updated: 2014/02/21 14:04:37 by jbalestr         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 .PHONY: all clean fclean re
 
 NAME =	lem-in
 CC =	gcc
-LIB =	-L gnl/ -L libft -lft -lftgnl
+LIB =	-L gnl/ -lftgnl
 FLAGS =	-g -Wall -Wextra -Werror
 SDIR =	sources/
 ODIR =	objects/
-IDIR =	-I includes/ -I gnl/includes -I libft/includes
-SRC =	main.c read_std.c init.c init_graph.c read_ants.c read_rooms.c \
-		read_path.c define_path.c
+IDIR =	-I includes/ -I gnl/includes
+SRC =	main.c dijkstra.c graph.c min_heap.c parsing.c parsing_helper.c ft_strsplit.c \
+		ft_splitwhite.c parsing_room.c parsing_edge.c parsing_ant.c libft.c room.c \
+		parsing_commands.c print_result.c libft_print.c destroy_graph.c \
+		print_result2.c
 OBJ =	$(SRC:.c=.o)
-EXT =	includes/lemin.h
 S =		$(addprefix $(SDIR), $(SRC))
 O =		$(addprefix $(ODIR), $(OBJ))
 
 all: lib $(NAME)
 
-$(NAME): $(O) $(EXT)
+$(NAME): $(O)
 	@echo "-> Creating $(NAME)..."
 	@$(CC) $(FLAGS) -o $@ $^ $(IDIR) $(LIB)
 	@echo "-> Done !"
@@ -39,7 +28,6 @@ $(ODIR)%.o: $(SDIR)%.c
 
 lib:
 	@make -C gnl/
-	@make -C libft/
 
 $(O): | ./objects
 ./objects:
@@ -49,12 +37,10 @@ clean:
 	@echo "-> Cleaning object files..."
 	@rm -rf $(ODIR)
 	@make clean -C gnl/
-	@make clean -C libft/
 
 fclean: clean
 	@echo "-> Cleaning $(NAME)..."
 	@rm -f $(NAME)
 	@make fclean -C gnl/
-	@make fclean -C libft/
 
 re: fclean all
