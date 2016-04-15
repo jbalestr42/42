@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/10 11:12:23 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/10 18:46:35 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/04/11 10:24:44 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ static char		*read_shader(const char *filename)
 				glsl_source[size] = '\0';
 				return (glsl_source);
 			}
-			fprintf(stderr, "ERROR: Could not read file %s\n", filename);
+			ft_putendl("ERROR: Could not read file.");
 		}
-		fprintf(stderr, "ERROR: Could not allocate %lu bytes.\n", size);
+		ft_putendl("ERROR: Could not allocate enough bytes.");
 		fclose(file);
 	}
 	if (file)
 		fclose(file);
-	fprintf(stderr, "ERROR: Could not open file %s\n", filename);
+	ft_putendl("ERROR: Could not open file.");
 	return (NULL);
 }
 
@@ -98,6 +98,6 @@ GLuint			load_shader(const char *filename, GLenum shader_type)
 		exit_on_glerror("Could not compile a shader");
 	}
 	else
-		fprintf(stderr, "ERROR: Could not create a shader.\n");
+		ft_putendl("ERROR: Could not create a shader.");
 	return (shader_id);
 }

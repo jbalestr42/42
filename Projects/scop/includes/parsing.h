@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/07 17:23:47 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/10 18:25:12 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/04/11 10:29:09 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void						setup_mesh_faces(t_obj_data *obj_data,
 		t_face_list *face_list);
 void						setup_mesh_origin(t_obj_data *obj_data);
 
+int							is_valid_name(char const *filename);
 char						**ft_strsplit(char const *s, char c);
 void						free_split(char **s);
 int							ft_strlen_tab(char **tab);

@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/10 15:52:48 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/10 17:51:47 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/04/11 10:29:31 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ int					load_mesh(t_obj_data *obj_data, char const *filename)
 {
 	int				fd;
 
+	if (!is_valid_name(filename))
+		return (0);
 	if ((fd = open(filename, O_RDONLY)) == -1)
 		return (0);
 	obj_data->obj_vertices = NULL;

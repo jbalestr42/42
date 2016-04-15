@@ -6,7 +6,7 @@
 /*   By: jbalestr <jbalestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/10 11:46:25 by jbalestr          #+#    #+#             */
-/*   Updated: 2016/03/10 15:51:47 by jbalestr         ###   ########.fr       */
+/*   Updated: 2016/04/11 10:37:12 by jbalestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ t_mesh			*create_mesh(char const *filename)
 	t_obj_data	obj_data;
 	t_mesh		*mesh;
 
-	mesh = init_mesh(&obj_data, filename);
+	if (!(mesh = init_mesh(&obj_data, filename)))
+		return (NULL);
 	generate_buffer(mesh);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertex_buffer_object[POSITION_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(t_vertex) * obj_data.vertex_count,
@@ -41,7 +42,6 @@ t_mesh			*create_mesh(char const *filename)
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(t_vertex),
 			(GLvoid*)(sizeof(obj_data.obj_vertices[0].position)));
-	exit_on_glerror("ERROR: Could not bind the VBO to the VAO");
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->vertex_buffer_object[INDEX_VB]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort)
 			* obj_data.indice_count, obj_data.indices, GL_STATIC_DRAW);
